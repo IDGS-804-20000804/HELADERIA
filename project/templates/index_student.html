@@ -1,0 +1,40 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div>
+    <div class="col-12">
+        <div class="text-right">
+            <a href="{{url_for('students.insert_student')}}" class="btn btn-success">Agregar alumno</a>
+        </div>
+    </div>
+</div>
+<div>
+    <table style="border-style: solid; border-color: #000000;">
+        <thead>
+            <tr>
+                <th style="border-style: solid; border-color: #000000;">Nombre</th>
+                <th style="border-style: solid; border-color: #000000;">Apaterno</th>
+                <th style="border-style: solid; border-color: #000000;">Estatura</th>
+                <th style="border-style: solid; border-color: #000000;">Edad</th>
+                <th style="border-style: solid; border-color: #000000;">Correo electronico</th>
+                <th style="border-style: solid; border-color: #000000;">Editar</th>
+                <th style="border-style: solid; border-color: #000000;">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for student in students%}
+            <tr>
+                <th style="border-style: solid; border-color: #000000;">{{student.nombre}}</th>
+                <th style="border-style: solid; border-color: #000000;">{{student.apellidos}}</th>
+                <th style="border-style: solid; border-color: #000000;">{{student.estatura}}</th>
+                <th style="border-style: solid; border-color: #000000;">{{student.edad}}</th>
+                <th style="border-style: solid; border-color: #000000;">{{student.correo}}</th>
+                <th style="border-style: solid; border-color: #000000;"><a href="{{url_for('students.update_student')}}?id={{student.id}}" class="btn btn-primary"><i
+                            class="fas fa-pencil-alt"></i> Update</a></th>
+                <th style="border-style: solid; border-color: #000000;"><a href="{{url_for('students.delete_student')}}?id={{student.id}}" class="btn btn-danger"><i
+                            class="far fa-window-close"></i> Delete</a></th>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+{%endblock%}
