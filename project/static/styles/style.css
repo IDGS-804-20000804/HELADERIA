@@ -1,18 +1,36 @@
-body,html {
+body {
   background-image: url("../img/imagenFondo.png");
- /* Fijar la imagen de fondo este vertical y
+  /* Fijar la imagen de fondo este vertical y
     horizontalmente y centrado */
-    background-position: center center;
+  background-position: center center;
 
-    /* Esta imagen no debe de repetirse */
-    background-repeat: no-repeat;
-  
-    /* COn esta regla fijamos la imagen en la pantalla. */
-    background-attachment: fixed;
-  
-    /* La imagen ocupa el 100% y se reescala */
-    background-size: cover;
-  
-    /* Damos un color de fondo mientras la imagen está cargando  */
-    background-color: #464646;
-  }
+  /* Esta imagen no debe de repetirse */
+  background-repeat: no-repeat;
+
+  /* COn esta regla fijamos la imagen en la pantalla. */
+  background-attachment: fixed;
+
+  /* La imagen ocupa el 100% y se reescala */
+  background-size: cover;
+
+  /* Damos un color de fondo mientras la imagen está cargando  */
+  background-color: #464646;
+}
+
+.botonInicio {
+  background-color:#3D7692;
+  color: black;
+  width: 180px;
+  height: 40px;
+  outline: 2px solid #3D7692;
+  outline-offset: 4px;
+}
+
+.botonLogin{
+  background-color:#3D7692;
+  color: black;
+  width: 130px;
+  height: 40px;
+  outline: 2px solid #3D7692;
+  outline-offset: 4px;
+}

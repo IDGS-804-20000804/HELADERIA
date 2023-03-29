@@ -1,0 +1,48 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div class="container-fluid">
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8" style="padding-top: 60px;">
+            <div class="card">
+                <h2 class="text-center pt-3" style="font-weight: bold;">Registro</h2>
+                <div class="form pt-2">
+                   <div class="row">
+                        <div class="col-6">
+                            <div class="mx-5" >
+                                <label for="txtNombre" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Nombre:</label> <br>
+                                <input id="txtNombre" type="text"  class="form-control" placeholder="Nombre" style="background: #F4F6F6;">
+                            </div>
+                            <br>
+                            <div class="mx-5" >
+                                <label for="txtUsuario" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Usuario:</label> <br>
+                                <input id="txtUsuario" type="text"  class="form-control" placeholder="Usuario" style="background: #F4F6F6;">
+                            </div>
+                            <br>
+                            <div class="mx-5">
+                                <label for="txtPassword" class="form-label" style="text-align: left; "><i class="fas fa-lock"></i><a>  </a>Contraseña:</label><br>
+                                <input id="txtPassword" type="password" class="form-control" placeholder="Contraseña" style="background: #F4F6F6;">
+                            </div>
+                            <div class="mx-4">
+                                <label for="password"></label>
+                                <div style="margin-top:15px;">
+                                    <input style="margin-left:20px;" type="checkbox" id="mostrar_contrasena" title="clic para mostrar contraseña"/>
+                                    &nbsp;&nbsp;Mostrar Contraseña</div><br>
+                            </div>
+                            <div class="pb-4 pt-3 text-center ">
+                                <button class="btn botonLogin" style=" font-family:'Times New Roman', Times, serif;"><a><b>Registrarse</b></a></button> <br>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                                <img src="../static/img/logotipo.png" style="height: 350px;">
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-4"></div>
+{%endblock%}
