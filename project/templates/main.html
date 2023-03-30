@@ -1,0 +1,127 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div class="vertical-nav bg-white" id="sidebar">
+    <div class="py-4 px-3 mb-4 bg-light text-center">
+        <div>
+            <img src="../static/img/logotipo.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        </div>
+        <div class="media-body ">
+            <div>
+                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">Nombre</span></h6>
+            </div>
+        </div>
+    </div>
+    <div id="global">
+        <ul class="nav flex-column bg-white mb-2" >
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-user-tie mr-3 fa-fw"></i>
+                    Empleados
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-users mr-3 fa-fw"></i>
+                    Clientes
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light">
+                    <i class="fa fa-shopping-basket" ></i>
+                    Productos
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-star" ></i>
+                    Materia Prima
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa far fa-file-alt" aria-hidden="true"></i>
+                    Recetas
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Ventas
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-male" aria-hidden="true"></i>
+                    Provedores
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Compras
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i  class="fa fa-folder-open mr-3 fa-fw" ></i>
+                    Solicitud de Productos
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    Envios
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    Bitacora
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-user-cog mr-3  fa-fw"></i>
+                    Cerrar Sesi&oacute;n
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <div class="p-5 mb-4 bg-light shadow-lg" style="border-radius: 1rem;">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="fw-bold display-5 text-center"><b>GELATOS S.A. de C.V.</b></h1><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4 class="my-4 fw-bold ">Misi&oacute;n:</h4>
+                    <p class="fs-6 lead" style="text-align: justify;">
+                        Nuestra misión es ofrecer helados de alta calidad que deleiten los paladares de
+                        nuestros clientes y les brinden momentos de felicidad y satisfacción. Nos
+                        esforzamos por utilizar los mejores ingredientes naturales y procesos de
+                        producción éticos y sostenibles para ofrecer una experiencia gastronómica única y
+                        deliciosa.
+                    </p>
+                    <h4 class="my-4 fw-bold ">Visi&oacute;n:</h4>
+                    <p class="fs-6 lead" style="text-align: justify;">
+                        Nos vemos como una empresa líder en la fabricación y venta de helados a nivel
+                        nacional, reconocida por nuestra excelencia en la calidad y el sabor de nuestros
+                        productos. Buscamos innovar continuamente y mantenernos a la vanguardia en el
+                        mercado, ofreciendo una amplia variedad de sabores y presentaciones que
+                        satisfagan los gustos y necesidades de nuestros clientes.
+                    </p>
+                </div>
+                <div class="my-5 col-lg-4">
+                    <img  src="../static/img/logotipo.png" alt="Generic placeholder image" width="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="expirado"></div>
+{%endblock%}

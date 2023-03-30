@@ -3,11 +3,15 @@ from flask import Flask, render_template,Blueprint
 from flask_wtf.csrf import CSRFProtect
 from routes.empleados.empleados import empleados
 from routes.materiaPrima.materiaPrima import materiaPrima
+from routes.registroUsuario.registroUsuario import registroUsuario
+from routes.login.login import login
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = True
 app.register_blueprint(materiaPrima)
 app.register_blueprint(empleados)
+app.register_blueprint(registroUsuario)
+app.register_blueprint(login)
 
 # csrf = CSRFProtect()
 # csrf.init_app(app)
@@ -21,6 +25,5 @@ app.register_blueprint(empleados)
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 app.run()

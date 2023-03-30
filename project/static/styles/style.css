@@ -1,0 +1,102 @@
+body {
+  background-image: url("../img/imagenFondo.png");
+  /* Fijar la imagen de fondo este vertical y
+    horizontalmente y centrado */
+  background-position: center center;
+
+  /* Esta imagen no debe de repetirse */
+  background-repeat: no-repeat;
+
+  /* COn esta regla fijamos la imagen en la pantalla. */
+  background-attachment: fixed;
+
+  /* La imagen ocupa el 100% y se reescala */
+  background-size: cover;
+
+  /* Damos un color de fondo mientras la imagen está cargando  */
+  background-color: #464646;
+}
+
+.botonInicio {
+  background-color:#3D7692;
+  color: black;
+  width: 180px;
+  height: 40px;
+  outline: 2px solid #3D7692;
+  outline-offset: 4px;
+}
+
+.botonLogin{
+  background-color:#3D7692;
+  color: black;
+  width: 130px;
+  height: 40px;
+  outline: 2px solid #3D7692;
+  outline-offset: 4px;
+}
+
+.vertical-nav {
+  min-width: 17rem;
+  width: 17rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+}
+
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+
+/* for toggle behavior */
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
+
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+
+.text-gray {
+  color: #aaa;
+}
+
+#global {
+	height: 400px;
+	width: 260px;
+	border: 1px solid #ddd;
+	background: #f1f1f1;
+	overflow-y: scroll;
+}

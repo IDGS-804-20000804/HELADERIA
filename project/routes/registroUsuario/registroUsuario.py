@@ -6,8 +6,8 @@ from flask_wtf.csrf import CSRFProtect
 registroUsuario = Blueprint('registroUsuario', __name__ )
 
 
-@registroUsuario.route('/registroUsuario')
-def index_students():
+@registroUsuario.route('/registro')
+def registro():
      create_form = EmpleadoForm(request.form)
-     return render_template('empleados.html')
+     return render_template('registro.html')
 
