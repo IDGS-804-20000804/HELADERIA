@@ -25,6 +25,10 @@ def login():
 def registro():
     return render_template('registro.html')
 
+@app.route('/main')
+def main():
+    return render_template('main.html')
+
 if __name__=='__main__':
     csrf.init_app(app)
     app.run(port=3000)
