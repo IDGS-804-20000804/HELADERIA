@@ -3,11 +3,16 @@ from models.empleados.forms import EmpleadoForm
 from flask_wtf.csrf import CSRFProtect
 
 # csrf = CSRFProtect()
-login = Blueprint('login', __name__ )
+login = Blueprint('login', __name__)
 
 
 @login.route('/login')
-def login():
-     create_form = EmpleadoForm(request.form)
-     return render_template('login.html')
+def logins():
 
+    return render_template('login.html')
+
+
+@login.route('/main')
+def main():
+
+    return render_template('main.html')

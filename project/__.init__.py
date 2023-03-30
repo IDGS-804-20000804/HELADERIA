@@ -1,10 +1,12 @@
 import flask
 from flask import Flask, render_template,Blueprint
 from flask_wtf.csrf import CSRFProtect
+from routes.login.login import login
 from routes.empleados.empleados import empleados
 from routes.materiaPrima.materiaPrima import materiaPrima
 from routes.registroUsuario.registroUsuario import registroUsuario
-from routes.login.login import login
+
+
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = True
