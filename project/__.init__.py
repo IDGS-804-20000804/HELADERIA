@@ -27,7 +27,16 @@ def registro():
 
 @app.route('/main')
 def main():
-    return render_template('main.html')
+    return render_template('inicio.html')
+
+@app.route('/empleados')
+def empleados():
+    return render_template('empleados.html')
+
+@app.route('/clientes')
+def clientes():
+    return render_template('clientes.html')
+
 
 if __name__=='__main__':
     csrf.init_app(app)
