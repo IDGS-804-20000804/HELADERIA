@@ -1,11 +1,16 @@
 import flask
-from flask import Flask, render_template
+from flask import Flask, render_template,Blueprint
 from flask_wtf.csrf import CSRFProtect
+from routes.empleados.empleados import empleados
+from routes.materiaPrima.materiaPrima import materiaPrima
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = True
-csrf = CSRFProtect()
-csrf.init_app(app)
+app.register_blueprint(materiaPrima)
+app.register_blueprint(empleados)
+
+# csrf = CSRFProtect()
+# csrf.init_app(app)
 
 # with app.app_context():
 #     sql_alchemy.create_all()
@@ -17,6 +22,5 @@ csrf.init_app(app)
 def index():
     return render_template('index.html')
 
-if __name__=='__main__':
-    csrf.init_app(app)
-    app.run(port=3000)
+
+app.run()
