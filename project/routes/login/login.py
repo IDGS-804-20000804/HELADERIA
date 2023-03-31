@@ -4,7 +4,7 @@ from flask_wtf.csrf import CSRFProtect
 
 # csrf = CSRFProtect()
 login = Blueprint('login', __name__)
-
+main = Blueprint('main',__name__)
 
 @login.route('/login')
 def logins():
@@ -12,7 +12,6 @@ def logins():
     return render_template('login.html')
 
 
-@login.route('/main')
-def main():
-
+@main.route('/main')
+def mains():
     return render_template('main.html')
