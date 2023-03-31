@@ -1,5 +1,20 @@
-{%extends 'layout.html'%}
-{%block content%}
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Gelatos</title>
+  <link rel="shortcut icon" href="../static/img/logotipo.png" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="../static/styles/style.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE BOOTSTRAP -->
+  <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="../static/font_awesome_5_15_3/css/all.min.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE SWEETALERT -->
+  <link type="text/css" rel="stylesheet" href='../static/sweetalert2/sweetalert2.min.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</head>
+<body >
 <div class="vertical-nav bg-white" id="sidebar">
     <div class="py-4 px-3 mb-4 bg-light text-center">
         <div>
@@ -14,13 +29,13 @@
     <div id="global">
         <ul class="nav flex-column bg-white mb-2" >
             <li class="nav-item m-1">
-                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                <a href="empleados" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-tie mr-3 fa-fw"></i>
                     Empleados
                 </a>
             </li>
             <li class="nav-item m-1">
-                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                <a href="clientes" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-users mr-3 fa-fw"></i>
                     Clientes
                 </a>
@@ -80,7 +95,7 @@
                 </a>
             </li>
             <li class="nav-item m-1">
-                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                <a href="/" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-cog mr-3  fa-fw"></i>
                     Cerrar Sesi&oacute;n
                 </a>
@@ -88,40 +103,34 @@
         </ul>
     </div>
 </div>
-<div class="page-content p-5" id="content">
-    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <div class="p-5 mb-4 bg-light shadow-lg" style="border-radius: 1rem;">
-        <div class="container-fluid ">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="fw-bold display-5 text-center"><b>GELATOS S.A. de C.V.</b></h1><br>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <h4 class="my-4 fw-bold ">Misi&oacute;n:</h4>
-                    <p class="fs-6 lead" style="text-align: justify;">
-                        Nuestra misión es ofrecer helados de alta calidad que deleiten los paladares de
-                        nuestros clientes y les brinden momentos de felicidad y satisfacción. Nos
-                        esforzamos por utilizar los mejores ingredientes naturales y procesos de
-                        producción éticos y sostenibles para ofrecer una experiencia gastronómica única y
-                        deliciosa.
-                    </p>
-                    <h4 class="my-4 fw-bold ">Visi&oacute;n:</h4>
-                    <p class="fs-6 lead" style="text-align: justify;">
-                        Nos vemos como una empresa líder en la fabricación y venta de helados a nivel
-                        nacional, reconocida por nuestra excelencia en la calidad y el sabor de nuestros
-                        productos. Buscamos innovar continuamente y mantenernos a la vanguardia en el
-                        mercado, ofreciendo una amplia variedad de sabores y presentaciones que
-                        satisfagan los gustos y necesidades de nuestros clientes.
-                    </p>
-                </div>
-                <div class="my-5 col-lg-4">
-                    <img  src="../static/img/logotipo.png" alt="Generic placeholder image" width="100%">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="expirado"></div>
-{%endblock%}
+
+    {%block content%}
+    
+    {%endblock%}
+</body>
+<script type="text/javascript">
+$(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar, #content').toggleClass('active');
+    });
+});
+
+//Mostramos contraseña 
+$(document).ready(function () {
+    $('#mostrar_contrasena').click(function () {
+      if ($('#mostrar_contrasena').is(':checked')) {
+        $('#txtPassword').attr('type', 'text');
+      } else {
+        $('#txtPassword').attr('type', 'password');
+      }
+    });
+  });
+</script>
+<!-- REFERENCIAS DE SCRIPT DE JQUERY-->
+<script type="text/javascript" src="../static/jquery/jquery-3.6.0.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src='../static/sweetalert2/sweetalert2.all.min.js'></script>
+</html>
+
