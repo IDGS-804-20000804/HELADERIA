@@ -1,4 +1,4 @@
-from db import *
+from db import db
 
 
 def insertar_maestro(nombre,apellidoP,apellidoM,edad,materia):

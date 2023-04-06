@@ -16,12 +16,12 @@ def index_students():
      nombre = request.form["txtNombre"]
      apaterno = request.form["txtApellidoPaterno"]
      email = request.form["txtApellidoMaterno"]
-     nombre = request.form["txtNombre"]
+     nombre = request.form["txtTelefono"]
      apaterno = request.form["txtApellidoPaterno"]
-     email = request.form["txtApellidoMaterno"]
-     nombre = request.form["txtNombre"]
-     apaterno = request.form["txtApellidoPaterno"]
-     email = request.form["txtApellidoMaterno"]
+     email = request.form["txtCorreo"]
+     nombre = request.form["txtCalle"]
+     apaterno = request.form["txtColonia"]
+     email = request.form["txtNumero"]
      controller.controlador_alumnos.insertar_alumnos(nombre,apaterno,email)
 
 
