@@ -6,6 +6,6 @@ from flask_wtf.csrf import CSRFProtect
 materiaPrima = Blueprint('materiaPrima', __name__ )
 
 @materiaPrima.route('/materiaPrima')
-def MateriasPrimas():
-     return render_template('empleados.html')
+def materiasPrimas():
+     return render_template('materiaPrima.html')
 
