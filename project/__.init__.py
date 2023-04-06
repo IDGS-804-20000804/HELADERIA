@@ -41,11 +41,29 @@ def clientes():
 def materiaPrima():
     return render_template('materiaPrima.html')
 
-
+@app.route('/recetas')
+def recetas():
+    return render_template('recetas.html')
 
 @app.route('/ventas')
 def ventas():
     return render_template('ventas.html')
+
+@app.route('/compras')
+def compras():
+    return render_template('compras.html')
+
+@app.route('/provedor')
+def provedor():
+    return render_template('provedor.html')
+
+@app.route('/envio')
+def envio():
+    return render_template('envio.html')
+
+@app.route('/stock')
+def stock():
+    return render_template('stock.html')
 if __name__=='__main__':
     csrf.init_app(app)
     app.run(port=3000)
