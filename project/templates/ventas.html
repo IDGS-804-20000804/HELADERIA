@@ -1,0 +1,210 @@
+{%extends 'main.html'%}
+{%block content%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+            class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#3D7692"
+        data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong><i class="fa fa-shopping-cart"
+                aria-hidden="true" style="color: #FFFFFF;"></i></strong></button>
+    <div id="divCatalogoEmpleado" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black" style=" font-size: 25px;"><b>Productos</b> </span>
+            </div>
+            <div class="card-body">
+                <br>
+                <!-- START SECTION STORE -->
+                <section class="store">
+                    <div class="container">
+                        <div class="items">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Fresa</h5>
+                                        <img class="item-image" src="../static/img/Fresa.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">9.99€</h5>
+                                        <div style="text-align: center; ">
+                                           <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br> 
+                                        </div><br>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Chocolate</h5>
+                                        <img class="item-image" src="../static/img/Chocolate.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">9.99€</h5>
+                                        <div style="text-align: center;">
+                                        <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br>
+                                            </div><br>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Limon</h5>
+                                        <img class="item-image" src="../static/img/Limon.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">9.99€</h5>
+                                        <div style="text-align: center;">
+                                        <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br>
+                                            </div><br>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Vainilla</h5>
+                                        <img class="item-image" src="../static/img/Vainilla.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">19.99€</h5>
+                                        <div style="text-align: center;">
+                                        <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
+                                            </div><br>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Oreo</h5>
+                                        <img class="item-image" src="../static/img/Oreo.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">19.99€</h5>
+                                        <div style="text-align: center;">
+                                        <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
+                                            </div><br>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">Helado de Cafe</h5>
+                                        <img class="item-image" src="../static/img/cafe.jpg">
+                                        <p>Detalles...</p>
+                                            <h5 class="item-price">6.99€</h5>
+                                        <div style="text-align: center;">
+                                        <button class="item-button btn btn-outline-success  addToCart"
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
+                                            </div><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- END SECTION STORE -->
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br>
+        <div class="modal fade" id="detalleEmpleado" tabindex="-1" aria-labelledby="detalleEmpleado" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle de
+                                Compras</b></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-header text-center bg-light">
+                                <span class="h5 text-black" style=" font-size: 25px;"><b>Productos</b> </span>
+                            </div>
+                            <div class="card-body">
+                                <br>
+                                <!-- START SECTION SHOPPING CART -->
+                                <section class="shopping-cart">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="shopping-cart-header">
+                                                    <h6>Producto</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="shopping-cart-header">
+                                                    <h6 class="text-truncate">Precio</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="shopping-cart-header">
+                                                    <h6>Cantidad</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ? START SHOPPING CART ITEMS -->
+                                        <div class="shopping-cart-items shoppingCartItemsContainer">
+                                        </div>
+                                        <!-- ? END SHOPPING CART ITEMS -->
+
+                                        <!-- START TOTAL -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="shopping-cart-total d-flex align-items-center">
+                                                    <p class="mb-0">Total</p>
+                                                    <p class="ml-4 mb-0 shoppingCartTotal">0€</p>
+                                                    <div class="toast ml-auto bg-info" role="alert"
+                                                        aria-live="assertive" aria-atomic="true" data-delay="2000">
+                                                        <div class="toast-header">
+                                                            <span>✅</span>
+                                                            <strong class="mr-auto ml-1 text-secondary">Elemento en el
+                                                                carrito</strong>
+                                                            <button type="button" class="ml-2 mb-1 close"
+                                                                data-dismiss="toast" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="toast-body text-white">
+                                                            Se aumentó correctamente la cantidad
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-outline-success ml-auto comprarButton" type="button"
+                                                        data-toggle="modal" data-target="#comprarModal">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- END TOTAL -->
+
+                                        <!-- START MODAL COMPRA -->
+                                        <div class="modal fade" id="comprarModal" tabindex="-1"
+                                            aria-labelledby="comprarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="comprarModalLabel">Gracias por su
+                                                            compra</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Pronto recibirá su pedido</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END MODAL COMPRA -->
+                                    </div>
+                                </section>
+                                <!-- END SECTION SHOPPING CART -->
+
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {%endblock%}

@@ -37,7 +37,15 @@ def empleados():
 def clientes():
     return render_template('clientes.html')
 
+@app.route('/materiaPrima')
+def materiaPrima():
+    return render_template('materiaPrima.html')
 
+
+
+@app.route('/ventas')
+def ventas():
+    return render_template('ventas.html')
 if __name__=='__main__':
     csrf.init_app(app)
     app.run(port=3000)
