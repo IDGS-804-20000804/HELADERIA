@@ -11,6 +11,37 @@ def index_students():
      create_form = EmpleadoForm(request.form)
      return render_template('empleados.html')
 
+@empleados.route('/empleados',method=["POST"])
+def index_students():
+     nombre = request.form["txtNombre"]
+     apaterno = request.form["txtApellidoPaterno"]
+     email = request.form["txtApellidoMaterno"]
+     nombre = request.form["txtNombre"]
+     apaterno = request.form["txtApellidoPaterno"]
+     email = request.form["txtApellidoMaterno"]
+     nombre = request.form["txtNombre"]
+     apaterno = request.form["txtApellidoPaterno"]
+     email = request.form["txtApellidoMaterno"]
+     controller.controlador_alumnos.insertar_alumnos(nombre,apaterno,email)
+
+
+
+     create_form = EmpleadoForm(request.form)
+     return render_template('empleados.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # @students.route('/insert-student', methods=['GET', 'POST'])
 # def insert_student():
