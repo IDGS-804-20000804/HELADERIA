@@ -26,7 +26,9 @@ CREATE TABLE `roles` (
 CREATE TABLE `usuario` (
   `id_usuario` INT AUTO_INCREMENT PRIMARY KEY,
   `correo` VARCHAR(255),
-  `contrasenia` VARCHAR(255)
+  `contrasenia` VARCHAR(255),
+  `fecha_creacion` DATETIME,
+  `fecha_actualizacion` DATETIME
 );
 
 CREATE TABLE `rol_usuario` (
@@ -46,13 +48,13 @@ CREATE TABLE `persona` (
   `numero_exterior` INT,
   `calle` VARCHAR(255),
   `colonia` VARCHAR(255),
-  `estatus` BOOLEAN
+  `estatus` BOOLEAN,
+  `fecha_creacion` DATETIME,
+  `fecha_actualizacion` DATETIME
 );
 
 CREATE TABLE `cliente` (
   `id_cliente` INT AUTO_INCREMENT PRIMARY KEY,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
   `fk_usuario` INT
 );
@@ -66,8 +68,6 @@ CREATE TABLE `proveedor` (
 
 CREATE TABLE `empleado` (
   `id_empleado` INT AUTO_INCREMENT PRIMARY KEY,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
   `fk_usuario` INT
 );
