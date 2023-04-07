@@ -113,13 +113,15 @@ CALL actualizar_cliente('Pablo','Palomares','Sánchez','4771234567','37287',110,
 DROP PROCEDURE IF EXISTS eliminar_clientes;
 DELIMITER $$
 CREATE PROCEDURE eliminar_clientes(	/* Datos Persona */
-									IN iid_persona INT
+									IN iid_persona INT,             -- 1
+                                    IN ifecha_eliminacion DATETIME  -- 2
 				)
 	BEGIN
-		UPDATE persona SET estatus = 0 
+		UPDATE persona SET  estatus = 0,
+							fecha_eliminacion = ifecha_eliminacion
         WHERE id_persona = iid_persona;
     END
 $$
 DELIMITER ;
 
-CALL eliminar_clientes(4);
+CALL eliminar_clientes(4,'2023-04-07');
