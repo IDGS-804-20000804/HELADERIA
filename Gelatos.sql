@@ -44,8 +44,8 @@ CREATE TABLE `persona` (
   `amaterno` VARCHAR(255),
   `telefono` VARCHAR(255),
   `codigo_postal` INT,
-  `numero_interior` INT,
-  `numero_exterior` INT,
+  `numero_interior` VARCHAR(255),
+  `numero_exterior` VARCHAR(255),
   `calle` VARCHAR(255),
   `colonia` VARCHAR(255),
   `estatus` BOOLEAN,
@@ -77,7 +77,8 @@ CREATE TABLE `compra` (
   `total` FLOAT,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
-  `fk_proveedor` INT
+  `fk_proveedor` INT,
+  `fk_empleado` INT
 );
 
 CREATE TABLE `detalle_compra` (
@@ -123,6 +124,7 @@ CREATE TABLE `detalle_almacen_stock` (
 CREATE TABLE `stock` (
   `id_stock` INT AUTO_INCREMENT PRIMARY KEY,
   `caducidad` VARCHAR(255),
+  `estatus` BOOLEAN,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_receta` INT
@@ -172,49 +174,7 @@ ALTER TABLE `empleado` ADD FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id_
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`fk_proveedor`) REFERENCES `proveedor` (`id_proveedor`);
 
-ALTER TABLE `detalle_compra` ADD FOREIGN KEY (`fk_materia_prima`) REFERENCES `materia_prima` (`id_materia_prima`);
-
-ALTER TABLE `detalle_compra` ADD FOREIGN KEY (`fk_compra`) REFERENCES `compra` (`id_compra`);
-
-ALTER TABLE `almacen` ADD FOREIGN KEY (`fk_materia_prima`) REFERENCES `materia_prima` (`id_materia_prima`);
-
-ALTER TABLE `detalle_materia_prima_receta` ADD FOREIGN KEY (`fk_materia_prima`) REFERENCES `materia_prima` (`id_materia_prima`);
-
-ALTER TABLE `detalle_materia_prima_receta` ADD FOREIGN KEY (`fk_receta`) REFERENCES `receta` (`id_receta`);
-
-ALTER TABLE `detalle_almacen_stock` ADD FOREIGN KEY (`fk_stock`) REFERENCES `stock` (`id_stock`);
-
-ALTER TABLE `detalle_almacen_stock` ADD FOREIGN KEY (`fk_almacen`) REFERENCES `almacen` (`id_almacen`);
-
-ALTER TABLE `stock` ADD FOREIGN KEY (`fk_receta`) REFERENCES `receta` (`id_receta`);
-
-ALTER TABLE `venta` ADD FOREIGN KEY (`fk_cliente`) REFERENCES `cliente` (`id_cliente`);
-
-ALTER TABLE `detalle_venta` ADD FOREIGN KEY (`fk_stock`) REFERENCES `stock` (`id_stock`);
-
-ALTER TABLE `detalle_venta` ADD FOREIGN KEY (`fk_venta`) REFERENCES `venta` (`id_venta`);
-
-ALTER TABLE `envio` ADD FOREIGN KEY (`fk_empleado`) REFERENCES `empleado` (`id_empleado`);
-
-ALTER TABLE `envio` ADD FOREIGN KEY (`fk_venta`) REFERENCES `venta` (`id_venta`);
-
-ALTER TABLE `materia_prima` ADD FOREIGN KEY (`fk_unidad_medida`) REFERENCES `unidad_medida` (`id_unidad_medida`);
-
-ALTER TABLE `rol_usuario` ADD FOREIGN KEY (`fk_rol`) REFERENCES `roles` (`id_rol`);
-
-ALTER TABLE `rol_usuario` ADD FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id_usuario`);
-
-ALTER TABLE `cliente` ADD FOREIGN KEY (`fk_persona`) REFERENCES `persona` (`id_persona`);
-
-ALTER TABLE `cliente` ADD FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id_usuario`);
-
-ALTER TABLE `proveedor` ADD FOREIGN KEY (`fk_persona`) REFERENCES `persona` (`id_persona`);
-
-ALTER TABLE `empleado` ADD FOREIGN KEY (`fk_persona`) REFERENCES `persona` (`id_persona`);
-
-ALTER TABLE `empleado` ADD FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id_usuario`);
-
-ALTER TABLE `compra` ADD FOREIGN KEY (`fk_proveedor`) REFERENCES `proveedor` (`id_proveedor`);
+ALTER TABLE `compra` ADD FOREIGN KEY (`fk_empleado`) REFERENCES `empleado` (`id_empleado`);
 
 ALTER TABLE `detalle_compra` ADD FOREIGN KEY (`fk_materia_prima`) REFERENCES `materia_prima` (`id_materia_prima`);
 
@@ -291,6 +251,11 @@ INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Vendedor');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Repartidor');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Comprador');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Cliente');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Gerente');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Productor');
+
+
+
 
 /* SELECT * FROM almacen a
 INNER JOIN materia_prima mp
