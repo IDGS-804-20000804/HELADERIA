@@ -15,3 +15,7 @@ def logins():
 @main.route('/main')
 def mains():
     return render_template('main.html')
+
+@main.route('/inicio')
+def inici():
+    return render_template('inicio.html')

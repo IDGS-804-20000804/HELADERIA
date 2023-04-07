@@ -9,7 +9,7 @@ from routes.materiaPrima.materiaPrima import materiaPrima
 from routes.registroUsuario.registroUsuario import registroUsuario
 from routes.ventas.ventas import ventas
 from routes.provedor.provedor import provedor
-
+from routes.login.login import inici
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = True
@@ -35,7 +35,7 @@ def index():
     
 # app.register_blueprint(routes_app_students)
 # app.register_blueprint(routes_app_teachers)
-app.register_blueprint(empleados)
+
 
 
 app.run()
