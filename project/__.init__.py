@@ -1,21 +1,26 @@
 import flask
 from flask import Flask, render_template
 from flask_wtf.csrf import CSRFProtect
+from db.config import DevelopmentConfig
 
-app = flask.Flask(__name__)
-app.config['DEBUG'] = True
+
+from controllers.empleados import empleados
+
+app=flask.Flask(__name__)
+app.config['DEBUG']=True
+app.config.from_object(DevelopmentConfig)
 csrf = CSRFProtect()
-csrf.init_app(app)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 # with app.app_context():
 #     sql_alchemy.create_all()
     
 # app.register_blueprint(routes_app_students)
 # app.register_blueprint(routes_app_teachers)
+app.register_blueprint(empleados)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/login')
 def login():
@@ -29,9 +34,9 @@ def registro():
 def main():
     return render_template('inicio.html')
 
-@app.route('/empleados')
-def empleados():
-    return render_template('empleados.html')
+# @app.route('/empleados')
+# def empleados():
+#     return render_template('empleados.html')
 
 @app.route('/clientes')
 def clientes():
@@ -64,6 +69,8 @@ def envio():
 @app.route('/stock')
 def stock():
     return render_template('stock.html')
+
+
 if __name__=='__main__':
     csrf.init_app(app)
     app.run(port=3000)
