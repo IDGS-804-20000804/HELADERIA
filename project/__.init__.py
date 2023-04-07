@@ -27,14 +27,15 @@ app.register_blueprint(provedor)
 # csrf = CSRFProtect()
 # csrf.init_app(app)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 # with app.app_context():
 #     sql_alchemy.create_all()
     
 # app.register_blueprint(routes_app_students)
 # app.register_blueprint(routes_app_teachers)
+app.register_blueprint(empleados)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 app.run()

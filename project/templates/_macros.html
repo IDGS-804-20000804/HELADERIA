@@ -1,4 +1,4 @@
-{% macro render_field(field)%}
+<!-- {% macro render_field(field)%}
         {{field.label}}
         {{field(**kwargs) | safe}}
 {%if field.errors%}
@@ -10,41 +10,31 @@
         {%endfor%}
     </ul>
 {%endif%}
-{% endmacro %}
+{% endmacro %} -->
+{% macro  render_input(name, placeholder,type='text')%}
 
-{% macro render_input(name, placeholder, type, classes) %}
-
-<div class="mb-3">
-    <label for="{{ name }}" class="form-label">{{placeholder}}</label>
-    <input
-        type="{{ type or 'text'}}"
-        id="{{name}}"
-        name="{{ name }}"
-        class="{{ classes or 'form-control' }}"
-        placeholder="{{ placeholder }}"
-    />
+<div class="control-group">
+    <label for="{{name}}" class="control-label">{{placeholder}}</label>
+    <div class="controls">
+        <input type="{{type}}" name="{{name}}" class="input-xlarge"
+        placeholder="{{placeholder}}">
+    </div>
 </div>
 
-{% endmacro %}
+{%endmacro%}
+{%macro render_firld(field)%}
 
-
-
-
-
-
-{% macro render_field(field) %}
-
-<div class="mb-3">
-    <label for="{{ name }}" class="form-label">{{placeholder}}</label>
-    {{ field.label }} {{ field(**kwargs)|safe }}
+<div class="control-group">
+    <div class="controls">
+        {{field.label}}
+        {{field(**kwargs)|safe}}
+    </div>
 </div>
-
 {% if field.errors %}
-    <ul class="text-danger">
+    <ul>
         {% for error in field.errors %}
-        <li>{{ error }}</li>
+            <li style="color: red">{{ error }}</li>
         {% endfor %}
-    </ul> 
+    </ul>
 {% endif %}
-
-{% endmacro %}
+{%endmacro%}
