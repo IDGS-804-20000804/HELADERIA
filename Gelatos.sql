@@ -26,9 +26,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `usuario` (
   `id_usuario` INT AUTO_INCREMENT PRIMARY KEY,
   `correo` VARCHAR(255),
-  `contrasenia` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `contrasenia` VARCHAR(255)
 );
 
 CREATE TABLE `rol_usuario` (
@@ -48,13 +46,11 @@ CREATE TABLE `persona` (
   `numero_exterior` INT,
   `calle` VARCHAR(255),
   `colonia` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `estatus` BOOLEAN
 );
 
 CREATE TABLE `cliente` (
   `id_cliente` INT AUTO_INCREMENT PRIMARY KEY,
-  `estatus` boolean,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
@@ -70,7 +66,6 @@ CREATE TABLE `proveedor` (
 
 CREATE TABLE `empleado` (
   `id_empleado` INT AUTO_INCREMENT PRIMARY KEY,
-  `estatus` boolean,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
@@ -291,7 +286,14 @@ INSERT INTO detalle_almacen_stock (cantidad, fk_almacen, fk_stock)
 VALUES (1, 6, 1);
 -- Receta = 5Azucar - 3Leche - 2Fresa
 
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Administrador');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Vendedor');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Repartidor');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Comprador');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Cliente');
 
-SELECT * FROM almacen a
+/* SELECT * FROM almacen a
 INNER JOIN materia_prima mp
-ON mp.id_materia_prima = a.fk_materia_prima;
+ON mp.id_materia_prima = a.fk_materia_prima;*/
+
+SET SQL_SAFE_UPDATES=0;
