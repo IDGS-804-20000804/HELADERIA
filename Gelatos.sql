@@ -61,6 +61,7 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `proveedor` (
   `id_proveedor` INT AUTO_INCREMENT PRIMARY KEY,
+  `correo` VARCHAR(255),
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_persona` INT
@@ -103,6 +104,8 @@ CREATE TABLE `receta` (
   `id_receta` INT AUTO_INCREMENT PRIMARY KEY,
   `nombre` VARCHAR(255),
   `cantidad` INT,
+  `precio` FLOAT,
+  `ruta_imagen` VARCHAR(255),
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME
 );
@@ -253,9 +256,6 @@ INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Comprador');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Cliente');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Gerente');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Productor');
-
-
-
 
 /* SELECT * FROM almacen a
 INNER JOIN materia_prima mp
