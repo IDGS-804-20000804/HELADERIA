@@ -148,13 +148,15 @@ CALL actualizar_empleado('Pepe','Pepa','Sánchez','4771234567','37287',110,NULL,
 DROP PROCEDURE IF EXISTS eliminar_empleado;
 DELIMITER $$
 CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
-									IN iid_persona INT
+									IN iid_persona INT,             -- 1
+                                    IN ifecha_eliminacion DATETIME  -- 2
 				)
 	BEGIN
-		UPDATE persona SET estatus = 0 
+		UPDATE persona SET  estatus = 0,
+                            fecha_eliminacion = ifecha_eliminacion 
         WHERE id_persona = iid_persona;
     END
 $$
 DELIMITER ;
 
-CALL eliminar_empleado(3);
+CALL eliminar_empleado(3,'2023-04-07');
