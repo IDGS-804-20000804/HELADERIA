@@ -1,13 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
-from models.empleados.Empleados import Empleados
 
-empleados = Blueprint('rutes', __name__)
 
-@empleados.route('/empleados')
-def empleado():
-     form = Empleados(request.form)
-     return render_template('empleados.html',form=form)
+compras = Blueprint('compras', __name__)
+
+@compras.route('/compras')
+def compra():
+     return render_template('compras.html')
 
 # @empleados.route('/empleados',method=["POST"])
 # def registro():

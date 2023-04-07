@@ -1,5 +1,6 @@
 {%extends 'main.html'%}
 {%block content%}
+{%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado" onclick="limpiar();"><strong>Agregar</strong></button>
@@ -44,59 +45,69 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
-                            <div > 
-                                <input id="txtCodigoEmpleado" type="hidden"> 
+                        <form name="sent" action="/empleado" id="form1" method="POST">
+                            <div hidden> 
+                                {{render_firld(form.id_persona,class='form-control')}} 
                             </div>
-                            <div > 
-                                <input id="txtCodigoPersona" type="hidden"> 
+                            <div hidden> 
+                                {{render_firld(form.id_empleado,class='form-control')}}
                             </div>
-                            <div > 
-                                <input id="txtCodigoUsuario" type="hidden"> 
+                            <div hidden> 
+                                {{render_firld(form.id_usuario,class='form-control')}}
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
                                 <label>Datos Personales</label>
                             </div>
                             <div class="row">
-                                <div class="col-4">
-                                    <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" />
-                                </div>
-                                <div class="col-4">
-                                    <label for="txtApellidoPaterno" class="form-label">Apellido Paterno<span class="text-danger">*</span></label>
-                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" />
-                                </div>
-                                <div class="col-4">
-                                    <label for="txtApellidoMaterno" class="form-label">Apellido Materno <span>(Opcional)</span></label>
-                                    <input id="txtApellidoMaterno" type="text" class="form-control" style="background: #F4F6F6;" > <br>
+                                <div class="col-6">
+                                    <!-- <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
+                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" /> -->
+                                    {{render_firld(form.nombre,class='form-control')}}
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtTelefono" class="form-label">Tel&eacute;fono<span class="text-danger">*</span></label>
-                                    <input id="txtTelefono" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtApellidoPaterno" class="form-label">Apellido Paterno<span class="text-danger">*</span></label>
+                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" /> -->
+                                    {{render_firld(form.apaterno,class='form-control')}}
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtCorreo" class="form-label">Correo<span class="text-danger">*</span></label>
-                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtApellidoMaterno" class="form-label">Apellido Materno <span>(Opcional)</span></label>
+                                    <input id="txtApellidoMaterno" type="text" class="form-control" style="background: #F4F6F6;" >  -->
+                                    {{render_firld(form.amaterno,class='form-control')}}
+                                    <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtCalle" class="form-label">Calle<span class="text-danger">*</span></label>
-                                    <input id="txtCalle" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtTelefono" class="form-label">Tel&eacute;fono<span class="text-danger">*</span></label>
+                                    <input id="txtTelefono" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.telefono,class='form-control')}}
+                                    <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
-                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtCorreo" class="form-label">Correo<span class="text-danger">*</span></label>
+                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.calle,class='form-control')}}
+                                    <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtNumero" class="form-label">Numero<span class="text-danger">*</span></label>
-                                    <input id="txtNumero" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtCalle" class="form-label">Calle<span class="text-danger">*</span></label>
+                                    <input id="txtCalle" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.colonia,class='form-control')}}
+                                    <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtCP" class="form-label">Codigo Postal<span class="text-danger">*</span></label>
-                                    <input id="txtCP" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
+                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.numero_exterior,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtNumero" class="form-label">Numero<span class="text-danger">*</span></label>
+                                    <input id="txtNumero" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.numero_interior,class='form-control')}}
+                                    <br>
                                 </div>
                             </div>
-                            <div style="color:#CA9F8B;" class="mt-4">
+                            <!-- <div style="color:#CA9F8B;" class="mt-4">
                                 <i class="fa fa-address-book"></i>
                                 <label>Datos de Empleado</label>
                             </div>
@@ -109,33 +120,30 @@
                                     <label for="txtFechaA" class="form-label">Fecha actualización<span class="text-danger">*</span></label>
                                     <input id="txtFechaA" type="text" class="form-control" style="background: #F4F6F6;"> <br>
                                 </div>
-                            </div>
+                            </div> -->
                             <div style="color:#CA9F8B;" class="mt-4">
                                 <i class="fa fa-lock"></i>
                                 <label>Datos de Seguridad</label>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
-                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <!-- <label for="txtCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
+                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.correo,class='form-control')}}
+                                    <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtContrasenia" class="form-label">Contraseña<span class="text-danger">*</span></label>
-                                    <div class="input-group mb-6">
-                                        <input id="txtContrasenia" type="password" class="form-control" style="background: #F4F6F6;">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="mostrarContrasena();"><i class="fa fa-eye" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
+                                        <!-- <input id="txtContrasenia" type="password" class="form-control" style="background: #F4F6F6;"> -->
+                                        {{render_firld(form.contrasenia,class='form-control',type='password')}}
                                 </div>
                                 <div class="col-4"></div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
                                 <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-info">
-                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
-                                    <button class="btn btn-outline-success mx-2" >
+                                    <button class="btn btn-outline-success mx-2">
                                         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
