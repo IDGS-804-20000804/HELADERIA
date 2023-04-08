@@ -1,15 +1,15 @@
-from decouple import config
+# from decouple import config
 
-class Config(object):
-    SECRET_KEY = 'MY_SECRET_KEY'
-    SESSION_COOKIES_SECURE = False
+# class Config(object):
+#     SECRET_KEY = 'MY_SECRET_KEY'
+#     SESSION_COOKIES_SECURE = False
 
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{0}:{1}@{2}:{3}/{4}'.format(config('MYSQL_USER'), config('MYSQL_PASSWORD'), config('MYSQL_PORT'), config('MYSQL_HOST'), config('MYSQL_DB'))
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+# class DevelopmentConfig(Config):
+#     DEBUG = True
+#     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{0}:{1}@{2}:{3}/{4}'.format(config('MYSQL_USER'), config('MYSQL_PASSWORD'), config('MYSQL_PORT'), config('MYSQL_HOST'), config('MYSQL_DB'))
+#     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-# import os
+# # import os
 # from sqlalchemy import create_engine
 
 # class Config(object):

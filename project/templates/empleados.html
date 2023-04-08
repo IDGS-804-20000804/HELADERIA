@@ -25,7 +25,23 @@
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyEmpleados" style="background: #e2e2e0;">
+                    <tbody  style="background: #e2e2e0;">
+                        {% for empleados in empleados %}
+                        <tr>
+                            <td>{{empleados[6]}} {{empleados[7]}} {{empleados[8]}}</td>
+                            <td>{{empleados[1]}}</td>
+                            <td>{{empleados[9]}}</td>
+                            <td>{{empleados[13]}} {{empleados[14]}} {{empleados[11]}} {{empleados[12]}}</td>
+                            <td>
+                                {# Pasar el id (lo que hay en juego[0] #}
+                                <a class="button is-info">Editar</a>
+                            </td>
+                            <td>
+                                <a class="button is-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>
@@ -45,7 +61,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="/empleados" id="form1" method="POST">
+                        <form name="sent" action="empleado" id="form1" method="POST">
                             <div hidden> 
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>
@@ -135,6 +151,18 @@
                                 <div class="col-6">
                                         <!-- <input id="txtContrasenia" type="password" class="form-control" style="background: #F4F6F6;"> -->
                                         {{render_firld(form.contrasenia,class='form-control',type='password')}}
+                                </div>
+                                <div class="col-12">
+                                    <label for="txtCorreo" class="form-label">Selecciona el rol</label>
+                                </div><br>
+                                <div class="col-12 mx-4 text-center" style="text-align: justify;">
+                                        <!-- <div class="clearBoth"></div>
+                                        {{ render_firld(form.rol,class="radio-inline") }}
+                                        <div class="clearBoth"></div> -->
+                                        {% for subfield in form.rol %} 
+                                        {{ subfield(class="form-check-input") }} 
+                                        {{ subfield.label(class="form-check-label me-4") }} 
+                                        {% endfor %}<br><br>
                                 </div>
                                 <div class="col-4"></div>
                                 <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>

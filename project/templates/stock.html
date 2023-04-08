@@ -17,10 +17,8 @@
                 <table class="table table-hover" id="datos">
                     <thead>
                         <tr>
-                            <th style="border: 1px solid black; text-align: center;">Nombre</th>
+                            <th style="border: 1px solid black; text-align: center;">Receta</th>
                             <th style="border: 1px solid black;  text-align: center;">Cantidad</th> 
-                            <th style="border: 1px solid black; text-align: center;">Fecha Inicio</th>
-                            <th style="border: 1px solid black; text-align: center;">Fecha Fin</th>
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
                         </tr>
                     </thead>
@@ -46,26 +44,24 @@
                     <div class="modal-body">
                         <div class="form">
                             <div > 
-                                <input id="txtCodigoEmpleado" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoPersona" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoUsuario" type="hidden"> 
+                                <input id="txtCodigoStock" type="hidden"> 
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
-                                <label>Datos Materia Prima</label>
+                                <label>Datos Stock</label>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" />
+                                    <label for="txtEmpleado" class="form-label">Receta</label>
+                                    <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
+                                    <select class="form-control">
+                                        <option>Selecciona una receta</option>
+                                        <option value="1"></option>
+                                    </select>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtApellidoPaterno" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" />
+                                    <label for="txtNumeroR" class="form-label">Número de recetas ha realizar</label>
+                                    <input id="txtNumeroR" type="text" class="form-control" />
                                 </div>
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >

@@ -1,6 +1,14 @@
-from wtforms import Form, StringField, IntegerField, validators
+from wtforms import Form, StringField, IntegerField, validators,RadioField
 
 class Empleados(Form):
+    opciones_tolerancia = [("Vendedor", "Vendedor"), 
+                           ("Repartidor", "Repartidor"), 
+                           ("Comprador", "Comprador"),
+                           ("Cliente", "Cliente"),
+                           ("Gerente", "Gerente"),
+                            ("Productor", "Productor"),
+                            ("Gerente", "Gerente"),
+                           ]
     id_persona = IntegerField('idPersona')
     id_empleado = IntegerField('idEmpleado')
     id_usuario = IntegerField('idPersona')
@@ -26,4 +34,5 @@ class Empleados(Form):
         validators.DataRequired(message='Este campo es requerido')])
     contrasenia = StringField('Contraseña', [
         validators.DataRequired(message='Este campo es requerido')])
+    rol = RadioField("Rol", choices=opciones_tolerancia, validators=[validators.DataRequired()])
    
