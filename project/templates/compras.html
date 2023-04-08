@@ -17,10 +17,10 @@
                 <table class="table table-hover" id="datos">
                     <thead>
                         <tr>
-                            <th style="border: 1px solid black; text-align: center;">Nombre</th>
-                            <th style="border: 1px solid black;  text-align: center;">Cantidad</th> 
+                            <th style="border: 1px solid black; text-align: center;">Provedor</th>
+                            <th style="border: 1px solid black;  text-align: center;">Materia Prima</th> 
+                            <th style="border: 1px solid black; text-align: center;">Cantidad</th>
                             <th style="border: 1px solid black; text-align: center;">Precio</th>
-                            <th style="border: 1px solid black; text-align: center;">Total</th>
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
                         </tr>
                     </thead>
@@ -40,42 +40,43 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
-                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Compra</b></span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form">
                             <div > 
-                                <input id="txtCodigoEmpleado" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoPersona" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoUsuario" type="hidden"> 
+                                <input id="txtCodigoCompras" type="hidden"> 
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
-                                <label>Datos Materia Prima</label>
+                                <label>Datos Compra</label>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" />
+                                    <label for="txtCantidad" class="form-label">Provedor<span class="text-danger">*</span></label>
+                                    <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
+                                    <select class="form-control">
+                                        <option>Selecciona un Provedor</option>
+                                        <option value="1">Kg</option>
+                                    </select>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtApellidoPaterno" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" />
+                                    <label for="txtMateriaP" class="form-label">Materia Prima<span class="text-danger">*</span></label>
+                                    <input id="txtMateriaP" type="text" class="form-control"  />
+                                </div>
+                                <div class="col-3">
+                                    <label for="txtCantidad" class="form-label">Cantidad<span></span></label>
+                                    <input id="txtCantidad" type="text" class="form-control"  > <br>
+                                </div>
+                                <div class="col-3">
+                                    <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
+                                    <input id="txtPrecio" type="text" class="form-control" > <br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtApellidoMaterno" class="form-label">Precio<span></span></label>
-                                    <input id="txtApellidoMaterno" type="text" class="form-control" style="background: #F4F6F6;" > <br>
+                                    <label for="txtFechaC" class="form-label">Fecha Caducidad <span class="text-danger">*</span></label>
+                                    <input id="txtFechaC" type="text" class="form-control" > <br>
                                 </div>
-                                <div class="col-6">
-                                    <label for="txtTelefono" class="form-label">Provedor<span class="text-danger">*</span></label>
-                                    <input id="txtTelefono" type="text" class="form-control" style="background: #F4F6F6;"> <br>
-                                </div>
-                                
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >
                                         <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>

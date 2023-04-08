@@ -18,8 +18,7 @@
                     <thead>
                         <tr>
                             <th style="border: 1px solid black; text-align: center;">Nombre</th>
-                            <th style="border: 1px solid black;  text-align: center;">Cantidad</th> 
-                            <th style="border: 1px solid black; text-align: center;">Caducidad</th>
+                            <th style="border: 1px solid black;  text-align: center;">Unidad de Medida</th> 
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
                         </tr>
                     </thead>
@@ -52,27 +51,18 @@
                                 <label>Datos Materia</label>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-6">
                                     <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" />
-                                </div>
-                                <div class="col-4">
-                                    <label for="txtCantidad" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtCantidad" type="text" class="form-control" style="background: #F4F6F6;" />
-                                </div>
-                                <div class="col-4">
-                                    <label for="txtCaducidad" class="form-label">Caducidad<span class="text-danger">*</span></label>
-                                    <input id="txtCaducidad" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <input id="txtNombre" type="text" class="form-control" />
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtfechaCreacion" class="form-label">Fecha Creación<span class="text-danger">*</span></label>
-                                    <input id="txtfechaCreacion" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <label for="txtCantidad" class="form-label">Unidad de medida<span class="text-danger">*</span></label>
+                                    <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
+                                    <select class="form-control">
+                                        <option>Unidad de Medida</option>
+                                        <option value="1">Kg</option>
+                                    </select>
                                 </div>
-                                <div class="col-6">
-                                    <label for="txtFechaActualizacion" class="form-label">Fecha Actualizacion<span class="text-danger">*</span></label>
-                                    <input id="txtFechaActualizacion" type="text" class="form-control" style="background: #F4F6F6;"> <br>
-                                </div>
-                                
                             </div>
                                 <div class="col-4"></div>
                                 <div class="pt-3 pb-3 text-center">
