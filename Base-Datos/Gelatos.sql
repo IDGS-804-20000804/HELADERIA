@@ -45,7 +45,7 @@ CREATE TABLE `persona` (
   `id_persona` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nombre` VARCHAR(255) NOT NULL,
   `apaterno` VARCHAR(255) NOT NULL,
-  `amaterno` VARCHAR(255) NOT NULL,
+  `amaterno` VARCHAR(255),
   `telefono` VARCHAR(255) NOT NULL,
   `codigo_postal` INT NOT NULL,
   `numero_exterior` VARCHAR(255) NOT NULL,
