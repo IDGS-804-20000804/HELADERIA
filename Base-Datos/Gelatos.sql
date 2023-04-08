@@ -2,162 +2,165 @@ DROP DATABASE IF EXISTS gelatos;
 CREATE DATABASE gelatos;
 USE gelatos;
 CREATE TABLE `unidad_medida` (
-  `id_unidad_medida` INT AUTO_INCREMENT PRIMARY KEY,
-  `descripcion` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `id_unidad_medida` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `descripcion` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `materia_prima` (
-  `id_materia_prima` INT AUTO_INCREMENT PRIMARY KEY,
-  `nombre` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_unidad_medida` INT
+  `id_materia_prima` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_unidad_medida` INT NOT NULL
 );
 
 CREATE TABLE `roles` (
-  `id_rol` INT AUTO_INCREMENT PRIMARY KEY,
-  `nombre` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `id_rol` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `usuario` (
-  `id_usuario` INT AUTO_INCREMENT PRIMARY KEY,
-  `correo` VARCHAR(255),
-  `contrasenia` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `id_usuario` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `correo` VARCHAR(255) NOT NULL,
+  `contrasenia` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `rol_usuario` (
-  `id_rol_usuario` INT AUTO_INCREMENT PRIMARY KEY,
-  `fk_usuario` INT,
-  `fk_rol` INT
+  `id_rol_usuario` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fk_usuario` INT NOT NULL,
+  `fk_rol` INT NOT NULL
 );
 
 CREATE TABLE `persona` (
-  `id_persona` INT AUTO_INCREMENT PRIMARY KEY,
-  `nombre` VARCHAR(255),
-  `apaterno` VARCHAR(255),
-  `amaterno` VARCHAR(255),
-  `telefono` VARCHAR(255),
-  `codigo_postal` INT,
+  `id_persona` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `apaterno` VARCHAR(255) NOT NULL,
+  `amaterno` VARCHAR(255) NOT NULL,
+  `telefono` VARCHAR(255) NOT NULL,
+  `codigo_postal` INT NOT NULL,
+  `numero_exterior` VARCHAR(255) NOT NULL,
   `numero_interior` VARCHAR(255),
-  `numero_exterior` VARCHAR(255),
-  `calle` VARCHAR(255),
-  `colonia` VARCHAR(255),
-  `estatus` BOOLEAN,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fecha_eliminacion` DATETIME
+  `calle` VARCHAR(255) NOT NULL,
+  `colonia` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `cliente` (
-  `id_cliente` INT AUTO_INCREMENT PRIMARY KEY,
-  `fk_persona` INT,
-  `fk_usuario` INT
+  `id_cliente` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fk_persona` INT NOT NULL,
+  `fk_usuario` INT NOT NULL
 );
 
 CREATE TABLE `proveedor` (
-  `id_proveedor` INT AUTO_INCREMENT PRIMARY KEY,
-  `correo` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_persona` INT
+  `id_proveedor` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `correo` VARCHAR(255) NOT NULL,
+  `fk_persona` INT NOT NULL
 );
 
 CREATE TABLE `empleado` (
-  `id_empleado` INT AUTO_INCREMENT PRIMARY KEY,
-  `fk_persona` INT,
-  `fk_usuario` INT
+  `id_empleado` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fk_persona` INT NOT NULL,
+  `fk_usuario` INT NOT NULL
 );
 
 CREATE TABLE `compra` (
-  `id_compra` INT AUTO_INCREMENT PRIMARY KEY,
-  `total` FLOAT,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_proveedor` INT,
-  `fk_empleado` INT
+  `id_compra` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `total` FLOAT NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_proveedor` INT NOT NULL,
+  `fk_empleado` INT NOT NULL
 );
 
 CREATE TABLE `detalle_compra` (
-  `id_detalle_compra` INT AUTO_INCREMENT PRIMARY KEY,
-  `cantidad` FLOAT,
-  `precio` FLOAT,
-  `fk_almacen` INT,
-  `fk_compra` INT
+  `id_detalle_compra` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cantidad` FLOAT NOT NULL,
+  `precio` FLOAT NOT NULL,
+  `fk_almacen` INT NOT NULL,
+  `fk_compra` INT NOT NULL
 );
 
 CREATE TABLE `almacen` (
-  `id_almacen` INT AUTO_INCREMENT PRIMARY KEY,
-  `cantidad` INT,
-  `caducidad` DATE,
-  `estatus` BOOLEAN,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_materia_prima` INT
+  `id_almacen` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cantidad` INT NOT NULL,
+  `caducidad` DATETIME NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_materia_prima` INT NOT NULL
 );
 
 CREATE TABLE `receta` (
-  `id_receta` INT AUTO_INCREMENT PRIMARY KEY,
-  `nombre` VARCHAR(255),
-  `cantidad` INT,
-  `precio` FLOAT,
-  `ruta_imagen` VARCHAR(255),
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME
+  `id_receta` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `cantidad` INT NOT NULL,
+  `precio` FLOAT NOT NULL,
+  `ruta_imagen` VARCHAR(255) NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `detalle_materia_prima_receta` (
-  `id_detalle_materia_prima_receta` INT AUTO_INCREMENT PRIMARY KEY,
-  `fk_receta` INT,
-  `cantidad` FLOAT,
-  `fk_materia_prima` INT
+  `id_detalle_materia_prima_receta` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fk_receta` INT NOT NULL,
+  `cantidad` FLOAT NOT NULL,
+  `fk_materia_prima` INT NOT NULL
 );
 
 CREATE TABLE `detalle_almacen_stock` (
-  `id_detalle_almacen_stock` INT AUTO_INCREMENT PRIMARY KEY,
-  `cantidad` FLOAT,
-  `fk_almacen` INT,
-  `fk_stock` INT
+  `id_detalle_almacen_stock` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cantidad` FLOAT NOT NULL,
+  `fk_almacen` INT NOT NULL,
+  `fk_stock` INT NOT NULL
 );
 
 CREATE TABLE `stock` (
-  `id_stock` INT AUTO_INCREMENT PRIMARY KEY,
-  `caducidad` VARCHAR(255),
-  `estatus` BOOLEAN,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_receta` INT
+  `id_stock` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `caducidad` VARCHAR(255) NOT NULL,
+  `precio` FLOAT NOT NULL,
+  `estatus` BOOLEAN DEFAULT TRUE NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_receta` INT NOT NULL
 );
 
 CREATE TABLE `venta` (
-  `id_venta` INT AUTO_INCREMENT PRIMARY KEY,
-  `total` FLOAT,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_cliente` INT
+  `id_venta` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `total` FLOAT NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_cliente` INT NOT NULL
 );
 
 CREATE TABLE `detalle_venta` (
-  `id_detalle_venta` INT AUTO_INCREMENT PRIMARY KEY,
-  `cantidad` FLOAT,
-  `precio` FLOAT,
-  `fk_stock` INT,
-  `fk_venta` INT
+  `id_detalle_venta` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cantidad` FLOAT NOT NULL,
+  `precio` FLOAT NOT NULL,
+  `fk_stock` INT NOT NULL,
+  `fk_venta` INT NOT NULL
 );
 
 CREATE TABLE `envio` (
-  `id_envio` INT AUTO_INCREMENT PRIMARY KEY,
-  `fecha_entrega` DATE,
-  `entregado` boolean,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fk_venta` INT,
-  `fk_empleado` INT
+  `id_envio` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fecha_entrega` DATETIME NOT NULL,
+  `entregado` BOOLEAN NOT NULL DEFAULT FALSE,
+  `fecha_creacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT NOW(),
+  `fk_venta` INT NOT NULL,
+  `fk_empleado` INT NOT NULL
 );
 
 ALTER TABLE `materia_prima` ADD FOREIGN KEY (`fk_unidad_medida`) REFERENCES `unidad_medida` (`id_unidad_medida`);
@@ -245,7 +248,7 @@ INSERT INTO materia_prima ( nombre, fk_unidad_medida) -- 13
 VALUES ('Colorante cafe', 6);
 
 -- Helado de fresa = 5 Azucar (1) - 3 Leche (2) - 2 Fresa (3) - 1 Hielo (4) - 3 Crema (5)
-INSERT INTO receta (nombre, cantidad) VALUES('Helado de fresa', 20); -- 1
+INSERT INTO receta (nombre, precio, ruta_imagen, cantidad) VALUES('Helado de fresa', 1000, 'uploads/1', 20); -- 1
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 1, 5, 1 );
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
@@ -258,7 +261,7 @@ INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 1, 3, 5 );
 
 -- Helado de oreo = 5 Azucar (1) - 3 Leche (2) - 20 Oreo (8) - 1 Hielo (4) - 3 Crema (5)
-INSERT INTO receta (nombre, cantidad) VALUES('Helado de oreo', 20); -- 2
+INSERT INTO receta (nombre, precio, ruta_imagen, cantidad) VALUES('Helado de oreo', 2000, 'uploads/2',  20); -- 2
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 2, 5, 1 );
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
@@ -271,7 +274,7 @@ INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 2, 3, 5 );
 
 -- Helado de vainilla = 5 Azucar (1) - 6 Leche (2) - 1 Hielo (4) - 8 Vainilla (6) - 3 Colorante amarillo (10) - 3 Crema (5)
-INSERT INTO receta (nombre, cantidad) VALUES('Helado de vainilla', 20); -- 3
+INSERT INTO receta (nombre, precio, ruta_imagen, cantidad) VALUES('Helado de vainilla', 3000, 'uploads/3', 20); -- 3
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 3, 5, 1 );
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
@@ -285,13 +288,41 @@ INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 INSERT INTO detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
 	VALUES ( 3, 3, 5 );
 
-INSERT INTO persona VALUES ();
-INSERT INTO proveedor (fk_persona) VALUES (1);
+INSERT INTO persona (nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, estatus)
+VALUES ('Proveedor', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia', true);
+INSERT INTO persona (nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, estatus)
+VALUES ('Empleado', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia', true);
+INSERT INTO persona (nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, estatus)
+VALUES ('Cliente', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia', true);
 
-INSERT INTO compra ( total, fk_proveedor ) VALUES (800, 1);
-INSERT INTO compra ( total, fk_proveedor ) VALUES (1600, 1);
-INSERT INTO compra ( total, fk_proveedor ) VALUES (1200, 1);
+INSERT INTO usuario (correo, contrasenia)
+VALUES ('Cliente_Ivan', '1234');
+INSERT INTO usuario (correo, contrasenia)
+VALUES ('Empleado_Ivan', '1234');
 
+INSERT INTO roles (nombre) VALUES ('Administrador');
+INSERT INTO roles (nombre) VALUES ('Cliente');
+INSERT INTO roles (nombre) VALUES ('Vendedor');
+INSERT INTO roles (nombre) VALUES ('Repartidor');
+INSERT INTO roles (nombre) VALUES ('Comprador');
+INSERT INTO roles (nombre) VALUES ('Gerente');
+INSERT INTO roles (nombre) VALUES ('Productor');
+
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (1,2);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,1);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,3);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,4);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,5);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,6);
+INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (2,7);
+
+INSERT INTO proveedor (correo, fk_persona) VALUES ('ivan_proveedor@gmail.com', 1);
+INSERT INTO cliente (fk_persona, fk_usuario) VALUES (2, 1);
+INSERT INTO empleado (fk_persona, fk_usuario) VALUES (3, 2);
+
+INSERT INTO compra ( total, fk_proveedor, fk_empleado ) VALUES (800, 1, 1);
+INSERT INTO compra ( total, fk_proveedor, fk_empleado ) VALUES (1600, 1, 1);
+INSERT INTO compra ( total, fk_proveedor, fk_empleado ) VALUES (1200, 1, 1);
 
 INSERT INTO almacen (cantidad, caducidad, estatus, fk_materia_prima) -- 1
 VALUES (5, '2023-04-30', true, 1); -- 5 Azucar id1
@@ -334,53 +365,52 @@ VALUES (20, '2023-03-15', false, 8); -- 20 Galleta oreo (8)
 INSERT INTO almacen (cantidad, caducidad, estatus, fk_materia_prima) -- 20
 VALUES (30, '2023-04-30', true, 8); -- 30 Galleta oreo (8)
 
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 1, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 2, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 3, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 9, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 11, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 13, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 16, 1);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (100, 18, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 1, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 2, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 3, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 9, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 11, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 13, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 16, 1);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 100, 18, 1);
 
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 4, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 5, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 6, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 10, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 12, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 14, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 17, 2);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (200, 19, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 4, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 5, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 6, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 10, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 12, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 14, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 17, 2);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 200, 19, 2);
 
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (300, 7, 3);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (300, 8, 3);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (300, 15, 3);
-INSERT INTO detalle_compra ( precio, fk_almacen, fk_compra )
-VALUES (300, 20, 3);
-
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 300, 7, 3);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 300, 8, 3);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 300, 15, 3);
+INSERT INTO detalle_compra ( cantidad, precio, fk_almacen, fk_compra )
+VALUES (1, 300, 20, 3);
 
 -- Helado de fresa = 5 Azucar (1) - 3 Leche (2) - 2 Fresa (3) - 1 Hielo (4) - 3 Crema (5)
-INSERT INTO stock (caducidad, fk_receta) -- 1
-VALUES ('2023-05-30', 1);
+INSERT INTO stock (caducidad, estatus, precio, fk_receta) -- 1
+VALUES ('2023-05-30', true, 100, 1);
 INSERT INTO detalle_almacen_stock (cantidad, fk_almacen, fk_stock)
 VALUES (5, 1, 1);
 UPDATE almacen SET estatus = false WHERE id_almacen = 1;
@@ -400,8 +430,8 @@ VALUES (3, 11, 1);
 -- NO EXISTE COLORANTE AMARILLO POR LO TANTO NO SE PUEDE HACER
 
 -- Helado de oreo (2) = 5 Azucar (1) - 3 Leche (2) - 20 Oreo (8) - 1 Hielo (4) - 3 Crema (5)
-INSERT INTO stock (caducidad, fk_receta) -- 2
-VALUES ('2023-05-30', 2);
+INSERT INTO stock (caducidad, estatus, precio, fk_receta) -- 2
+VALUES ('2023-05-30', true, 100, 2);
 INSERT INTO detalle_almacen_stock (cantidad, fk_almacen, fk_stock)
 VALUES (5, 4, 2);
 UPDATE almacen SET estatus = false WHERE id_almacen = 4;
@@ -416,16 +446,12 @@ VALUES (1, 9, 2);
 INSERT INTO detalle_almacen_stock (cantidad, fk_almacen, fk_stock)
 VALUES (3, 11, 2);
 
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Administrador');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Vendedor');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Repartidor');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Comprador');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Cliente');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Gerente');
-INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Productor');
-
-/* SELECT * FROM almacen a
-INNER JOIN materia_prima mp
-ON mp.id_materia_prima = a.fk_materia_prima;*/
+INSERT INTO roles (nombre) VALUES ('Administrador');
+INSERT INTO roles (nombre) VALUES ('Vendedor');
+INSERT INTO roles (nombre) VALUES ('Repartidor');
+INSERT INTO roles (nombre) VALUES ('Comprador');
+INSERT INTO roles (nombre) VALUES ('Cliente');
+INSERT INTO roles (nombre) VALUES ('Gerente');
+INSERT INTO roles (nombre) VALUES ('Productor');
 
 SET SQL_SAFE_UPDATES=0;
