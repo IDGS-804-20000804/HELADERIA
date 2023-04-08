@@ -26,7 +26,9 @@ CREATE TABLE `roles` (
 CREATE TABLE `usuario` (
   `id_usuario` INT AUTO_INCREMENT PRIMARY KEY,
   `correo` VARCHAR(255),
-  `contrasenia` VARCHAR(255)
+  `contrasenia` VARCHAR(255),
+  `fecha_creacion` DATETIME,
+  `fecha_actualizacion` DATETIME
 );
 
 CREATE TABLE `rol_usuario` (
@@ -42,23 +44,25 @@ CREATE TABLE `persona` (
   `amaterno` VARCHAR(255),
   `telefono` VARCHAR(255),
   `codigo_postal` INT,
-  `numero_interior` INT,
-  `numero_exterior` INT,
+  `numero_interior` VARCHAR(255),
+  `numero_exterior` VARCHAR(255),
   `calle` VARCHAR(255),
   `colonia` VARCHAR(255),
-  `estatus` BOOLEAN
+  `estatus` BOOLEAN,
+  `fecha_creacion` DATETIME,
+  `fecha_actualizacion` DATETIME,
+  `fecha_eliminacion` DATETIME
 );
 
 CREATE TABLE `cliente` (
   `id_cliente` INT AUTO_INCREMENT PRIMARY KEY,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
   `fk_usuario` INT
 );
 
 CREATE TABLE `proveedor` (
   `id_proveedor` INT AUTO_INCREMENT PRIMARY KEY,
+  `correo` VARCHAR(255),
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_persona` INT
@@ -66,8 +70,6 @@ CREATE TABLE `proveedor` (
 
 CREATE TABLE `empleado` (
   `id_empleado` INT AUTO_INCREMENT PRIMARY KEY,
-  `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
   `fk_persona` INT,
   `fk_usuario` INT
 );
@@ -77,7 +79,7 @@ CREATE TABLE `compra` (
   `total` FLOAT,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
-  `fk_proveedor` INT
+  `fk_proveedor` INT,
   `fk_empleado` INT
 );
 
@@ -103,6 +105,8 @@ CREATE TABLE `receta` (
   `id_receta` INT AUTO_INCREMENT PRIMARY KEY,
   `nombre` VARCHAR(255),
   `cantidad` INT,
+  `precio` FLOAT,
+  `ruta_imagen` VARCHAR(255),
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME
 );
@@ -124,6 +128,7 @@ CREATE TABLE `detalle_almacen_stock` (
 CREATE TABLE `stock` (
   `id_stock` INT AUTO_INCREMENT PRIMARY KEY,
   `caducidad` VARCHAR(255),
+  `estatus` BOOLEAN,
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_receta` INT
@@ -417,6 +422,7 @@ INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Repartidor');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Comprador');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Cliente');
 INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Gerente');
+INSERT INTO `gelatos`.`roles` (`nombre`) VALUES ('Productor');
 
 /* SELECT * FROM almacen a
 INNER JOIN materia_prima mp
