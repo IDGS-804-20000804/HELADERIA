@@ -1,5 +1,6 @@
 {%extends 'main.html'%}
 {%block content%}
+{%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado" onclick="limpiar();"><strong>Agregar</strong></button>
@@ -42,9 +43,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
-                            <div > 
-                                <input id="txtCodigoStock" type="hidden"> 
+                        <form name="sent" action="/stock" id="form1" method="POST">
+                            <div hidden> 
+                                {{render_firld(form.id_stock,class='form-control')}}
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
@@ -52,16 +53,18 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtEmpleado" class="form-label">Receta</label>
+                                    <!-- <label for="txtEmpleado" class="form-label">Receta</label> -->
                                     <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
-                                    <select class="form-control">
+                                    <!-- <select class="form-control">
                                         <option>Selecciona una receta</option>
                                         <option value="1"></option>
-                                    </select>
+                                    </select> -->
+                                    {{render_firld(form.receta,class='form-control')}}<br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtNumeroR" class="form-label">Número de recetas ha realizar</label>
-                                    <input id="txtNumeroR" type="text" class="form-control" />
+                                    <!-- <label for="txtNumeroR" class="form-label">Número de recetas ha realizar</label>
+                                    <input id="txtNumeroR" type="text" class="form-control" /> -->
+                                    {{render_firld(form.numReceta,class='form-control')}}<br>
                                 </div>
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >
@@ -70,7 +73,7 @@
                                         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

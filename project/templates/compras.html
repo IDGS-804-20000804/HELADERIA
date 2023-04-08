@@ -1,5 +1,6 @@
 {%extends 'main.html'%}
 {%block content%}
+{%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado" onclick="limpiar();"><strong>Agregar</strong></button>
@@ -45,8 +46,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form">
-                            <div > 
-                                <input id="txtCodigoCompras" type="hidden"> 
+                            <div hidden> 
+                                {{render_firld(form.id_compra,class='form-control')}}
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
@@ -54,28 +55,33 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtCantidad" class="form-label">Provedor<span class="text-danger">*</span></label>
+                                    <!-- <label for="txtCantidad" class="form-label">Provedor<span class="text-danger">*</span></label> -->
                                     <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
-                                    <select class="form-control">
+                                    <!-- <select class="form-control">
                                         <option>Selecciona un Provedor</option>
                                         <option value="1">Kg</option>
-                                    </select>
+                                    </select> -->
+                                    {{render_firld(form.provedor,class='form-control')}}<br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtMateriaP" class="form-label">Materia Prima<span class="text-danger">*</span></label>
-                                    <input id="txtMateriaP" type="text" class="form-control"  />
+                                    <!-- <label for="txtMateriaP" class="form-label">Materia Prima<span class="text-danger">*</span></label>
+                                    <input id="txtMateriaP" type="text" class="form-control"  /> -->
+                                    {{render_firld(form.materiaPrima,class='form-control')}}<br>
                                 </div>
                                 <div class="col-3">
-                                    <label for="txtCantidad" class="form-label">Cantidad<span></span></label>
-                                    <input id="txtCantidad" type="text" class="form-control"  > <br>
+                                    <!-- <label for="txtCantidad" class="form-label">Cantidad<span></span></label>
+                                    <input id="txtCantidad" type="text" class="form-control"  > <br> -->
+                                    {{render_firld(form.cantidad,class='form-control')}}<br>
                                 </div>
                                 <div class="col-3">
-                                    <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
-                                    <input id="txtPrecio" type="text" class="form-control" > <br>
+                                    <!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
+                                    <input id="txtPrecio" type="text" class="form-control" > <br> -->
+                                    {{render_firld(form.precio,class='form-control')}}<br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtFechaC" class="form-label">Fecha Caducidad <span class="text-danger">*</span></label>
-                                    <input id="txtFechaC" type="text" class="form-control" > <br>
+                                    <!-- <label for="txtFechaC" class="form-label">Fecha Caducidad <span class="text-danger">*</span></label>
+                                    <input id="txtFechaC" type="text" class="form-control" > <br> -->
+                                    {{render_firld(form.fechaCaducidad,class='form-control')}}<br>
                                 </div>
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >

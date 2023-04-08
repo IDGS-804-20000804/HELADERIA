@@ -1,5 +1,6 @@
 {%extends 'main.html'%}
 {%block content%}
+{%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado" onclick="limpiar();"><strong>Agregar</strong></button>
@@ -42,9 +43,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
-                            <div > 
-                                <input id="txtMateriaPrima" type="hidden"> 
+                        <form name="sent" action="/materiaPrima" id="form1" method="POST">
+                            <div hidden> 
+                                {{render_firld(form.id_unidadMedida,class='form-control')}}
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
@@ -52,26 +53,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" />
+                                    <!-- <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
+                                    <input id="txtNombre" type="text" class="form-control" /> -->
+                                    {{render_firld(form.nombre,class='form-control')}}
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtCantidad" class="form-label">Unidad de medida<span class="text-danger">*</span></label>
+                                    <!-- <label for="txtCantidad" class="form-label">Unidad de medida<span class="text-danger">*</span></label> -->
                                     <!-- <input id="txtCantidad" type="select" class="form-control" style="background: #F4F6F6;" /> -->
-                                    <select class="form-control">
+                                    <!-- <select class="form-control">
                                         <option>Unidad de Medida</option>
                                         <option value="1">Kg</option>
-                                    </select>
+                                    </select> -->
+                                    {{render_firld(form.unidadMedida,class='form-control')}}
                                 </div>
                             </div>
                                 <div class="col-4"></div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >
                                         <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
                                     <button class="btn btn-outline-success mx-2">
                                         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
