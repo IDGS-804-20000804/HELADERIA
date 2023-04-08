@@ -102,12 +102,12 @@ CALL actualizar_proveedor('Daniela','Duran','Diaz','4774567890','37209','134',NU
 DROP PROCEDURE IF EXISTS eliminar_proveedor;
 DELIMITER $$
 CREATE PROCEDURE eliminar_proveedor(	/* Datos Persona */
-									IN iid_persona INT,             -- 1
-                                    IN ifecha_eliminacion DATETIME  -- 2
+									IN iid_persona INT,               -- 1
+									IN ifecha_actualizacion DATETIME  -- 2
 				)
 	BEGIN
 		UPDATE persona SET  estatus = 0,
-							fecha_eliminacion = ifecha_eliminacion
+							fecha_actualizacion = ifecha_actualizacion
         WHERE id_persona = iid_persona;
     END
 $$
