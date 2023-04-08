@@ -78,6 +78,7 @@ CREATE TABLE `compra` (
   `fecha_creacion` DATETIME,
   `fecha_actualizacion` DATETIME,
   `fk_proveedor` INT
+  `fk_empleado` INT
 );
 
 CREATE TABLE `detalle_compra` (
@@ -171,6 +172,8 @@ ALTER TABLE `empleado` ADD FOREIGN KEY (`fk_persona`) REFERENCES `persona` (`id_
 ALTER TABLE `empleado` ADD FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`fk_proveedor`) REFERENCES `proveedor` (`id_proveedor`);
+
+ALTER TABLE `compra` ADD FOREIGN KEY (`fk_empleado`) REFERENCES `empleado` (`id_empleado`);
 
 ALTER TABLE `detalle_compra` ADD FOREIGN KEY (`fk_almacen`) REFERENCES `almacen` (`id_almacen`);
 
