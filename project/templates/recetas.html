@@ -19,7 +19,7 @@
                         <tr>
                             <th style="border: 1px solid black; text-align: center;">Nombre</th>
                             <th style="border: 1px solid black;  text-align: center;">Cantidad</th> 
-                            <th style="border: 1px solid black; text-align: center;">Materia Prima</th>
+                            <th style="border: 1px solid black; text-align: center;">Precio</th>
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
                         </tr>
                     </thead>
@@ -39,19 +39,13 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
-                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Receta</b></span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form">
                             <div > 
-                                <input id="txtCodigoEmpleado" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoPersona" type="hidden"> 
-                            </div>
-                            <div > 
-                                <input id="txtCodigoUsuario" type="hidden"> 
+                                <input id="txtReceta" type="hidden"> 
                             </div>
                             <div style="color:#CA9F8B" class="mt-4">
                                 <i class="fas fa-grin-alt"></i>
@@ -60,30 +54,20 @@
                             <div class="row">
                                 <div class="col-6">
                                     <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" />
+                                    <input id="txtNombre" type="text" class="form-control" /><br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtApellidoPaterno" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" />
-                                </div>
-                            </div>
-                            <div style="color:#CA9F8B;" class="mt-4">
-                                <i class="fa fa-address-book"></i>
-                                <label>Datos de Materia Prima</label>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="txtFechaC" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtFechaC" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <label for="txtCantidad" class="form-label">Cantidad<span class="text-danger">*</span></label>
+                                    <input id="txtCantidad" type="number" class="form-control" /><br>
                                 </div>
                                 <div class="col-6">
-                                    <label for="txtFechaA" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtFechaA" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                    <label for="txtFoto" class="form-label">Foto<span class="text-danger">*</span></label>
+                                    <input id="txtFoto" type="input" class="form-control" />
                                 </div>
-                            </div>
-                            <div style="color:#CA9F8B;" class="mt-4">
-                                <i class="fa fa-lock"></i>
-                                <label>Datos de Seguridad</label>
+                                <div class="col-6">
+                                    <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
+                                    <input id="txtPrecio" type="text" class="form-control" />
+                                </div>
                             </div>
                             <div class="row">
 
