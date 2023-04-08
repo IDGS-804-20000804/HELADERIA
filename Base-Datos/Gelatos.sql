@@ -50,8 +50,7 @@ CREATE TABLE `persona` (
   `colonia` VARCHAR(255),
   `estatus` BOOLEAN,
   `fecha_creacion` DATETIME,
-  `fecha_actualizacion` DATETIME,
-  `fecha_eliminacion` DATETIME
+  `fecha_actualizacion` DATETIME
 );
 
 CREATE TABLE `cliente` (
