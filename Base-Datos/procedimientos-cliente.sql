@@ -13,24 +13,23 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
                                     IN	inumero_exterior VARCHAR(6),   	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
                                     IN	icolonia         VARCHAR(100),    -- 9
-                                    IN ifecha_creacion   DATETIME,        -- 10
                                     
                                     /* Datos de Usuario */
-                                    IN	icorreo   		VARCHAR(100),    -- 11
-                                    IN	icontrasenia    VARCHAR(100),    -- 12
+                                    IN	icorreo   		VARCHAR(100),    -- 10
+                                    IN	icontrasenia    VARCHAR(100),    -- 11
 
                                     /* Valores de Retorno */
-                                    OUT	iid_persona      INT,           -- 13
-                                    OUT	iid_usuario   	 INT,           -- 14
-                                    OUT	iid_cliente      INT            -- 15
+                                    OUT	iid_persona      INT,           -- 12
+                                    OUT	iid_usuario   	 INT,           -- 13
+                                    OUT	iid_cliente      INT            -- 14
 				)                                    
     BEGIN        
     
         -- Insertando los datos de la Persona:
         INSERT INTO persona ( nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, 
-							  numero_exterior, calle, colonia, estatus, fecha_creacion) 
+							  numero_exterior, calle, colonia) 
 					 VALUES ( inombre, iapaterno, iamaterno, itelefono, icodigo_postal, inumero_interior, 
-							  inumero_exterior,  icalle, icolonia, 1, ifecha_creacion);
+							  inumero_exterior,  icalle, icolonia);
         -- Obtenemos el ID de Persona que se generó:
         SET iid_persona = LAST_INSERT_ID();
 
@@ -49,12 +48,12 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
 $$
 DELIMITER ;
 
-CALL insertar_cliente('Ían', 'Gimenez','Villa','4771234568','37208','123', '-','Sabinas',
-'Nuevo León',NULL,'ian@email.com','123457',@id_persona, @id_usuario,@id_cliente);
-CALL insertar_cliente('Paco', 'Villanueva','Puerta','4772345690','37209','428-B', '-','Via Palatino',
-'Villa Magna',NULL,'paco@email.com','1238',@id_persona, @id_usuario,@id_cliente);
-CALL insertar_cliente('Maria', 'Villegas','Bonilla','4773456790','37207','4', '400-C','Elefante esa',
-'Villa Magna',NULL,'maria@email.com','1236',@id_persona, @id_usuario,@id_cliente);
+CALL insertar_cliente('Ían', 'Gimenez','Villa','4771231212', 37000, null, '112', 'Calle', 
+'Colonia','ian@email.com','123457',@id_persona, @id_usuario,@id_cliente);
+CALL insertar_cliente('Paco', 'Villanueva','Puerta','4771231212', 37000, null, '113', 'Calle', 
+'Colonia','paco@email.com','1238',@id_persona, @id_usuario,@id_cliente);
+CALL insertar_cliente('Maria', 'Villegas','Bonilla','4771231212', 37000, null, '114', 'Calle', 
+'Colonia','maria@email.com','1236',@id_persona, @id_usuario,@id_cliente);
 
 
 -- Stored Procedure para actualizar Clientes.
@@ -70,15 +69,14 @@ CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
                                     IN	inumero_exterior VARCHAR(6), 	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
                                     IN	icolonia         VARCHAR(100),    -- 9
-                                    IN ifecha_actualizacion DATETIME,     -- 10
                                     
                                     /* Datos de Usuario */
-                                    IN	icorreo   		VARCHAR(100),    -- 11
-                                    IN	icontrasenia    VARCHAR(100),    -- 12
+                                    IN	icorreo   		VARCHAR(100),    -- 10
+                                    IN	icontrasenia    VARCHAR(100),    -- 11
                                     
                                     /* ID's de las tablas relacionadas con el Cliente */
-                                    IN	iid_persona       INT,            -- 13
-                                    IN	iid_usuario       INT             -- 14
+                                    IN	iid_persona       INT,            -- 12
+                                    IN	iid_usuario       INT             -- 13
 				)                                    
     BEGIN        
     
@@ -91,9 +89,8 @@ CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
                                 numero_interior = inumero_interior,
                                 numero_exterior = inumero_exterior,
                                 calle = icalle, 
-                                colonia = icolonia,
-                                estatus = 1,
-                                fecha_actualizacion = ifecha_actualizacion
+                                colonia = icolonia, 
+                                fecha_actualizacion =  NOW()
                         WHERE   id_persona = iid_persona;
 
         -- Actualizamos los datos de Seguridad:
@@ -105,23 +102,22 @@ CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
 $$
 DELIMITER ;
 
-CALL actualizar_cliente('Pablo','Palomares','Sánchez','4771234567','37287',110,NULL,'Elefante esa',
-'Villa Magna',NULL,'pablo@email.com','123456',4,4);
+CALL actualizar_cliente('Pablo','Mares','Sánchez','4771234567','37287',110,34,'Elefante esa',
+'Villa Magna','pablo@email.com','123456',4,4);
 
 
 -- Stored Procedure para eliminar Clientes.
 DROP PROCEDURE IF EXISTS eliminar_clientes;
 DELIMITER $$
 CREATE PROCEDURE eliminar_clientes(	/* Datos Persona */
-									IN iid_persona INT,               -- 1
-									IN ifecha_actualizacion DATETIME  -- 2
+									IN iid_persona INT    -- 1
 				)
 	BEGIN
-		UPDATE persona SET  estatus = 0,
-							fecha_actualizacion = ifecha_actualizacion
+		UPDATE persona SET  estatus = false,
+							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
 $$
 DELIMITER ;
 
-CALL eliminar_clientes(4,'2023-04-07');
+CALL eliminar_clientes(4);
