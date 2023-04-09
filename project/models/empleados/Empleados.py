@@ -1,13 +1,12 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField
 
 class Empleados(Form):
-    opciones_tolerancia = [("Vendedor", "Vendedor"), 
-                           ("Repartidor", "Repartidor"), 
-                           ("Comprador", "Comprador"),
-                           ("Cliente", "Cliente"),
-                           ("Gerente", "Gerente"),
-                            ("Productor", "Productor"),
-                            ("Gerente", "Gerente"),
+    opciones_tolerancia = [(1, "Vendedor"), 
+                           (2, "Repartidor"), 
+                           (3, "Comprador"),
+                           (4, "Cliente"),
+                           (5, "Gerente"),
+                           (6, "Productor"),
                            ]
     id_persona = IntegerField('idPersona')
     id_empleado = IntegerField('idEmpleado')

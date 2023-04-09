@@ -4,35 +4,93 @@ from models.empleados.Empleados import Empleados
 from controllers.controllerEmpleado import obtener_empleados,insertar_empleado
 
 empleados = Blueprint('empleados', __name__)
-
-@empleados.route('/empleados',methods=["POST","GET"])
+@empleados.route('/empleados', methods=["POST", "GET"])
 def empleado():
-     create_form = Empleados(request.form)
-     #Si el metodo es POST Se hara un insert 
-     if request.method == 'POST':
-          nombre=create_form.nombre.data,
-          apaterno=create_form.apaterno.data,
-          amaterno=create_form.amaterno.data,
-          telefono=create_form.telefono.data,
-          codigo_postal=create_form.codigo_postal.data,
-          numero_exterior=create_form.numero_exterior.data,
-          numero_interior=create_form.numero_interior.data,
-          calle=create_form.calle.data,
-          colonia=create_form.colonia.data,
-          correo=create_form.correo.data,
-          contrasenia=create_form.contrasenia.data
-          idEmpleado='@id_Empleado'
-          idUsuario='@id_Usuario'
-          idPersona='@id_Persona'
-          insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,idPersona,idUsuario,idEmpleado)
-          # De cualquier modo, y si todo fue bien, redireccionar
-          return redirect("/empleados")
-          
-     else :     
-          emp = obtener_empleados()
-          print(emp)
+    if request.method == 'POST':
+        # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
+        create_form = Empleados(request.form)
+        nombre = create_form.nombre.data
+        apaterno = create_form.apaterno.data
+        amaterno = create_form.amaterno.data
+        telefono = create_form.telefono.data
+        codigo_postal = create_form.codigo_postal.data
+        numero_exterior = create_form.numero_exterior.data
+        numero_interior = create_form.numero_interior.data
+        calle = create_form.calle.data
+        colonia = create_form.colonia.data
+        correo = create_form.correo.data
+        contrasenia = create_form.contrasenia.data
+        rol = create_form.rol.data
+        id_Empleado=''
+        id_Usuario=''
+        id_Persona=''
+        # Lógica para insertar empleado en la base de datos
+        realizar_insercion(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+        # De cualquier modo, y si todo fue bien, redireccionar
+        return redirect(url_for('empleados.empleado'))
+    else:
+        create_form = Empleados()
+        emp = obtener_empleados()
+        print(emp)
+        return render_template('empleados.html', form=create_form, empleados=emp)
 
-     return render_template('empleados.html',form=create_form,empleados=emp)
+
+@empleados.route('/insertar_empleado', methods=["POST"])
+def realizar_insercion():
+    # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
+    nombre = request.form['nombre']
+    apaterno = request.form['apaterno']
+    amaterno = request.form['amaterno']
+    telefono = request.form['telefono']
+    codigo_postal = request.form['codigo_postal']
+    numero_exterior = request.form['numero_exterior']
+    numero_interior = request.form['numero_interior']
+    calle = request.form['calle']
+    colonia = request.form['colonia']
+    correo = request.form['correo']
+    contrasenia = request.form['contrasenia']
+    rol = request.form['rol']
+    id_Empleado=''
+    id_Usuario=''
+    id_Persona=''
+    # Lógica para insertar empleado en la base de datos
+    insertar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect(url_for('empleados.empleado'))
+
+
+
+
+
+
+
+# @empleados.route('/empleados',methods=["POST","GET"])
+# def empleado():
+#      create_form = Empleados(request.form)
+#      emp = obtener_empleados()
+#      print(emp)
+#      #Si el metodo es POST Se hara un insert 
+#      return render_template('empleados.html',form=create_form,empleados=emp)
+
+# def insertar_empleado():
+#      if request.method == 'POST':
+#           nombre=nombre.data,
+#           apaterno=apaterno.data,
+#           amaterno=amaterno.data,
+#           telefono=telefono.data,
+#           codigo_postal=codigo_postal.data,
+#           numero_exterior=numero_exterior.data,
+#           numero_interior=numero_interior.data,
+#           calle=calle.data,
+#           colonia=colonia.data,
+#           correo=correo.data,
+#           contrasenia=contrasenia.data
+#           rol=rol.data
+#           insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol)
+#           # De cualquier modo, y si todo fue bien, redireccionar
+#           print(e)
+          
+#      return render_template('empleados.html')
 
 
 

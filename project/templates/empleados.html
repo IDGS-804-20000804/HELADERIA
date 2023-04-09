@@ -61,7 +61,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="empleado" id="form1" method="POST">
+                        <form name="sent" action="insertar_empleado" id="form1" method="POST">
                             <div hidden> 
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>
@@ -96,6 +96,17 @@
                                     <!-- <label for="txtTelefono" class="form-label">Tel&eacute;fono<span class="text-danger">*</span></label>
                                     <input id="txtTelefono" type="text" class="form-control" style="background: #F4F6F6;">  -->
                                     {{render_firld(form.telefono,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
+                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.numero_exterior,class='form-control')}}
+                                    <br>
+                                </div><div class="col-6">
+                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
+                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.codigo_postal,class='form-control')}}
                                     <br>
                                 </div>
                                 <div class="col-6">

@@ -1,6 +1,6 @@
 USE gelatos;
 
--- Stored Procedure para insertar nuevos Clientes.
+-- Stored Procedure para insertar nuevos Proveedores.
 DROP PROCEDURE IF EXISTS insertar_proveedor;
 DELIMITER $$
 CREATE PROCEDURE insertar_proveedor(	/* Datos Personales */
@@ -13,39 +13,38 @@ CREATE PROCEDURE insertar_proveedor(	/* Datos Personales */
                                     IN	inumero_exterior VARCHAR(6),   	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
                                     IN	icolonia         VARCHAR(100),    -- 9
-                                    IN ifecha_creacion   DATETIME,        -- 10
                                     
                                     /* Datos de Proveedor */
-                                    IN	icorreo   		VARCHAR(100),    -- 11
+                                    IN	icorreo   		VARCHAR(100),    -- 10
 
                                     /* Valores de Retorno */
-                                    OUT	iid_persona      INT,            -- 12
-                                    OUT	iid_proveedor      INT           -- 13
+                                    OUT	iid_persona      INT,            -- 11
+                                    OUT	iid_proveedor      INT           -- 12
 				)                                    
     BEGIN        
     
         -- Insertando los datos de la Persona:
         INSERT INTO persona ( nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, 
-							  numero_exterior, calle, colonia, estatus, fecha_creacion) 
+							  numero_exterior, calle, colonia) 
 					 VALUES ( inombre, iapaterno, iamaterno, itelefono, icodigo_postal, inumero_interior, 
-							  inumero_exterior,  icalle, icolonia, 1, ifecha_creacion);
+							  inumero_exterior,  icalle, icolonia);
         -- Obtenemos el ID de Persona que se generó:
         SET iid_persona = LAST_INSERT_ID();
 
-        -- Insertamos en la tabla Cliente:
+        -- Insertamos en la tabla Proveedores:
         INSERT INTO proveedor (correo, fk_persona) VALUES(icorreo, iid_persona);
-        -- Obtenemos el ID del Cliente que se generó:
+        -- Obtenemos el ID del Proveedores que se generó:
         SET iid_proveedor = LAST_INSERT_ID();
     END
 $$
 DELIMITER ;
 
-CALL insertar_proveedor('Janneth', 'Valencia','Palomares','4773456789','37208','400', '-','Montemorelos',
-'Nuevo León',NULL,'janneth@email.com',@id_persona,@id_proveedor);
-CALL insertar_proveedor('Diana', 'Duran','Diaz','4774567890','37209','134', '-','Bangladeh',
-'Cañon de la India',NULL,'diana@email.com',@id_persona,@id_proveedor);
-CALL insertar_proveedor('Mariana', 'Molino','Parra','4773456790','37208','-', '234-A','ZuaZua',
-'Nuevo León',NULL,'mariana@email.com',@id_persona,@id_proveedor);
+CALL insertar_proveedor('Janneth', 'Valencia','Palomares','4771231212', 37000, null, '120', 'Calle', 
+'Colonia','janneth@email.com',@id_persona,@id_proveedor);
+CALL insertar_proveedor('Diana', 'Duran','Diaz','4771231212', 37000, null, '121', 'Calle', 
+'Colonia','diana@email.com',@id_persona,@id_proveedor);
+CALL insertar_proveedor('Mariana', 'Molino','Parra','4771231212', 37000, null, '122', 'Calle', 
+'Colonia','mariana@email.com',@id_persona,@id_proveedor);
 
 
 -- Stored Procedure para actualizar Proveedor.
@@ -61,18 +60,17 @@ CREATE PROCEDURE actualizar_proveedor(	/* Datos Personales */
                                     IN	inumero_exterior VARCHAR(6), 	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
                                     IN	icolonia         VARCHAR(100),    -- 9
-                                    IN ifecha_actualizacion DATETIME,     -- 10
                                     
                                     /* Datos de Proveedor */
-                                    IN	icorreo   		VARCHAR(100),     -- 11
+                                    IN	icorreo   		VARCHAR(100),     -- 10
                                     
                                     /* ID's de las tablas relacionadas con el Proveedor */
-                                    IN	iid_persona       INT,            -- 12
-                                    IN  iid_proveedor 	  INT			  -- 13
+                                    IN	iid_persona       INT,            -- 11
+                                    IN  iid_proveedor 	  INT			  -- 12
 				)                                    
     BEGIN        
     
-	 -- Datos Persona del Cliente:
+	 -- Datos Persona del Proveedor:
         UPDATE persona  SET     nombre = inombre,
 								apaterno = iapaterno,
                                 amaterno = iamaterno,
@@ -82,8 +80,7 @@ CREATE PROCEDURE actualizar_proveedor(	/* Datos Personales */
                                 numero_exterior = inumero_exterior,
                                 calle = icalle, 
                                 colonia = icolonia,
-                                estatus = 1,
-                                fecha_actualizacion = ifecha_actualizacion
+                                fecha_actualizacion = NOW()
                         WHERE   id_persona = iid_persona;
 
         -- Actualizamos los datos de Proveedor:
@@ -94,23 +91,22 @@ CREATE PROCEDURE actualizar_proveedor(	/* Datos Personales */
 $$
 DELIMITER ;
 
-CALL actualizar_proveedor('Daniela','Duran','Diaz','4774567890','37209','134',NULL,'Bangladeh',
-'Cañon de la India',NULL,'daniela@email.com',8,8);
+CALL actualizar_proveedor('Daniela','Duran','Diaz','4774567890','37209',NULL,'134','Bangladeh',
+'Cañon de la India','daniela@email.com',10,10);
 
 
 -- Stored Procedure para eliminar Proveedor.
 DROP PROCEDURE IF EXISTS eliminar_proveedor;
 DELIMITER $$
 CREATE PROCEDURE eliminar_proveedor(	/* Datos Persona */
-									IN iid_persona INT,               -- 1
-									IN ifecha_actualizacion DATETIME  -- 2
+									IN iid_persona INT   -- 1
 				)
 	BEGIN
-		UPDATE persona SET  estatus = 0,
-							fecha_actualizacion = ifecha_actualizacion
+		UPDATE persona SET  estatus = false,
+							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
 $$
 DELIMITER ;
 
-CALL eliminar_proveedor(7,'2023-04-07');
+CALL eliminar_proveedor(10);

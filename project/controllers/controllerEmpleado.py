@@ -9,7 +9,7 @@ def obtener_empleados():
     try:
         with conexion.cursor() as cursor:
             # Ejecutar una consulta SELECT para obtener los datos de la vista
-            cursor.execute('SELECT * FROM vista_empleados')
+            cursor.execute('SELECT * FROM vista_empleado')
             empleados = cursor.fetchall()
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -21,13 +21,13 @@ def obtener_empleados():
         conexion.close()
         return empleados
      
-def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,idPersona,idUsuario,idEmpleado):
+def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Empleado,id_Usuario,id_Persona):
     # Obtener conexión a la base de datos
     conexion = get_connection()
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('insertar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,idPersona,idUsuario,idEmpleado])
+            cursor.callproc('insertar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Empleado,id_Usuario,id_Persona])
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -37,7 +37,25 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
     finally:
         # Cerrar la conexión a la base de datos
         conexion.close()
-
+     
+def obtener_maestro_por_id(id):
+    # Obtener conexión a la base de datos
+    conexion = obtener_conexion()
+    empleados = None
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('buscar_maestro_por_id', [id])
+            empleados = cursor.fetchone()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al insertar alumno: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return empleados
 
 
 
