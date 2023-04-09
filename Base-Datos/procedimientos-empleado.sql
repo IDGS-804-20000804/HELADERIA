@@ -159,4 +159,16 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 $$
 DELIMITER ;
 
+SELECT * FROM vista_empleados;
+CREATE VIEW vista_empleados AS
+SELECT u.id_usuario, u.correo, u.contrasenia, u.fecha_creacion AS usuario_fecha_creacion, u.fecha_actualizacion AS usuario_fecha_actualizacion,
+       p.id_persona, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, p.numero_interior, p.numero_exterior, p.calle, p.colonia, p.estatus,
+       p.fecha_creacion AS persona_fecha_creacion, p.fecha_actualizacion AS persona_fecha_actualizacion, p.fecha_eliminacion,
+       c.id_cliente, c.fk_persona, c.fk_usuario
+FROM usuario u
+JOIN cliente c ON u.id_usuario = c.fk_usuario
+JOIN persona p ON p.id_persona = c.fk_persona;
+
+
+
 CALL eliminar_empleado(3,'2023-04-07');
