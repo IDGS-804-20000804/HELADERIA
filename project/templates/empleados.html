@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarEmpleado" type="text" onkeyup="buscarTabla()" /></span>
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
                 </div>
                 <br>
                 <table class="table table-hover" id="datos">
@@ -23,25 +23,25 @@
                             <th style="border: 1px solid black; text-align: center;">Tel&eacute;fono</th>
                             <th style="border: 1px solid black; text-align: center;">Dirección</th>
                             <th class="col-2" style="border: 1px solid black; ">Acciones</th>
+                            <th class="col-2" style="border: 1px solid black; "></th>
                         </tr>
                     </thead>
                     <tbody  style="background: #e2e2e0;">
                         {% for empleados in empleados %}
                         <tr>
-                            <td>{{empleados[6]}} {{empleados[7]}} {{empleados[8]}}</td>
+                            <td>{{empleados[5]}} {{empleados[6]}} {{empleados[7]}}</td>
                             <td>{{empleados[1]}}</td>
                             <td>{{empleados[9]}}</td>
                             <td>{{empleados[13]}} {{empleados[14]}} {{empleados[11]}} {{empleados[12]}}</td>
-                            <td>
-                                {# Pasar el id (lo que hay en juego[0] #}
-                                <a class="button is-info">Editar</a>
-                            </td>
-                            <td>
-                                <a class="button is-danger">Eliminar</a>
+                            <td><a href="empleados?id={{empleados[0]}}"
+                                class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><i class="icon-pencil icon-white"></i>
+                             Modificar</a></td>
+                             <td><a href="empleados?id={{empleados[0]}}"
+                             class="btn btn-danger"><i class="icon-remove icon-white"></i>
+                          Eliminar</a>
                             </td>
                         </tr>
                         {% endfor %}
-
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>
