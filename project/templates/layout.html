@@ -1,18 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>UNIVERSIDAD</title>
+  <title>Gelatos</title>
+  <link rel="shortcut icon" href="../static/img/logotipo.png" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="../static/styles/style.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE BOOTSTRAP -->
+  <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="../static/font_awesome_5_15_3/css/all.min.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE SWEETALERT -->
+  <link type="text/css" rel="stylesheet" href='../static/sweetalert2/sweetalert2.min.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 </head>
-
-<body>
-  <div>
-      
-  </div>
+<body >
+  
     {%block content%}
-
+    
     {%endblock%}
-</body>
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
+</body>
+<script type="text/javascript">
+$(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar, #content').toggleClass('active');
+    });
+});
+
+//Mostramos contraseña 
+$(document).ready(function () {
+    $('#mostrar_contrasena').click(function () {
+      if ($('#mostrar_contrasena').is(':checked')) {
+        $('#txtPassword').attr('type', 'text');
+      } else {
+        $('#txtPassword').attr('type', 'password');
+      }
+    });
+  });
+</script>
+<!-- REFERENCIAS DE SCRIPT DE JQUERY-->
+<script type="text/javascript" src="../static/jquery/jquery-3.6.0.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src='../static/sweetalert2/sweetalert2.all.min.js'></script>
 </html>

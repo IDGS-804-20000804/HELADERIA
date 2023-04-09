@@ -1,22 +1,16 @@
-# from flask import Blueprint, render_template, request, redirect, url_for
-# from ...models.forms import StudentForm
-# from ...models.Student import Students
-# from ...controllers.student_controller import setStudent, updateStudent, deleteStudent, insertStudent
-# from flask_wtf.csrf import CSRFProtect
+from flask import Blueprint, render_template, request, redirect, url_for
+from ...models.forms import StudentForm
+from ...models.Student import Students
+from ...controllers.student_controller import setStudent, updateStudent, deleteStudent, insertStudent
+from flask_wtf.csrf import CSRFProtect
 
 # csrf = CSRFProtect()
-# students = Blueprint('students', __name__)
+routes = Blueprint('rutes', __name__)
 
-# @students.route('/')
-# def index():
-#     return render_template('index.html')
+@routes.route('/e')
+def index():
+     return render_template('index.html')
 
-
-# @students.route('/index-student')
-# def index_students():
-#     create_form = StudentForm(request.form)
-#     students = Students.query.all()
-#     return render_template('index_student.html', form=create_form, students=students)
 
 
 # @students.route('/insert-student', methods=['GET', 'POST'])

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Gelatos</title>
+  <link rel="shortcut icon" href="../static/img/logotipo.png" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="../static/styles/style.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE BOOTSTRAP -->
+  <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="../static/font_awesome_5_15_3/css/all.min.css">
+  <!-- REFERENCIAS DE LAS LIBRERIAS DE SWEETALERT -->
+  <link type="text/css" rel="stylesheet" href='../static/sweetalert2/sweetalert2.min.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+</head>
+<body >
+<div class="vertical-nav bg-white" id="sidebar">
+    <div class="py-4 px-3 mb-4 bg-light text-center">
+        <div>
+            <img src="../static/img/logotipo.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        </div>
+        <div class="media-body ">
+            <div>
+                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">Nombre</span></h6>
+            </div>
+        </div>
+    </div>
+    <div id="global">
+        <ul class="nav flex-column bg-white mb-2" >
+            <li class="nav-item m-1">
+                <a href="empleados" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-user-tie mr-3 fa-fw"></i>
+                    Empleados
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="clientes" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-users mr-3 fa-fw"></i>
+                    Clientes
+                </a>
+            </li>
+            <!-- <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light">
+                    <i class="fa fa-shopping-basket" ></i>
+                    Productos
+                </a>
+            </li> -->
+            <li class="nav-item m-1">
+                <a href="materiaPrima" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-star" ></i>
+                    Materia Prima
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="recetas" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa far fa-file-alt" aria-hidden="true"></i>
+                    Recetas
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="ventas" class="nav-link text-dark font-italic bg-light">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Ventas
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="provedor" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-male" aria-hidden="true"></i>
+                    Provedores
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="compras" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Compras
+                </a>
+            </li>
+            <!-- <li class="nav-item m-1">
+                <a href="#" class="nav-link text-dark font-italic bg-light" >
+                    <i  class="fa fa-folder-open mr-3 fa-fw" ></i>
+                    Solicitud de Productos
+                </a>
+            </li> -->
+            <li class="nav-item m-1">
+                <a href="envio" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    Envios
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="stock" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    Stock
+                </a>
+            </li>
+            <li class="nav-item m-1">
+                <a href="/" class="nav-link text-dark font-italic bg-light" >
+                    <i class="fas fa-user-cog mr-3  fa-fw"></i>
+                    Cerrar Sesi&oacute;n
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+    {%block content%}
+    
+    {%endblock%}
+</body>
+<script type="text/javascript">
+$(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar, #content').toggleClass('active');
+    });
+});
+
+//Mostramos contraseña 
+$(document).ready(function () {
+    $('#mostrar_contrasena').click(function () {
+      if ($('#mostrar_contrasena').is(':checked')) {
+        $('#txtPassword').attr('type', 'text');
+      } else {
+        $('#txtPassword').attr('type', 'password');
+      }
+    });
+  });
+</script>
+<!-- REFERENCIAS DE SCRIPT DE JQUERY-->
+<script type="text/javascript" src="../static/jquery/jquery-3.6.0.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
+<script type="text/javascript" src='../static/sweetalert2/sweetalert2.all.min.js'></script>
+<script type="text/javascript" src='../static/js/tienda.js'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</html>
+

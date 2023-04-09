@@ -1,4 +1,122 @@
-{%extends 'layout.html'%}
-{%block content%}
-<h1>INDEX</h1>
-{%endblock%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/styles/styleHome.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+<body >
+    <header class="header">
+        <div class="menu container">
+            <a href="#" class="logo"></a> 
+            <img src="../static/img/logotipo.png" width="110px">
+            <input type="checkbox" id="menu"/>
+            <label for="menu">
+                <img src="../static/images/menu.png" class="menu-icono" alt="">
+            </label>
+            <!-- <nav class="navbar">
+                <ul>
+                   <li><a href="#">Inicio</a></li> 
+                   <li><a href="#">Servicios</a></li>
+                   <li><a href="#">Productos</a></li>
+                   <li><a href="#">Reservaciones</a></li>
+                   <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav> -->
+        </div>
+        <div class="header-content container">
+            <div class="header-txt">
+                <h1>Refresca<br> <span>tus sentidos</span></h1>
+                <p>
+                    <b>Los Helados Gelatos son una deliciosa y refrescante opción para disfrutar en cualquier momento del día. Con su textura suave y cremosa, combinada con sabores dulces y frescos, los helados son un postre clásico que nunca pasa de moda.</b>
+                </p><br><br>
+                <div class="buttons">
+                    <a href="login" class="btn-1">Inicio de Sesión</a>
+                    <a href="registro" class="btn-1">Registrate</a>
+                </div>
+            </div>
+            <div class="header-img">
+                <img src="../static/img/imagenMujer.png" alt="">
+            </div>
+        </div>
+    </header>
+    <section class="menu-pl container">
+        <h2>Deliciosos<span> sabores</span></h2>
+        <div class="general-content">
+            <div class="general-txt">
+                <img src="../static/img/Limon.jpg">
+                <h3>Helado de Limón</h3>
+                <p style="text-align: justify;">El helado de limón es un sabor clásico que se destaca por su refrescante sabor cítrico. Este helado suele ser de color blanco cremoso, con pequeños trozos de piel de limón que le dan un toque de textura y sabor adicionales. Al probarlo, se puede sentir la frescura de los jugosos limones recién exprimidos, mezclados con la cremosidad del helado, lo que lo convierte en una opción perfecta para disfrutar en un día caluroso de verano. </p>
+            </div>
+            <div class="general-txt">
+                <img src="../static/img/Vainilla.jpg">
+                <h3>Helado de Vainilla</h3>
+                <p  style="text-align: justify;">El helado de vainilla es un clásico que ha sido disfrutado por generaciones. Este helado es de color blanco cremoso y tiene un sabor dulce y suave con un toque de vainilla. El aroma de la vainilla se puede percibir desde el momento en que se abre la tapa del helado, y al probarlo, se puede sentir la suavidad y la textura cremosa del helado en la boca. </p>
+            </div>
+            <div class="general-txt">
+                <img src="../static/img/Oreo.jpg">
+                <h3>Helado de Oreo</h3>
+                <p  style="text-align: justify;">El helado de Oreo es un sabor irresistible para los amantes de las galletas. Este helado es de color blanco y tiene trozos crujientes de galletas Oreo en cada bocado. Al probarlo, se puede sentir la textura crujiente de las galletas mezclada con la suavidad y la cremosidad del helado, creando una combinación perfecta de sabores y texturas. </p>
+            </div>
+        </div>
+    </section><br><br>
+    <section class="about">
+        <div class="about-content container">
+            <div class="about-txt">
+                <h2>Gelatos<br><span>Una sorpresa para ti</span></h2>
+                <p style="text-align: justify;">
+                    Gelatos es una empresa especializada en la elaboración de helados artesanales de alta calidad. Su compromiso con la excelencia se ve reflejado en cada detalle, desde la selección de los ingredientes frescos y naturales hasta el proceso de elaboración artesanal que asegura una textura suave y cremosa en cada bocado. Además, Gelatos se enorgullece de ofrecer una amplia variedad de sabores, desde los clásicos como vainilla y chocolate.
+                </p>
+                <div class="hamburger">
+                    <span>Precios accesibles</span>
+                </div>
+            </div>
+            <div class="about-img">
+                <img src="../static/img/logotipo.png" alt="">
+            </div>
+        </div>
+    </section>
+    <section class="info container">
+        <div class="info-img">
+            <img src="../static/img/helado2.jpg" alt="">
+        </div>
+        <div class="info-txt">
+            <h2>Sobre <span>Nosotros</span></h2>
+            <h3 class="my-4 fw-bold " style="color: #3D7692;">Contactanos</h3>
+                    <p class="fs-6 lead" style="text-align: justify;">
+                        <h4 >Teléfono: 4775353250</h4><br>
+                        <h4 >Correo: gelatos@contacto.com.mx</h4>
+                    </p>
+                    <h3 class="my-4 fw-bold " style="color: #3D7692;">Redes sociales</h3>
+                    <p class="fs-6 lead" style="text-align: justify;">
+                        <h4>Facebook: gelatos_MX</h4><br>
+                        <h4>Intagram: gelatosMX</h4><br>
+                        <h4>TikTok: gelatosMXT</h4>
+                    </p>
+                </div>
+        </div>
+    </section>
+    <!-- <footer class="footer">
+        <div class="footer-content container">
+            <div class="link">
+                <h1>Contactanos</h1><br>
+                <h3>Teléfono: 4775353250</h3>
+                <h3>Corrrego: gelatos@contacto.com.mx</h3>
+            </div>
+            <div class="link link2">
+                <h1>Redes Sociales</h1><br>
+                
+            </div>
+            <div class="link">
+                <img src="../static/img/logoImg.png" width="200px">
+            </div>
+        </div>
+    </footer> -->
+</body>
+</html>
