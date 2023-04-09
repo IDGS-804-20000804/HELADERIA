@@ -38,15 +38,32 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
         # Cerrar la conexión a la base de datos
         conexion.close()
      
-def obtener_maestro_por_id(id):
+def obtener_empleado_por_id(id):
     # Obtener conexión a la base de datos
-    conexion = obtener_conexion()
+    conexion = get_connection()
     empleados = None
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('buscar_maestro_por_id', [id])
+            cursor.callproc('buscar_empleado_id', [id])
             empleados = cursor.fetchone()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al insertar Empleado: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return empleados
+
+def actualizar_empleado(id,nombre,apellidoP,apellidoM,edad,materia):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('actualizar_empleado',[id,nombre,apellidoP,apellidoM,edad,materia])
         # Confirmar los cambios en la base de datos
         conexion.commit()
     except Exception as e:
@@ -55,8 +72,7 @@ def obtener_maestro_por_id(id):
     finally:
         # Cerrar la conexión a la base de datos
         conexion.close()
-        return empleados
-
+        
 
 
 

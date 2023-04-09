@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
-from controllers.controllerEmpleado import obtener_empleados,insertar_empleado
+from controllers.controllerEmpleado import obtener_empleados,insertar_empleado,obtener_empleado_por_id
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
@@ -31,7 +31,7 @@ def empleado():
     else:
         create_form = Empleados()
         emp = obtener_empleados()
-        print(emp)
+     
         return render_template('empleados.html', form=create_form, empleados=emp)
 
 
@@ -59,8 +59,23 @@ def realizar_insercion():
     return redirect(url_for('empleados.empleado'))
 
 
+@empleados.route("/empleados/<int:id>")
+def buscar_empleado_id(id):
+    # Obtener el juego por ID
+    emple = obtener_empleado_por_id(id)
+    return redirect(url_for('empleados.empleados', empleados=emple))
 
 
+@empleados.route("/empleados", methods=["POST"])
+def actualizar_empleados():
+    id = request.form["id"]
+    nombre = request.form["Nombre"]
+    apellidoP = request.form["apellidoP"]
+    apellidoM = request.form["apellidoM"]
+    edad = request.form["edad"]
+    materia = request.form["materia"]
+    controller.controller_maestros.actualizar_maestro(id,nombre, apellidoP, apellidoM, edad, materia)
+    return redirect("/maestros")
 
 
 
