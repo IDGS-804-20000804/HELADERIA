@@ -12,20 +12,36 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarEmpleado" type="text" onkeyup="buscarTabla()" /></span>
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
                 </div>
                 <br>
                 <table class="table table-hover" id="datos">
-                    <thead>
+                    <thead  style="background: #e2e2e0;">
                         <tr>
-                            <th style="border: 1px solid black; text-align: center;">Nombre</th>
-                            <th style="border: 1px solid black;  text-align: center;">Correo</th> 
-                            <th style="border: 1px solid black; text-align: center;">Tel&eacute;fono</th>
-                            <th style="border: 1px solid black; text-align: center;">Dirección</th>
-                            <th class="col-2" style="border: 1px solid black; ">Acciones</th>
+                            <th style=" text-align: center;">Nombre</th>
+                            <th style="  text-align: center;">Correo</th> 
+                            <th style=" text-align: center;">Tel&eacute;fono</th>
+                            <th style=" text-align: center;">Dirección</th>
+                            <th class="col-2" style="text-align: center;">Acciones</th>
+
                         </tr>
                     </thead>
-                    <tbody id="tbodyEmpleados" style="background: #e2e2e0;">
+                    <tbody >
+                        {% for clientes in clientes %}
+                        <tr>
+                            <td>{{clientes[5]}} {{clientes[6]}} {{clientes[7]}}</td>
+                            <td>{{clientes[1]}}</td>
+                            <td>{{clientes[9]}}</td>
+                            <td>{{clientes[13]}} {{clientes[14]}} {{clientes[11]}} {{clientes[12]}}</td>
+                            <td style="text-align: center;" ><a href="clientes?id={{clientes[0]}}"
+                                class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
+                             </a>
+                             <a href="clientes?id={{clientes[0]}}"
+                             class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
+                          </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>
@@ -45,7 +61,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="/empleado" id="form1" method="POST">
+                        <form name="sent" action="/clientes" id="form1" method="POST">
                             <div hidden> 
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>

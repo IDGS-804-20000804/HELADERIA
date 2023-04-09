@@ -63,6 +63,7 @@ def realizar_insercion():
 def buscar_empleado_id(id):
     # Obtener el juego por ID
     emple = obtener_empleado_por_id(id)
+    
     return redirect(url_for('empleados.empleados', empleados=emple))
 
 
