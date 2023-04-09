@@ -1,6 +1,6 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField, SelectField
 
-class materiaPrima(Form):
+class MateriaPrima(Form):
     opciones = [("1", "1kg"), 
                 ("2", "2kg"), 
                 ("3", "3kg"),

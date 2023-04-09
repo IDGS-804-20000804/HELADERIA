@@ -6,7 +6,26 @@ from datetime import datetime
 
 materiaP= Blueprint('materiaPrima', __name__)
 
-@materiaP.route('/materiaPrima')
-def materiaPrima():
-    create_form=forms.materiaPrima(request.form)
-    return render_template('materiaPrima.html',form=create_form)
+# @materiaP.route('/materiaPrima')
+# def materiaPrima():
+#     create_form=forms.materiaPrima(request.form)
+#     return render_template('materiaPrima.html',form=create_form)
+
+def obtener_materia_prima():
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    materiaP = []
+    try:
+        with conexion.cursor() as cursor:
+            # Ejecutar una consulta SELECT para obtener los datos de la vista
+            cursor.execute('SELECT * FROM vista_materia_prima')
+            materiaP = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al obtener materiaP: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return materiaP
