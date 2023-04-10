@@ -106,3 +106,28 @@ SELECT
     um.descripcion AS unidad_medida
   FROM materia_prima mp
   INNER JOIN unidad_medida um ON mp.fk_unidad_medida = um.id_unidad_medida;
+
+  -- Vista clientes
+  DROP VIEW vista_cliente;
+CREATE VIEW vista_cliente AS
+SELECT 
+    c.id_cliente, 
+    c.fk_persona,
+	c.fk_usuario,
+    u.correo, 
+    u.estatus, 
+    p.nombre, 
+    p.apaterno, 
+    p.amaterno, 
+    p.telefono, 
+    p.codigo_postal, 
+    p.numero_exterior, 
+    p.numero_interior, 
+    p.calle, 
+    p.colonia
+FROM 
+    cliente c
+JOIN 
+    usuario u ON c.fk_usuario = u.id_usuario
+JOIN 
+    persona p ON c.fk_persona = p.id_persona;

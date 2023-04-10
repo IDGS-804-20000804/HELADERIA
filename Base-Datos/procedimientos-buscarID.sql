@@ -1,3 +1,18 @@
+-- CALL buscar_cliente_id(1)
+DROP PROCEDURE buscar_cliente_id;
+DELIMITER //
+CREATE PROCEDURE buscar_cliente_id(IN p_id_cliente INT)
+BEGIN
+SELECT c.id_cliente, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal,
+p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.contrasenia, u.estatus,p.id_persona,u.id_usuario
+FROM cliente c
+INNER JOIN persona p ON c.fk_persona = p.id_persona
+INNER JOIN usuario u ON c.fk_usuario = u.id_usuario
+WHERE c.id_cliente = p_id_cliente;
+END //
+DELIMITER ;
+
+------------------------------------------------------
 DELIMITER //
 CREATE PROCEDURE buscar_empleado_id(IN p_id_empleado INT)
 BEGIN
@@ -10,18 +25,6 @@ BEGIN
 END //
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS buscar_cliente_id;
-DELIMITER //
-CREATE PROCEDURE buscar_cliente_id(IN p_id_cliente INT)
-BEGIN
-  SELECT c.id_cliente, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.estatus
-  FROM cliente c
-  INNER JOIN persona p ON c.fk_persona = p.id_persona
-  INNER JOIN usuario u ON c.fk_usuario = u.id_usuario
-  WHERE c.id_cliente = p_id_cliente;
-END //
-DELIMITER ;
 -- CALL buscar_cliente_id(4);
 
 DROP PROCEDURE IF EXISTS buscar_proveedor_id;
