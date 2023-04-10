@@ -1,65 +1,90 @@
 USE gelatos;
 
--- Stored Procedure para insertar nuevas Recetas.
 DROP PROCEDURE IF EXISTS insertar_receta;
 DELIMITER //
-CREATE PROCEDURE insertar_receta(	/* Datos Receta*/
-                                    IN	inombre         VARCHAR(50),	-- 1
-                                    IN  icantidad		INT,			-- 2
-                                    IN  iprecio		 	FLOAT,			-- 3
-                                    IN	iruta_imagen 	TEXT,			-- 4
+CREATE PROCEDURE insertar_receta(
+	IN	inombre VARCHAR(255),
+	IN  icantidad INT,
+	IN  iprecio FLOAT,
+	IN	iruta_imagen VARCHAR(255),
+	IN	iarr_receta TEXT
+)
+BEGIN
+	DECLARE did_receta INT;
+	DECLARE dfk_materia_prima INT;
+	DECLARE dcantidad FLOAT;
+	DECLARE dposicion_ingrediente INT;
+	DECLARE dobjeto_ingrediente JSON;
+	
+     INSERT INTO receta ( nombre, cantidad, precio, ruta_imagen)
+ 		VALUES ( inombre, icantidad, iprecio, iruta_imagen);
+     SET did_receta = LAST_INSERT_ID();
+	SET dposicion_ingrediente = json_length(iarr_receta);
+	ciclo_for: LOOP
+		IF dposicion_ingrediente = 0 THEN
+			LEAVE ciclo_for;
+		END IF;
+		SET dobjeto_ingrediente = JSON_EXTRACT(iarr_receta, CONCAT('$[',dposicion_ingrediente - 1,']'));
+		SET dfk_materia_prima = JSON_EXTRACT(dobjeto_ingrediente, CONCAT('$[0]'));
+		SET dcantidad = JSON_EXTRACT(dobjeto_ingrediente, CONCAT('$[1]'));
+ 		INSERT detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
+ 			VALUES (did_receta, dcantidad, dfk_materia_prima);
 
-                                    /* Valores de Retorno */
-                                    OUT	iid_receta      INT				-- 5
-				)                                    
-    BEGIN        
-    
-        -- Insertando los datos de la Receta:
-        INSERT INTO receta ( nombre, cantidad, precio, ruta_imagen) 
-					 VALUES ( inombre, icantidad, iprecio, iruta_imagen);
-        -- Obtenemos el ID de Receta que se generó:
-        SET iid_receta = LAST_INSERT_ID();
-
-    END
-//
+		SET dposicion_ingrediente = dposicion_ingrediente - 1;
+		ITERATE ciclo_for;
+	END LOOP;
+END //
 DELIMITER ;
 
-CALL insertar_receta('Helado Frambuesa', '20', '300', '-',@id_receta);
-CALL insertar_receta('Helado Cajeta', '20', '200', '-',@id_receta);
-CALL insertar_receta('Helado choco chips', '20', '220', '-',@id_receta);
+-- [fk_materia_prima, cantidad]
+CALL insertar_receta('Helado Frambuesa', '20', '299.99', '/uploads/asdasd', '[[1, 10],[2, 15],[3, 3],[4, 5],[5, 4]]');
 
 
--- Stored Procedure para actualizar Receta.
 DROP PROCEDURE IF EXISTS actualizar_receta;
 DELIMITER //
-CREATE PROCEDURE actualizar_receta(	/* Datos Receta */
-                                    IN	inombre         VARCHAR(50),	-- 1
-                                    IN  icantidad		INT,			-- 2
-                                    IN  iprecio		 	FLOAT,			-- 3
-                                    IN	iruta_imagen 	TEXT,			-- 4
-                                    
-                                    /* ID de la tabla Receta*/
-                                    IN	iid_receta       INT			-- 5
-				)                                    
-    BEGIN        
-    
-	 -- Datos Receta:
-        UPDATE receta  SET     nombre = inombre,
-								cantidad = icantidad,
-                                precio = iprecio,
-                                ruta_imagen = iruta_imagen,
-                                fecha_actualizacion = NOW()
-                        WHERE   id_receta = iid_receta;
-    END
-//
+CREATE PROCEDURE actualizar_receta(
+	IN	iid_receta INT,
+	IN	inombre VARCHAR(255),
+	IN  icantidad INT,
+	IN  iprecio FLOAT,
+	IN	iruta_imagen VARCHAR(255),
+	IN	iarr_receta TEXT
+)
+BEGIN
+	DECLARE dfk_materia_prima INT;
+	DECLARE dcantidad FLOAT;
+	DECLARE dposicion_ingrediente INT;
+	DECLARE dobjeto_ingrediente JSON;
+	UPDATE receta SET
+		nombre = inombre,
+        cantidad = icantidad,
+        precio = iprecio,
+        ruta_imagen = iruta_imagen,
+		fecha_actualizacion = NOW()
+	WHERE id_receta = iid_receta;
+    DELETE FROM detalle_materia_prima_receta WHERE fk_receta = iid_receta;
+	SET dposicion_ingrediente = json_length(iarr_receta);
+	ciclo_for: LOOP
+		IF dposicion_ingrediente = 0 THEN
+			LEAVE ciclo_for;
+		END IF;
+		SET dobjeto_ingrediente = JSON_EXTRACT(iarr_receta, CONCAT('$[',dposicion_ingrediente - 1,']'));
+		SET dfk_materia_prima = JSON_EXTRACT(dobjeto_ingrediente, CONCAT('$[0]'));
+		SET dcantidad = JSON_EXTRACT(dobjeto_ingrediente, CONCAT('$[1]'));
+ 		INSERT detalle_materia_prima_receta (fk_receta, cantidad, fk_materia_prima)
+ 			VALUES (iid_receta, dcantidad, dfk_materia_prima);
+
+		SET dposicion_ingrediente = dposicion_ingrediente - 1;
+		ITERATE ciclo_for;
+	END LOOP;
+END //
 DELIMITER ;
 
-CALL actualizar_receta('Helado vainilla chips', '20', '240', '-',6);
-
+CALL actualizar_receta(3, 'Helado Frambuesa', '20', '299.99', '/uploads/asdasd', '[[1, 10],[2, 15],[3, 3],[4, 5],[5, 4]]');
 
 -- Stored Procedure para eliminar receta.
 DROP PROCEDURE IF EXISTS eliminar_receta;
-DELIMITER //
+DELIMITER $$
 CREATE PROCEDURE eliminar_receta(	/* Datos Receta */
 									IN iid_receta INT   -- 1
 				)
@@ -68,7 +93,7 @@ CREATE PROCEDURE eliminar_receta(	/* Datos Receta */
 							fecha_actualizacion = NOW()
         WHERE id_receta = iid_receta;
     END
-//
+$$
 DELIMITER ;
 
 CALL eliminar_receta(6);
