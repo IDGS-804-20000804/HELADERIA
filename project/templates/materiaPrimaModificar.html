@@ -3,7 +3,7 @@
 {%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detallemateriaPrima" onclick="limpiar();"><strong>Agregar</strong></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detallemateriaPrimaModificar" onclick="limpiar();"><strong>Agregar</strong></button>
     <!-- CATÁLOGO DE materiaPrima-->
     <div id="divCatalogomateriaPrima" class="col-12">
         <div class="card">
@@ -49,7 +49,7 @@
     <!-- FORMULARIO DE materiaPrima-->
     <div class="container">
         <br>
-        <div class="modal fade" id="detallemateriaPrima" tabindex="-1" aria-labelledby="detallemateriaPrima" aria-hidden="true" >
+        <div class="modal fade" id="detallemateriaPrimaModificar" tabindex="-1" aria-labelledby="detallemateriaPrimaModificar" aria-hidden="true" data-controls-modal="detallemateriaPrimaModificar" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
@@ -86,8 +86,8 @@
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >
                                         <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
-                                    <button class="btn btn-outline-success mx-2">
-                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                                    <a href="materiaPrima" class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</a>
                                 </div>
                             </form>
                         </div>
