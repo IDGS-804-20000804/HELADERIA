@@ -1,6 +1,6 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField, SelectField, FileField
 
-class receta(Form):
+class Proveedor(Form):
     id_persona = IntegerField('idPersona')
     id_proveedor = IntegerField('idProveedor')
     nombre = StringField('Nombre', [

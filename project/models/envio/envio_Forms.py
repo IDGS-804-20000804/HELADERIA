@@ -1,6 +1,6 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField, SelectField, DateField
 
-class envio(Form):
+class Envio(Form):
     opciones = [("1", ""), 
                 ("2", ""), 
                 ]
