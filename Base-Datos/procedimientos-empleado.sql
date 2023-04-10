@@ -2,7 +2,7 @@ USE gelatos;
 
 -- Stored Procedure para insertar nuevos Empleados.
 DROP PROCEDURE IF EXISTS insertar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE insertar_empleado(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -60,7 +60,7 @@ CREATE PROCEDURE insertar_empleado(	/* Datos Personales */
         -- Obtenemos el ID del Empleado que se generó:
         SET iid_empleado = LAST_INSERT_ID();
     END
-$$
+//
 DELIMITER ;
 
 CALL insertar_empleado('Luis Adrián', 'Hernández','Sánchez','4771231212', 37000, null, '115', 'Calle', 
@@ -73,7 +73,7 @@ CALL insertar_empleado('Andres', 'Bautista','Peralta','4771231212', 37000, null,
 
 -- Stored Procedure para actualizar Empleados.
 DROP PROCEDURE IF EXISTS actualizar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE actualizar_empleado(	/* Datos Personales */
                                     IN	inombre         VARCHAR(50),     -- 1
                                     IN  iapaterno		VARCHAR(50),	 -- 2
@@ -134,7 +134,7 @@ CREATE PROCEDURE actualizar_empleado(	/* Datos Personales */
 		END LOOP;
         
     END
-$$
+//
 DELIMITER ;
 
 CALL actualizar_empleado('Pepe','Pepa','Sánchez','4771234567','37287',NULL,466,'Elefante',
@@ -143,7 +143,7 @@ CALL actualizar_empleado('Pepe','Pepa','Sánchez','4771234567','37287',NULL,466,
 
 -- Stored Procedure para eliminar Empleados.
 DROP PROCEDURE IF EXISTS eliminar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 									IN iid_persona INT   -- 1
 				)
@@ -152,7 +152,7 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
-$$
+//
 DELIMITER ;
 
 
