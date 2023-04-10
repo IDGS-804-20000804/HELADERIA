@@ -75,10 +75,12 @@ BEGIN
 		SET dposicion_almacen = dposicion_almacen - 1;
 		ITERATE ciclo_for;
 	END LOOP;
-
+	SET dtotal = (SELECT SUM(precio) FROM detalle_compra WHERE fk_compra = did_compra);
+	UPDATE compra SET
+		total = dtotal
+	WHERE id_compra = did_compra;
 END //
 DELIMITER ;
 
--- CALL insertar_compra( '[5, 2023-04-30, 1, 200],[5, 2023-04-30, 2, 100]', 1, 1 );
 -- [cantidad, fecha, fk_materia_prima, precio]
 -- CALL insertar_compra( '[[500, "2024-07-30", 1, 500.111111],[5, "2023-04-30", 2, 100.222222]]', 1, 1 );

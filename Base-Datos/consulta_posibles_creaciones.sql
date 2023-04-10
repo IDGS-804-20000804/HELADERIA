@@ -1,135 +1,60 @@
 USE gelatos;
--- CONSULTAR CAPACIDAD DE CREACION
--- COMRPROBAR TODAS LAS RECETAS (LISTADO DE MATERIA PRIMA) QUE SE PUEDEN HACER CON LAS COSAS DE ALMACEN
+
 DROP PROCEDURE IF EXISTS consultar_recetas_posibles;
 
 DELIMITER //
-CREATE PROCEDURE consultar_recetas_posibles( OUT ids JSON )
+CREATE PROCEDURE consultar_recetas_posibles( OUT oids JSON )
 BEGIN
-	DECLARE cantidades_creacion_receta JSON;
-	DECLARE listado_ids JSON;
 	DECLARE dposicion_receta INT;
-	DECLARE dposicion_ingrediente INT;
-	DECLARE dposicion_resultado INT;
+	DECLARE dtotal_receta INT;
+	DECLARE dtotal_posibles_receta INT;
+	DECLARE dtotal_posibles_receta_arreglos INT;
     DECLARE did_receta INT;
-    DECLARE offset_dposicion_receta INT;
-	DECLARE listado_recetas_posibles JSON;
-	DECLARE ingrediente_receta JSON;
-	DECLARE ingrediente_resultados JSON;
-	DECLARE resultado_final_receta JSON;
-	DECLARE receta_resultados JSON;
-	DECLARE ids_resultados JSON;
-	DECLARE coincidencia_existencia INT;
-	DECLARE flag_existencia INT;
-	SET listado_recetas_posibles = JSON_ARRAY();
-	SET listado_ids = JSON_ARRAY();
-	SET cantidades_creacion_receta = JSON_ARRAY();
-	SET ingrediente_receta = JSON_ARRAY();
-	SET ingrediente_resultados = JSON_ARRAY();
-    SET resultado_final_receta = JSON_ARRAY();
-	SET receta_resultados = JSON_ARRAY();
-    SET ids_resultados = JSON_ARRAY();
-    SET dposicion_receta = (
-		SELECT COUNT(*)
-		FROM (
-			SELECT fk_receta 
-			FROM detalle_materia_prima_receta 
-			GROUP BY fk_receta
-		) AS subquery
-	);
-	ciclo_recetas: LOOP
+    DECLARE ids_resultados JSON;
+	SET ids_resultados = JSON_ARRAY();
+    SET dposicion_receta = (SELECT COUNT(DISTINCT fk_receta) FROM detalle_materia_prima_receta);
+    ciclo_recetas: LOOP
 		IF dposicion_receta = 0 THEN
 			LEAVE ciclo_recetas;
 		END IF;
-
-        SET offset_dposicion_receta = dposicion_receta - 1;
-        SET did_receta = (
-			SELECT fk_receta 
+        SET dtotal_posibles_receta_arreglos = dposicion_receta - 1;
+        SET did_receta = (SELECT fk_receta
 			FROM detalle_materia_prima_receta
 			GROUP BY fk_receta
-			LIMIT 1 OFFSET offset_dposicion_receta
+			LIMIT dtotal_posibles_receta_arreglos,1);
+        SET dtotal_posibles_receta = (
+			SELECT COUNT(*) FROM (
+				SELECT dmpr.cantidad, dmpr.fk_materia_prima, SUM(cantidad_usable) AS cantidad_usable
+					FROM detalle_materia_prima_receta dmpr
+					INNER JOIN
+						(SELECT fk_materia_prima,
+							   CASE WHEN cantidad_total IS NULL THEN cantidad ELSE cantidad_total END AS cantidad_usable
+						FROM (
+							SELECT a.id_almacen, a.fk_materia_prima, a.cantidad, (a.cantidad - SUM(das.cantidad)) AS cantidad_total, a.caducidad
+							FROM almacen a
+							LEFT JOIN detalle_almacen_stock das
+							ON id_almacen = fk_almacen
+							WHERE estatus = TRUE
+							AND DATE(caducidad) > DATE(NOW())
+							GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
+							HAVING cantidad_total IS NULL OR cantidad_total > 0
+							ORDER BY a.caducidad DESC
+						) AS t) AS t2
+					ON t2.fk_materia_prima = dmpr.fk_materia_prima
+				WHERE fk_receta = 1
+				GROUP BY cantidad, fk_materia_prima
+			) AS t3
 		);
-        
-		SELECT JSON_ARRAYAGG(JSON_OBJECT(
-			   'cantidad', cantidad,
-			   'fk_materia_prima', fk_materia_prima
-			))
-			INTO cantidades_creacion_receta
-		FROM detalle_materia_prima_receta
-		WHERE fk_receta = did_receta;
-        SET dposicion_ingrediente = JSON_LENGTH(cantidades_creacion_receta);
-		ciclo_ingredientes: LOOP
-			IF dposicion_ingrediente = 0 THEN
-				LEAVE ciclo_ingredientes;
-			END IF;
-			SET flag_existencia = TRUE;
-			SET coincidencia_existencia = (SELECT COUNT(*)
-			FROM (
-				SELECT fk_materia_prima, SUM(cantidad) AS existencia FROM almacen WHERE estatus = TRUE AND DATE(caducidad) > DATE(NOW()) GROUP BY fk_materia_prima
-			) AS subquery
-			WHERE subquery.fk_materia_prima = (JSON_EXTRACT(
-				cantidades_creacion_receta,
-				CONCAT('$[', dposicion_ingrediente - 1 , '].fk_materia_prima')
-			))
-			AND subquery.existencia >= (JSON_EXTRACT(
-				cantidades_creacion_receta,
-                CONCAT('$[', dposicion_ingrediente - 1 , '].cantidad')
-			)));
-			IF coincidencia_existencia = 0 THEN
-				SET flag_existencia = FALSE;
-			END IF;
-            
-			SET ingrediente_resultados = JSON_ARRAY_APPEND(
-				ingrediente_resultados,
-				'$',
-				JSON_OBJECT(
-					'flag_existencia', flag_existencia,
-                    'id_materia_prima', (JSON_EXTRACT(
-						cantidades_creacion_receta,
-						CONCAT('$[', dposicion_ingrediente - 1 , '].fk_materia_prima')
-					))
-				)
-			);
-			SET dposicion_ingrediente = dposicion_ingrediente - 1;
-			ITERATE ciclo_ingredientes;
-		END LOOP;
-        
-		SET receta_resultados = JSON_ARRAY_APPEND(
-			receta_resultados,
-			'$',
-			JSON_OBJECT(
-				'id_receta', did_receta,
-				'ingrediente_resultados', ingrediente_resultados
-			)
-		);
-        SET ingrediente_resultados = JSON_ARRAY();
-        SET dposicion_receta = dposicion_receta - 1;
+        SET dtotal_receta = (SELECT COUNT(*) FROM detalle_materia_prima_receta WHERE fk_receta = did_receta);
+		IF dtotal_posibles_receta = dtotal_receta THEN
+			SET ids_resultados = JSON_ARRAY_APPEND(ids_resultados, '$', did_receta);
+        END IF;
+		SET dposicion_receta = dposicion_receta - 1;
         ITERATE ciclo_recetas;
 	END LOOP;
-    SET dposicion_resultado = JSON_LENGTH(receta_resultados);
-	ciclo_resultado: LOOP
-		IF dposicion_resultado = 0 THEN
-			LEAVE ciclo_resultado;
-		END IF;
-		SET resultado_final_receta = JSON_EXTRACT(receta_resultados, CONCAT('$[', dposicion_resultado - 1,']'));
-		IF NOT(JSON_CONTAINS(
-			JSON_EXTRACT(resultado_final_receta
-			, '$.ingrediente_resultados[*].flag_existencia'),
-				'0'
-			))
-		THEN 
-			SET ids_resultados = JSON_ARRAY_APPEND(ids_resultados, '$', JSON_EXTRACT(resultado_final_receta, '$.id_receta'));
-		END IF;        
-        SET dposicion_resultado = dposicion_resultado - 1;
-        ITERATE ciclo_resultado;
-	END LOOP;
-    SELECT *
-	FROM receta
-	WHERE id_receta IN (
-	  SELECT * FROM JSON_TABLE(ids_resultados, '$[*]' COLUMNS (id VARCHAR(255) PATH '$')) AS jt
-	);
-    SET ids = ids_resultados;
+    SET oids = ids_resultados;
 END //
 DELIMITER ;
 
 CALL consultar_recetas_posibles(@ids);
+SELECT @ids;
