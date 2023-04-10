@@ -2,7 +2,7 @@ from wtforms import Form, StringField, IntegerField, validators
 
 class Clientes(Form):
     id_persona = IntegerField('idPersona')
-    id_empleado = IntegerField('idCliente')
+    id_cliente = IntegerField('idCliente')
     id_usuario = IntegerField('idUsuario')
     nombre = StringField('Nombre', [
         validators.DataRequired(message='Este campo es requerido')])
