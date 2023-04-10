@@ -109,20 +109,22 @@ SELECT
 
 DROP VIEW IF EXISTS vista_almacen;
 CREATE VIEW vista_almacen AS
-SELECT mp.id_materia_prima, mp.nombre, sub_query.cantidad_usable, mp.estatus, mp.fecha_creacion, mp.fecha_actualizacion, um.descripcion AS unidad_medida
-        FROM (SELECT id_almacen, fk_materia_prima, 
-				   CASE WHEN cantidad_total IS NULL THEN cantidad ELSE cantidad_total END AS cantidad_usable
-			FROM (
-				SELECT a.id_almacen, a.fk_materia_prima, a.cantidad, (a.cantidad - SUM(das.cantidad)) AS cantidad_total
-				FROM almacen a
-				LEFT JOIN detalle_almacen_stock das
-				ON id_almacen = fk_almacen
-				WHERE estatus = TRUE
-				AND DATE(caducidad) > DATE(NOW())
-				GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
-				HAVING cantidad_total IS NULL OR cantidad_total > 0
-			) t) AS sub_query
-        INNER JOIN materia_prima mp
-        ON mp.id_materia_prima = sub_query.fk_materia_prima
-        INNER JOIN unidad_medida um
-        ON mp.fk_unidad_medida = um.id_unidad_medida;
+SELECT id_materia_prima, nombre, cantidad_usable, descripcion AS unidad_medida, caducidad FROM materia_prima
+				INNER JOIN (SELECT 
+					fk_materia_prima, 
+					CASE WHEN cantidad_total IS NULL THEN cantidad ELSE cantidad_total END AS cantidad_usable,
+					caducidad
+				FROM (
+					SELECT a.id_almacen, a.fk_materia_prima, a.cantidad, (a.cantidad - SUM(das.cantidad)) AS cantidad_total, a.caducidad
+					FROM almacen a
+					LEFT JOIN detalle_almacen_stock das
+					ON id_almacen = fk_almacen
+					WHERE estatus = TRUE
+					AND DATE(caducidad) > DATE(NOW())
+					GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
+					HAVING cantidad_total IS NULL OR cantidad_total > 0
+					ORDER BY a.caducidad DESC
+				) AS t) AS t2
+                ON fk_materia_prima = id_materia_prima
+                INNER JOIN unidad_medida
+                ON fk_unidad_medida = id_unidad_medida;
