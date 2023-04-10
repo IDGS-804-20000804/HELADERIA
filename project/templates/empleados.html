@@ -33,20 +33,12 @@
                             <td>{{empleados[1]}}</td>
                             <td>{{empleados[9]}}</td>
                             <td>{{empleados[13]}} {{empleados[14]}} {{empleados[11]}} {{empleados[12]}}</td>
-<<<<<<< HEAD
-                            <td >
-                                {# Pasar el id (lo que hay en juego[0] #}
-                                <a type="button"  href="empleados?id={{empleados[0]}}"  class="button is-info"  >Editar</a>
-                            
-                                <a class="button is-danger">Eliminar</a>
-=======
                             <td><a href="empleados?id={{empleados[0]}}"
-                                class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><i class="icon-pencil icon-white"></i>
+                                class="btn btn-warning"><i class="icon-pencil icon-white"></i>
                              Modificar</a></td>
                              <td><a href="empleados?id={{empleados[0]}}"
                              class="btn btn-danger"><i class="icon-remove icon-white"></i>
                           Eliminar</a>
->>>>>>> f1ba7100166e356d73aa28fb97f6b6740129c6ef
                             </td>
                         </tr>
                         {% endfor %}
@@ -58,7 +50,7 @@
             </div>
         </div>
     </div>
-    <form name="sent" action="insertar_empleado" id="form1" method="POST">
+    <form name="sent" action="actualizar_empleados" id="form1" method="POST">
         <div hidden> 
             {{render_firld(form.id_persona,class='form-control')}} 
         </div>

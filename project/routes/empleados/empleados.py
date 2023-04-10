@@ -63,21 +63,45 @@ def realizar_insercion():
 def buscar_empleado_id(id):
     # Obtener el juego por ID
     emple = obtener_empleado_por_id(id)
+
+    return redirect(url_for('empleados.actualizar_empleados', empleados=emple))
+
+
+# @empleados.route("/empleados")
+# def actualizar_empleados():
+#     id = request.form["id"]
+#     print("Hola estamos en actualizar ")
+#     empleados[5] = form.nombre
+#     apellidoP = request.form["apellidoP"]
+#     apellidoM = request.form["apellidoM"]
+#     edad = request.form["edad"]
+#     materia = request.form["materia"]
+#     controller.controller_maestros.actualizar_maestro(id,nombre, apellidoP, apellidoM, edad, materia)
+#     return redirect("/maestros")
+
+
+
+@app.route('/editar_empleado/<id_empleado>', methods=['GET'])
+def editar_empleado(id_empleado):
+    # Obtener los datos del empleado con el id_empleado dado
+    empleado = obtener_empleado_por_id(id_empleado)
+
+    # Asignar los valores del empleado a las variables del formulario
+    form.nombre.data = empleado['nombre']
+    form.apaterno.data = empleado['apaterno']
+    form.amaterno.data = empleado['amaterno']
+    form.telefono.data = empleado['telefono']
+    form.numero_exterior.data = empleado['numero_exterior']
+    form.codigo_postal.data = empleado['codigo_postal']
+    form.calle.data = empleado['calle']
+    form.numero_interior.data = empleado['numero_interior']
+    form.colonia.data = empleado['colonia']
+    form.municipio.data = empleado['municipio']
+    form.estado.data = empleado['estado']
+    form.pais.data = empleado['pais']
     
-    return redirect(url_for('empleados.empleados', empleados=emple))
-
-
-@empleados.route("/empleados", methods=["POST"])
-def actualizar_empleados():
-    id = request.form["id"]
-    nombre = request.form["Nombre"]
-    apellidoP = request.form["apellidoP"]
-    apellidoM = request.form["apellidoM"]
-    edad = request.form["edad"]
-    materia = request.form["materia"]
-    controller.controller_maestros.actualizar_maestro(id,nombre, apellidoP, apellidoM, edad, materia)
-    return redirect("/maestros")
-
+    # Renderizar la plantilla con los datos del empleado en los campos del formulario
+    return render_template('editar_empleado.html', form=form, empleados=empleado)
 
 
 # @empleados.route('/empleados',methods=["POST","GET"])
