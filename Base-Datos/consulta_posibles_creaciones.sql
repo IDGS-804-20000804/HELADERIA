@@ -41,7 +41,7 @@ BEGIN
 							ORDER BY a.caducidad DESC
 						) AS t) AS t2
 					ON t2.fk_materia_prima = dmpr.fk_materia_prima
-				WHERE fk_receta = 1
+				WHERE fk_receta = did_receta
 				GROUP BY cantidad, fk_materia_prima
 			) AS t3
 		);
