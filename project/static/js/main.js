@@ -1,7 +1,6 @@
 function inicializarModulo() {
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
-    $('#detalleClienteEditar').modal({backdrop: 'static', keyboard: false})
 
     //Modales de Materia Prima al modificar
     $('#detallemateriaPrimaModificar').modal('show'); // abrir
@@ -14,8 +13,26 @@ function inicializarModulo() {
       //Modales de Provedor
       $('#detalleProveedorModificar').modal('show'); // abrir
       $('#detalleProveedorModificar').modal({backdrop: 'static', keyboard: false})
+
+      
 }
 
+function clientes(){
+    $('#detalleCliente').modal('show'); // abrir
+}
+
+function roles(){
+    var arr = [];
+
+    $("input:checkbox[name=check]:checked").each(function(){
+    arr.push($(this).val());
+});
+
+console.log(arr);
+alert(arr)
+sessionStorage.setItem('rol',arr)
+
+}
 // function precio(){
 //     var precio=$('#precio').value()
 //     alert(precio)

@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
 from controllers.controllerEmpleado import obtener_empleados,insertar_empleado
+import json
+
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
@@ -20,19 +22,26 @@ def empleado():
         colonia = create_form.colonia.data
         correo = create_form.correo.data
         contrasenia = create_form.contrasenia.data
-        rol = create_form.rol.data
         id_Empleado=''
         id_Usuario=''
         id_Persona=''
+        rol1=request.form.get('cbox1')
+        rol2=request.form.get('cbox2')
+        rol3=request.form.get('cbox3')
+        rol4=request.form.get('cbox4')
+        rol5=request.form.get('cbox5')
+        rol6=request.form.get('cbox6')
+        rol7=request.form.get('cbox7')
         # Lógica para insertar empleado en la base de datos
-        realizar_insercion(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+        realizar_insercion(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol7,id_Empleado,id_Usuario,id_Persona)
         # De cualquier modo, y si todo fue bien, redireccionar
         return redirect(url_for('empleados.empleado'))
     else:
         create_form = Empleados()
         emp = obtener_empleados()
-        print(emp)
+     
         return render_template('empleados.html', form=create_form, empleados=emp)
+
 
 
 @empleados.route('/insertar_empleado', methods=["POST"])
@@ -49,12 +58,28 @@ def realizar_insercion():
     colonia = request.form['colonia']
     correo = request.form['correo']
     contrasenia = request.form['contrasenia']
-    rol = request.form['rol']
+    rol1=request.form.get('cbox1')
+    rol2=request.form.get('cbox2')
+    rol3=request.form.get('cbox3')
+    rol4=request.form.get('cbox4')
+    rol5=request.form.get('cbox5')
+    rol6=request.form.get('cbox6')
+    rol7=request.form.get('cbox7')
+    roles=list()
+    roles=[rol1,rol2,rol3,rol4,rol5,rol6,rol7]
+    arreglo=[elemento for elemento in roles if elemento is not None]
+    print(arreglo)
+    rol = []
+    for cadena in arreglo:
+        rol.append(int(cadena))
+    print(rol)
+    json_string = json.dumps(rol)
+
     id_Empleado=''
     id_Usuario=''
     id_Persona=''
     # Lógica para insertar empleado en la base de datos
-    insertar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+    insertar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, json_string,id_Empleado,id_Usuario,id_Persona)
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect(url_for('empleados.empleado'))
 
