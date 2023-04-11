@@ -33,7 +33,7 @@
                             <td>{{empleados[1]}}</td>
                             <td>{{empleados[9]}}</td>
                             <td>{{empleados[13]}} {{empleados[14]}} {{empleados[11]}} {{empleados[12]}}</td>
-                            <td><a href="empleadosModificar?id={{empleados[0]}}"
+                            <td><a href="empleados?id={{empleados[0]}}"
                                 class="btn btn-warning"><i class="icon-pencil icon-white"></i>
                              Modificar</a></td>
                              <td><a href="empleados?id={{empleados[0]}}"
@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+  
     <!-- FORMULARIO DE EMPLEADO-->
     <div class="container">
         <br>
@@ -61,7 +62,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="insertar_empleado" id="form1" method="POST">
+                        <form name="sent" action="/empleadosModificar" id="form1" method="POST">
                             <div hidden> 
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>

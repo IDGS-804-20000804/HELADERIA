@@ -33,7 +33,7 @@
                             <td>{{clientes[1]}}</td>
                             <td>{{clientes[9]}}</td>
                             <td>{{clientes[13]}} {{clientes[14]}} {{clientes[11]}} {{clientes[12]}}</td>
-                            <td style="text-align: center;" ><a href="clientes?id={{clientes[0]}}"
+                            <td style="text-align: center;" ><a href="clientesModificar?id={{clientes[0]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
                              </a>
                              <a href="clientes?id={{clientes[0]}}"
@@ -66,7 +66,7 @@
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>
                             <div hidden> 
-                                {{render_firld(form.id_empleado,class='form-control')}}
+                                {{render_firld(form.id_cliente,class='form-control')}}
                             </div>
                             <div hidden> 
                                 {{render_firld(form.id_usuario,class='form-control')}}
