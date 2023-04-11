@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
-from controllers.controllerEmpleado import obtener_empleados,insertar_empleado
+from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id
 import json
+from flask import jsonify
 
 
 empleados = Blueprint('empleados', __name__)
@@ -83,9 +84,49 @@ def realizar_insercion():
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect(url_for('empleados.empleado'))
 
+@empleados.route("/empleadosModificar",methods=['GET','POST'])
+def modificar():
+   create_fprm=Empleados(request.form)
+   if request.method=='GET':
+      id=request.args.get('id')
+      emp=obtener_empleado_por_id(id)
+      create_fprm.id_empleado.data=request.args.get('id')
+      create_fprm.id_persona.data=emp[0][13]
+      create_fprm.id_usuario.data=emp[0][14]
+      create_fprm.nombre.data=emp[0][1]
+      create_fprm.apaterno.data=emp[0][2]
+      create_fprm.amaterno.data=emp[0][3]
+      create_fprm.telefono.data=emp[0][4] 
+      create_fprm.calle.data=emp[0][8] 
+      create_fprm.codigo_postal.data=emp[0][5] 
+      create_fprm.colonia.data=emp[0][9]   
+      create_fprm.numero_exterior.data=emp[0][6]   
+      create_fprm.numero_interior.data=emp[0][7]   
+      create_fprm.correo.data=emp[0][10]   
+      create_fprm.contrasenia.data=emp[0][11]          
+      emp = obtener_empleados()
+      print(emp)
+   return render_template('empleadosModificar.html', form= create_fprm, empleados=emp)
 
+@empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
+def eliminar_empleado():
+    if request.method == 'POST':
+        id = request.form.get('id')
+        eliminar_empleado_por_id(id)
+        return redirect(url_for('empleados.empleados'))
+    else:
+        id = request.args.get('id')
+        emp = obtener_empleado_por_id(id)
+        return render_template('empleados.html', empleado=emp[0], id=id)
 
-
+@empleados.route('/empleadosEliminarAjax', methods=['POST'])
+def eliminar_empleado_ajax():
+    try:
+        id = request.form.get('id')
+        eliminar_empleado_por_id(id)
+        return jsonify({'status': 'OK'})
+    except Exception as e:
+        return jsonify({'status': 'ERROR', 'message': str(e)})
 
 
 

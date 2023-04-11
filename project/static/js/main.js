@@ -1,4 +1,7 @@
 function inicializarModulo() {
+     //Modales de Empleados al modificar
+     $('#detalleEmpleadoModificar').modal('show'); // abrir
+
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
 
@@ -33,6 +36,54 @@ alert(arr)
 sessionStorage.setItem('rol',arr)
 
 }
+
+function eliminarEmpleado(id) {
+    Swal.fire({
+        title: '¿Estás seguro de eliminar el cliente?',
+        text: 'No podrás revertir esto.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '{{url_for("empleados.eliminar_empleado_ajax")}}',
+                data: {'id': id},
+                success: function(data) {
+                    if (data.status === 'OK') {
+                        Swal.fire({
+                            title: 'Empleado eliminado',
+                            icon: 'success'
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error al eliminar empleado',
+                            text: data.message,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error al eliminar empleado',
+                        text: 'Ha ocurrido un error al intentar eliminar al empleado.',
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+    });
+}
+
+
+//Elimnar empleados
+
 // function precio(){
 //     var precio=$('#precio').value()
 //     alert(precio)

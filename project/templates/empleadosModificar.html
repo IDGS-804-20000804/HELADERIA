@@ -3,7 +3,7 @@
 {%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong>Agregar</strong></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleadoModificar"><strong>Agregar</strong></button>
     <!-- CATÁLOGO DE EMPLEADO-->
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
@@ -33,9 +33,9 @@
                             <td style="text-align: center;" ><a href="empleadosModificar?id={{empleados[0]}}"
                                 class="btn btn-outline-warning"><i class="fas fa-pencil-alt"></i>
                              </a>
-                             <a  class="btn btn-outline-danger" onclick="eliminarEmpleado('{{empleados[0].id}}')">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                             <a href="{{ url_for('empleados.eliminar_empleado', id=empleados[0]) }}"
+                             class="btn btn-outline-danger" onclick="eliminar()"><i class="fas fa-trash-alt"></i>
+                          </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -50,12 +50,11 @@
     <!-- FORMULARIO DE EMPLEADO-->
     <div class="container">
         <br>
-        <div class="modal fade" id="detalleEmpleado" tabindex="-1" aria-labelledby="detalleEmpleado" aria-hidden="true" >
+        <div class="modal fade" id="detalleEmpleadoModificar" tabindex="-1" aria-labelledby="detalleEmpleadoModificar" aria-hidden="true" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
                         <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form name="sent" action="insertar_empleado" id="form1" method="POST">
@@ -169,12 +168,12 @@
                                         {% endfor %}<br><br> -->
 
                                         <label><input type="checkbox" id="cbox1" value="1" name="cbox1"> Administrador</label>
-                                                <input type="checkbox" id="cbox2" value="2" name="cbox2"> <label for="cbox2"> Cliente</label>
-                                                <input type="checkbox" id="cbox2" value="3" name="cbox3">  <label for="cbox3"> Vendedor</label>
-                                                <input type="checkbox" id="cbox2" value="4" name="cbox4"> <label for="cbox4"> Repartidor</label>
-                                                <input type="checkbox" id="cbox2" value="5" name="cbox5"> <label for="cbox5"> Comprador</label>
-                                                <input type="checkbox" id="cbox2" value="6" name="cbox6"> <label for="cbox6"> Gerente</label>
-                                                <input type="checkbox" id="cbox2" value="7" name="cbox7"> <label for="cbox7"> Productor</label>
+                                        <input type="checkbox" id="cbox2" value="2" name="cbox2"><label for="cbox2"> Cliente</label>
+                                        <input type="checkbox" id="cbox2" value="3" name="cbox3"><label for="cbox3"> Vendedor</label>
+                                        <input type="checkbox" id="cbox2" value="4" name="cbox4"><label for="cbox4"> Repartidor</label>
+                                        <input type="checkbox" id="cbox2" value="5" name="cbox5"><label for="cbox5"> Comprador</label>
+                                        <input type="checkbox" id="cbox2" value="6" name="cbox6"><label for="cbox6"> Gerente</label>
+                                        <input type="checkbox" id="cbox2" value="7" name="cbox7"><label for="cbox7"> Productor</label>
                                 </div>
                                 <div class="col-4"></div>
                                 <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
