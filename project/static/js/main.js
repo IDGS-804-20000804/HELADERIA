@@ -1,9 +1,12 @@
 function inicializarModulo() {
      //Modales de Empleados al modificar
      $('#detalleEmpleadoModificar').modal('show'); // abrir
+     $('#alertaEliminar').modal('show'); // abrir
+     $('#alertaEliminar').modal({backdrop: 'static', keyboard: false})
 
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
+    
 
     //Modales de Materia Prima al modificar
     $('#detallemateriaPrimaModificar').modal('show'); // abrir

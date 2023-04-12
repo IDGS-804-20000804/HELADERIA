@@ -4,7 +4,6 @@
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong>Agregar</strong></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#alertaEliminar"><strong>Eliminar</strong></button>
 
     <!-- CATÁLOGO DE EMPLEADO-->
     <div id="divCatalogoEmpleado" class="col-12">
@@ -195,29 +194,32 @@
 <!-- FORMULARIO DE EMPLEADO-->
 <div class="container">
     <br>
-    <div class="modal fade" id="alertaEliminar" tabindex="-1" aria-labelledby="alertaEliminar" aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="alertaEliminar" tabindex="-1" aria-labelledby="alertaEliminar" aria-hidden="true" data-controls-modal="alertaEliminar" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header" style="background: #3D7692; text-align: center">
-                    <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
                     <form name="sent" action="empleadosEliminar" id="form1" method="POST">
-                            <h4>Desea eliminar este registro</h4>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <div class="text-center">
+                                   <img src="../static/img/iconos/iconoEliminar.svg" width="120px"><br><br>
+                                </div>
+                                <h4 style='color: #3D7692; font-weight: bold;text-align: center;'>¿DESEA REALIZAR LA ELIMINACIÓN DEL EMPLEADO?</h4>
+                            </div>
                             <div hidden> 
                                 {{render_firld(form.id_persona,class='form-control')}} 
                             </div>
                             <div class="col-4"></div>
                             <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                           
                             <div class="pt-3 pb-3 text-center">
-                                <button class="btn btn-outline-success mx-2">
-                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Aceptar</button>
+                                    <a href="{{ url_for('empleados.empleado') }}" class="btn btn-outline-danger mx-2"  class="btn-close" >
+                                    CANCELAR</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-outline-success mx-2">
+                                        ACEPTAR</button>
                             </div>
-                            <div class="pt-3 pb-3 text-center">
-                                <button class="btn btn-outline-success mx-2" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Cancelar</button>
-                            </div>
+                            
+                        </div>
                         </form>
                         </div>
                 </div>
