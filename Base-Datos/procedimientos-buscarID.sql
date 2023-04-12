@@ -1,14 +1,27 @@
+DROP PROCEDURE IF EXISTS buscar_empleado_id;
 DELIMITER //
-CREATE PROCEDURE buscar_empleado_id(IN p_id_empleado INT)
+CREATE PROCEDURE buscar_empleado_id(
+									IN p_id_empleado INT
+)
 BEGIN
   SELECT e.id_empleado, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.estatus
-  FROM empleado e
-  INNER JOIN persona p ON e.fk_persona = p.id_persona
-  INNER JOIN usuario u ON e.fk_usuario = u.id_usuario
-  WHERE e.id_empleado = p_id_empleado;
+         p.numero_exterior, p.numero_interior, p.calle, p.colonia, 
+         rol.id_usuario, rol.correo, rol.estatus, rol.roles FROM empleado e
+				INNER JOIN (SELECT id_usuario,
+						correo,
+						estatus,
+						(SELECT JSON_ARRAYAGG(fk_rol)
+							FROM rol_usuario
+							WHERE fk_usuario = id_usuario)
+						AS roles
+					FROM usuario
+					WHERE id_usuario = id_usuario
+				) AS rol
+                ON fk_usuario = id_usuario
+                INNER JOIN persona p ON e.fk_persona = p.id_persona;
 END //
 DELIMITER ;
+-- CALL buscar_empleado_id(2);
 
 DROP PROCEDURE IF EXISTS buscar_cliente_id;
 DELIMITER //
