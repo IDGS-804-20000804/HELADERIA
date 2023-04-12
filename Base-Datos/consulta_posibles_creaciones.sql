@@ -38,7 +38,7 @@ BEGIN
 							AND DATE(caducidad) > DATE(NOW())
 							GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
 							HAVING cantidad_total IS NULL OR cantidad_total > 0
-							ORDER BY a.caducidad DESC
+							ORDER BY a.caducidad
 						) AS t) AS t2
 					ON t2.fk_materia_prima = dmpr.fk_materia_prima
 				WHERE fk_receta = did_receta

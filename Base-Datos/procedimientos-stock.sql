@@ -104,7 +104,7 @@ BEGIN
                     AND a.fk_materia_prima = dfk_materia_prima
 					GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
 					HAVING cantidad_total IS NULL OR cantidad_total > 0
-					ORDER BY a.caducidad DESC
+					ORDER BY a.caducidad
 				) AS t
 			) AS t2;
 			SET dposicion_existencias = 0;
@@ -124,12 +124,12 @@ BEGIN
 						INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
 							VALUES (dcantidad_usable, did_almacen, did_stock);
 						UPDATE almacen SET estatus = FALSE WHERE id_almacen = did_almacen;
+						ITERATE subciclo_tabla_intermedia;
 					ELSE 
 						INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
 							VALUES (dcantidad, did_almacen, did_stock);
 						LEAVE subciclo_tabla_intermedia;
 					END IF;
-					ITERATE subciclo_tabla_intermedia;
 				END LOOP;
 			ELSE 
 				INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
