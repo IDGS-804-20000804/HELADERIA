@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, IntegerField, validators,RadioField
+from wtforms import Form, StringField, IntegerField, validators,RadioField,SelectMultipleField
 
 class Empleados(Form):
     opciones_tolerancia = [(1, "Vendedor"), 

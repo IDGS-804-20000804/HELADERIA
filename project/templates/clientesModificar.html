@@ -1,0 +1,168 @@
+{%extends 'main.html'%}
+{%block content%}
+{%from "_macros.html" import render_firld%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleClienteEditar"><strong>Agregar</strong></button>
+    <!-- CATÁLOGO DE EMPLEADO-->
+    <div id="divCatalogoEmpleado" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black"  style=" font-size: 25px;"><b>Cat&aacute;logo de Clientes</b> </span>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
+                </div>
+                <br>
+                <table class="table table-hover" id="datos">
+                    <thead  style="background: #e2e2e0;">
+                        <tr>
+                            <th style=" text-align: center;">Nombre</th>
+                            <th style="  text-align: center;">Correo</th> 
+                            <th style=" text-align: center;">Tel&eacute;fono</th>
+                            <th style=" text-align: center;">Dirección</th>
+                            <th class="col-2" style="text-align: center;">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for clientes in clientes %}
+                        <tr>
+                            <td>{{clientes[5]}} {{clientes[6]}} {{clientes[7]}}</td>
+                            <td>{{clientes[1]}}</td>
+                            <td>{{clientes[9]}}</td>
+                            <td>{{clientes[13]}} {{clientes[14]}} {{clientes[11]}} {{clientes[12]}}</td>
+                            <td style="text-align: center;" ><a href="clientesModificar?id={{clientes[0]}}"
+                                class="btn btn-outline-warning" ><i class="fas fa-pencil-alt"></i>
+                             </a>
+                             <a href="clientes?id={{clientes[0]}}"
+                             class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
+                          </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tr class='noSearch hide'>
+                        <td colspan="10000"></td>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-- FORMULARIO DE EMPLEADO-->
+    <div class="container">
+        <br>
+        <div class="modal fade" id="detalleClienteEditar" tabindex="-1" aria-labelledby="detalleClienteEditar" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Cliente</b></span>
+                    </div>
+                    <div class="modal-body">
+                        <form name="sent" action="/clientes" id="form1" method="POST">
+                            <div hidden> 
+                                {{render_firld(form.id_persona,class='form-control')}} 
+                            </div>
+                            <div hidden> 
+                                {{render_firld(form.id_cliente,class='form-control')}}
+                            </div>
+                            <div hidden> 
+                                {{render_firld(form.id_usuario,class='form-control')}}
+                            </div>
+                            <div style="color:#CA9F8B" class="mt-4">
+                                <i class="fas fa-grin-alt"></i>
+                                <label>Datos Personales</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
+                                    <input id="txtNombre" type="text" class="form-control" style="background: #F4F6F6;" /> -->
+                                    {{render_firld(form.nombre,class='form-control')}}<br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtApellidoPaterno" class="form-label">Apellido Paterno<span class="text-danger">*</span></label>
+                                    <input id="txtApellidoPaterno" type="text" class="form-control" style="background: #F4F6F6;" /> -->
+                                    {{render_firld(form.apaterno,class='form-control')}}<br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtApellidoMaterno" class="form-label">Apellido Materno <span>(Opcional)</span></label>
+                                    <input id="txtApellidoMaterno" type="text" class="form-control" style="background: #F4F6F6;" >  -->
+                                    {{render_firld(form.amaterno,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtTelefono" class="form-label">Tel&eacute;fono<span class="text-danger">*</span></label>
+                                    <input id="txtTelefono" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.telefono,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtCorreo" class="form-label">Correo<span class="text-danger">*</span></label>
+                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.calle,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtCalle" class="form-label">Calle<span class="text-danger">*</span></label>
+                                    <input id="txtCalle" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.colonia,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
+                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.numero_exterior,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtNumero" class="form-label">Numero<span class="text-danger">*</span></label>
+                                    <input id="txtNumero" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.numero_interior,class='form-control')}}
+                                    <br>
+                                </div>
+                            </div>
+                            <!-- <div style="color:#CA9F8B;" class="mt-4">
+                                <i class="fa fa-address-book"></i>
+                                <label>Datos de Empleado</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="txtFechaC" class="form-label">Fecha creación<span class="text-danger">*</span></label>
+                                    <input id="txtFechaC" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                </div>
+                                <div class="col-6">
+                                    <label for="txtFechaA" class="form-label">Fecha actualización<span class="text-danger">*</span></label>
+                                    <input id="txtFechaA" type="text" class="form-control" style="background: #F4F6F6;"> <br>
+                                </div>
+                            </div> -->
+                            <div style="color:#CA9F8B;" class="mt-4">
+                                <i class="fa fa-lock"></i>
+                                <label>Datos de Seguridad</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- <label for="txtCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
+                                    <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.correo,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                        <!-- <input id="txtContrasenia" type="password" class="form-control" style="background: #F4F6F6;"> -->
+                                        {{render_firld(form.contrasenia,class='form-control',type='password')}}
+                                </div>
+                                <div class="col-4"></div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                                <div class="pt-3 pb-3 text-center">
+                                    <a href="clientes" class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+{%endblock%}

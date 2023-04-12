@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarProveedor" type="text" onkeyup="buscarTabla()" /></span>
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
                 </div>
                 <br>
                 <table class="table table-hover" id="datos">
@@ -33,7 +33,7 @@
                             <td>{{proveedor[2]}}</td>
                             <td>{{proveedor[6]}}</td>
                             <td>{{proveedor[10]}} {{proveedor[11]}} {{proveedor[8]}} {{proveedor[9]}} {{proveedor[7]}}</td>
-                            <td style="text-align: center;" ><a href="proveedor?id={{proveedor[0]}}"
+                            <td style="text-align: center;" ><a href="provedorModificar?id={{proveedor[0]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
                              </a>
                              <a href="proveedor?id={{proveedor[0]}}"

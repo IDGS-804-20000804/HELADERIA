@@ -29,3 +29,22 @@ def obtener_materia_prima():
         # Cerrar la conexión a la base de datos
         conexion.close()
         return materiaP
+    
+def obtener_materiaP_por_id(id):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    materiaPrima = None
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.execute('CALL buscar_materia_prima_id(%s)',(id))
+            materiaPrima = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar materia prima: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return materiaPrima
