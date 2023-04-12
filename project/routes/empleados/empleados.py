@@ -111,6 +111,7 @@ def modificar():
 @empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
 def eliminar_empleado():
     create_fprm = Empleados(request.form)
+    emp = obtener_empleados()
     if request.method == 'GET':
         # id = request.args.get('id')
         create_fprm.id_persona.data=request.args.get('id')
@@ -119,7 +120,7 @@ def eliminar_empleado():
         eliminar_empleado_por_id(id)  
         # emp = obtener_empleados() # Comenta esta línea si no la necesitas
         return redirect(url_for('empleados.empleado'))
-    return render_template('empleadosEliminar.html', form=create_fprm)
+    return render_template('empleadosEliminar.html', form=create_fprm, empleados=emp)
 
 # @empleados.route('/eliminar_empleado_ajax', methods=['POST'])
 # def eliminar_empleado_ajax():
