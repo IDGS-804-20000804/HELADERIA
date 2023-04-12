@@ -137,12 +137,11 @@ CREATE TABLE detalle_venta (
 );
 CREATE TABLE envio (
 	id_envio INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	fecha_entrega DATETIME NOT NULL,
 	entregado BOOLEAN NOT NULL DEFAULT FALSE,
 	fecha_creacion DATETIME NOT NULL DEFAULT NOW(),
 	fecha_actualizacion DATETIME NOT NULL DEFAULT NOW(),
 	fk_venta INT NOT NULL,
-	fk_empleado INT NOT NULL
+	fk_empleado INT
 );
 ALTER TABLE materia_prima ADD FOREIGN KEY (fk_unidad_medida) REFERENCES unidad_medida (id_unidad_medida);
 ALTER TABLE rol_usuario ADD FOREIGN KEY (fk_rol) REFERENCES roles (id_rol);
