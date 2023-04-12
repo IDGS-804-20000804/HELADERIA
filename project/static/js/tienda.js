@@ -116,3 +116,12 @@ function comprarButtonClicked() {
   shoppingCartItemsContainer.innerHTML = '';
   updateShoppingCartTotal();
 }
+
+// function compra(){
+//   const shoppingCartTotal =$('#precio').value;
+//   alert(shoppingCartTotal)
+//   if(shoppingCartTotal=="0MXM" || shoppingCartTotal=="0.00MXM"){
+//     Swal.fire('Datos de Compra', 'No has seleccionado ningun producto', 'info');
+//   }
+// }
+

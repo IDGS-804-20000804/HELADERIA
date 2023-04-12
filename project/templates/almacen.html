@@ -1,0 +1,139 @@
+{%extends 'main.html'%}
+{%block content%}
+{%from "_macros.html" import render_firld%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#F5B7B1" data-bs-toggle="modal" data-bs-target="#detalleAlmacenCaducados"><strong>Caducados</strong></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#F5CBA7" data-bs-toggle="modal" data-bs-target="#detalleAlmacenProximos"><strong>Proximos a Caducar</strong></button>
+    <!-- CATÁLOGO DE EMPLEADO-->
+    <div id="divCatalogoEmpleado" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black"  style=" font-size: 25px;"><b>Cat&aacute;logo de Almacen</b> </span>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
+                </div>
+                <br>
+                <table class="table table-hover" id="datos">
+                    <thead  style="background: #e2e2e0;">
+                        <tr>
+                            <th style=" text-align: center;">Nombre</th>
+                            <th style="  text-align: center;">Cantidad existente</th> 
+                            <th style=" text-align: center;">Unidad de Medida</th>
+                            <th style=" text-align: center;">Caducidad</th>
+                            <!-- <th class="col-2" style="text-align: center;">Acciones</th> -->
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for almacen in almacen %}
+                        <tr style="text-align: center;">
+                            <td>{{almacen[1]}}</td>
+                            <td>{{almacen[2]}}</td>
+                            <td>{{almacen[3]}}</td>
+                            <td>{{almacen[4]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tr class='noSearch hide'>
+                        <td colspan="10000"></td>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-- FORMULARIO DE EMPLEADO-->
+    <div class="container">
+        <br>
+        <div class="modal fade" id="detalleAlmacenProximos" tabindex="-1"  aria-labelledby="detalleAlmacenProximos" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Almacen(Proximos a Caducar)</b></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarPoxCaducados" type="text" onkeyup="buscarTablaPoxCaducados()" /></span>
+                            </div>
+                            <br>
+                            <table class="table table-hover" id="datosPoxCaducados">
+                                <thead  style="background: #e2e2e0;">
+                                    <tr>
+                                        <th style=" text-align: center;">Nombre</th>
+                                        <th style="  text-align: center;">Cantidad existente</th> 
+                                        <th style=" text-align: center;">Unidad de Medida</th>
+                                        <th style=" text-align: center;">Caducidad</th>
+                                        <!-- <th class="col-2" style="text-align: center;">Acciones</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    {% for almacen in almacen %}
+                                    <tr style="text-align: center;">
+                                        <td>{{almacen[1]}}</td>
+                                        <td>{{almacen[2]}}</td>
+                                        <td>{{almacen[3]}}</td>
+                                        <td>{{almacen[4]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tr class='noSearchPoxCaducados hide'>
+                                    <td colspan="10000"></td>
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="container">
+    <br>
+    <div class="modal fade" id="detalleAlmacenCaducados" tabindex="-1"  aria-labelledby="detalleAlmacenCaducados" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #3D7692; text-align: center">
+                    <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Almacen(Caducados)</b></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarCaducados" type="text" onkeyup="buscarTablaCaducados()" /></span>
+                        </div>
+                        <br>
+                        <table class="table table-hover" id="datosCaducados">
+                            <thead  style="background: #e2e2e0;">
+                                <tr>
+                                    <th style=" text-align: center;">Nombre</th>
+                                    <th style="  text-align: center;">Cantidad existente</th> 
+                                    <th style=" text-align: center;">Unidad de Medida</th>
+                                    <th style=" text-align: center;">Caducidad</th>
+                                    <!-- <th class="col-2" style="text-align: center;">Acciones</th> -->
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {% for almacen in almacen %}
+                                <tr style="text-align: center;">
+                                    <td>{{almacen[1]}}</td>
+                                    <td>{{almacen[2]}}</td>
+                                    <td>{{almacen[3]}}</td>
+                                    <td>{{almacen[4]}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tr class='noSearchCaducados hide'>
+                                <td colspan="10000"></td>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

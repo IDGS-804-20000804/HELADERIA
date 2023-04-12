@@ -16,5 +16,5 @@ import pymysql
 def get_connection():
     return pymysql.connect(host='localhost',
                                 user='root',
-                                password='vegetta777',
+                                password='12345678',
                                 db='gelatos')
