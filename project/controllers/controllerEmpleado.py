@@ -60,17 +60,23 @@ def obtener_empleado_por_id(id):
 
 
 def eliminar_empleado_por_id(id):
-    conn = get_connection()
-    cursor = conn.cursor()
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    empleado = None
     try:
-        cursor.callproc('eliminar_empleado', (id,))
-        conn.commit()
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.execute('CALL eliminar_empleado(%s)', (id,))
+            empleado = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
     except Exception as e:
-        conn.rollback()
-        raise e
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar empleado: ", e)
     finally:
-        cursor.close()
-        conn.close()
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return empleado
 
 
 

@@ -110,23 +110,25 @@ def modificar():
 
 @empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
 def eliminar_empleado():
+    create_fprm = Empleados(request.form)
+    if request.method == 'GET':
+        # id = request.args.get('id')
+        create_fprm.id_persona.data=request.args.get('id')
     if request.method == 'POST':
-        id = request.form.get('id')
-        eliminar_empleado_por_id(id)
-        return redirect(url_for('empleados.empleados'))
-    else:
-        id = request.args.get('id')
-        emp = obtener_empleado_por_id(id)
-        return render_template('empleados.html', empleado=emp[0], id=id)
+        id=create_fprm.id_persona.data
+        eliminar_empleado_por_id(id)  
+        # emp = obtener_empleados() # Comenta esta línea si no la necesitas
+        return redirect(url_for('empleados.empleado'))
+    return render_template('empleadosEliminar.html', form=create_fprm)
 
-@empleados.route('/empleadosEliminarAjax', methods=['POST'])
-def eliminar_empleado_ajax():
-    try:
-        id = request.form.get('id')
-        eliminar_empleado_por_id(id)
-        return jsonify({'status': 'OK'})
-    except Exception as e:
-        return jsonify({'status': 'ERROR', 'message': str(e)})
+# @empleados.route('/eliminar_empleado_ajax', methods=['POST'])
+# def eliminar_empleado_ajax():
+#     try:
+#         id = request.form.get('id')
+#         eliminar_empleado_por_id(id)
+#         return jsonify({'status': 'OK'})
+#     except Exception as e:
+#         return jsonify({'status': 'ERROR', 'message': str(e)})
 
 
 
