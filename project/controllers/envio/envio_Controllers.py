@@ -7,6 +7,21 @@ from datetime import datetime
 envioP= Blueprint('envio', __name__)
 
 @envioP.route('/envio')
-def envio():
-    create_form=forms.envio(request.form)
-    return render_template('envio.html',form=create_form)
+def obtener_envio():
+     # Obtener conexión a la base de datos
+    conexion = get_connection()
+    envio = []
+    try:
+        with conexion.cursor() as cursor:
+            # Ejecutar una consulta SELECT para obtener los datos de la vista
+            cursor.execute('SELECT * FROM vista_envio')
+            envio = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al obtener envio: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return envio

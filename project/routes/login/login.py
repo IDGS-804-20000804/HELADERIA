@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 
-login = Blueprint('login', __name__)
-main = Blueprint('main',__name__)
+login = Blueprint('login', __name__, url_prefix='/security')
+main = Blueprint('main',__name__, url_prefix='/security')
 
 @login.route('/login')
 def logins():
 
-    return render_template('login.html')
+    return render_template('/security/login.html')
 
 
 @main.route('/main')

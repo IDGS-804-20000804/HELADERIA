@@ -16,15 +16,35 @@
                 </div>
                 <br>
                 <table class="table table-hover" id="datos">
-                    <thead>
+                    <thead  style="background: #e2e2e0;">
                         <tr>
-                            <th style="border: 1px solid black; text-align: center;">ID Envio</th>
-                            <th style="border: 1px solid black;  text-align: center;">Empleado</th> 
-                            <th style="border: 1px solid black; text-align: center;">Estatus</th>
-                            <th class="col-2" style="border: 1px solid black; ">Acciones</th>
+                            <th style="  text-align: center;">Nombre del Cliente</th>
+                            <th style="  text-align: center;">Direcci&oacute;n del Cliente</th>
+                            <th style="  text-align: center;">Tel&eacute;fono del Cliente</th>
+                            <th style="  text-align: center;">Empleado</th>
+                            <th style="  text-align: center;">Fecha esperada de entrega</th>
+                            <th style="  text-align: center;">Total</th>
+                            <th class="col-2" style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyEmpleados" style="background: #e2e2e0;">
+                    <tbody >
+                        {% for envio in envio %}
+                        <tr>
+                            <td>{{envio[4]}}</td>
+                            <td>{{envio[5]}} {{envio[6]}}</td>
+                            <td>{{envio[7]}}</td>
+                            <td>{{envio[8]}}</td>
+                            <td>{{envio[1]}}</td>
+                            <td>{{envio[3]}}</td>
+                            <td style="text-align: center;" ><a href="envio?id={{envio[0]}}"
+                                class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
+                             </a>
+                             <a href="envio?id={{envio[0]}}"
+                             class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
+                          </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>

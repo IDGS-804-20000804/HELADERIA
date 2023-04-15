@@ -4,6 +4,7 @@
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong>Agregar</strong></button>
+
     <!-- CATÁLOGO DE EMPLEADO-->
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
@@ -17,28 +18,25 @@
                 <br>
                 <table class="table table-hover" id="datos">
                     <thead>
-                        <tr>
-                            <th style="border: 1px solid black; text-align: center;">Nombre</th>
-                            <th style="border: 1px solid black;  text-align: center;">Correo</th> 
-                            <th style="border: 1px solid black; text-align: center;">Tel&eacute;fono</th>
-                            <th style="border: 1px solid black; text-align: center;">Dirección</th>
-                            <th class="col-2" style="border: 1px solid black; ">Acciones</th>
-                            <th class="col-2" style="border: 1px solid black; "></th>
+                        <tr style="background: #e2e2e0;">
+                            <th style=" text-align: center;">Nombre</th>
+                            <th style="  text-align: center;">Correo</th> 
+                            <th style=" text-align: center;">Tel&eacute;fono</th>
+                            <th class="col-2" style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody  style="background: #e2e2e0;">
+                    <tbody  >
                         {% for empleados in empleados %}
                         <tr>
                             <td>{{empleados[5]}} {{empleados[6]}} {{empleados[7]}}</td>
-                            <td>{{empleados[1]}}</td>
-                            <td>{{empleados[9]}}</td>
-                            <td>{{empleados[13]}} {{empleados[14]}} {{empleados[11]}} {{empleados[12]}}</td>
-                            <td><a href="empleadosModificar?id={{empleados[0]}}"
-                                class="btn btn-warning"><i class="icon-pencil icon-white"></i>
-                             Modificar</a></td>
-                             <td><a href="empleados?id={{empleados[0]}}"
-                             class="btn btn-danger"><i class="icon-remove icon-white"></i>
-                          Eliminar</a>
+                            <td>{{empleados[3]}}</td>
+                            <td>{{empleados[8]}}</td>
+                            <td style="text-align: center;" ><a href="empleadosModificar?id={{empleados[0]}}"
+                                class="btn btn-outline-warning"><i class="fas fa-pencil-alt"></i>
+                             </a>
+                             <a  href="empleadosEliminar?id={{empleados[2]}}" class="btn btn-outline-danger" >
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -98,17 +96,7 @@
                                     {{render_firld(form.telefono,class='form-control')}}
                                     <br>
                                 </div>
-                                <div class="col-6">
-                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
-                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
-                                    {{render_firld(form.numero_exterior,class='form-control')}}
-                                    <br>
-                                </div><div class="col-6">
-                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
-                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
-                                    {{render_firld(form.codigo_postal,class='form-control')}}
-                                    <br>
-                                </div>
+                                
                                 <div class="col-6">
                                     <!-- <label for="txtCorreo" class="form-label">Correo<span class="text-danger">*</span></label>
                                     <input id="txtCorreo" type="text" class="form-control" style="background: #F4F6F6;">  -->
@@ -121,16 +109,22 @@
                                     {{render_firld(form.colonia,class='form-control')}}
                                     <br>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-3">
                                     <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
                                     <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
                                     {{render_firld(form.numero_exterior,class='form-control')}}
                                     <br>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-3">
                                     <!-- <label for="txtNumero" class="form-label">Numero<span class="text-danger">*</span></label>
                                     <input id="txtNumero" type="text" class="form-control" style="background: #F4F6F6;">  -->
                                     {{render_firld(form.numero_interior,class='form-control')}}
+                                    <br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtColonia" class="form-label">Colonia<span class="text-danger">*</span></label>
+                                    <input id="txtColonia" type="text" class="form-control" style="background: #F4F6F6;">  -->
+                                    {{render_firld(form.codigo_postal,class='form-control')}}
                                     <br>
                                 </div>
                             </div>
@@ -166,14 +160,22 @@
                                 <div class="col-12">
                                     <label for="txtCorreo" class="form-label">Selecciona el rol</label>
                                 </div><br>
-                                <div class="col-12 mx-4 text-center" style="text-align: justify;">
+                                <div class="col-12 mx-4 " >
                                         <!-- <div class="clearBoth"></div>
                                         {{ render_firld(form.rol,class="radio-inline") }}
                                         <div class="clearBoth"></div> -->
-                                        {% for subfield in form.rol %} 
+                                        <!-- {% for subfield in form.rol %} 
                                         {{ subfield(class="form-check-input") }} 
                                         {{ subfield.label(class="form-check-label me-4") }} 
-                                        {% endfor %}<br><br>
+                                        {% endfor %}<br><br> -->
+
+                                        <label><input type="checkbox" id="cbox1" value="1" name="cbox1"> Administrador</label>
+                                                <input type="checkbox" id="cbox2" value="2" name="cbox2"> <label for="cbox2"> Cliente</label>
+                                                <input type="checkbox" id="cbox2" value="3" name="cbox3">  <label for="cbox3"> Vendedor</label>
+                                                <input type="checkbox" id="cbox2" value="4" name="cbox4"> <label for="cbox4"> Repartidor</label>
+                                                <input type="checkbox" id="cbox2" value="5" name="cbox5"> <label for="cbox5"> Comprador</label>
+                                                <input type="checkbox" id="cbox2" value="6" name="cbox6"> <label for="cbox6"> Gerente</label>
+                                                <input type="checkbox" id="cbox2" value="7" name="cbox7"> <label for="cbox7"> Productor</label>
                                 </div>
                                 <div class="col-4"></div>
                                 <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
@@ -188,5 +190,38 @@
             </div>
         </div>
 </div>
+
+<!-- FORMULARIO DE EMPLEADO-->
+<!-- <div class="container">
+    <br>
+    <div class="modal fade" id="alertaEliminar" tabindex="-1" aria-labelledby="alertaEliminar" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #3D7692; text-align: center">
+                    <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="sent" action="empleadosEliminar" id="form1" method="POST">
+                        <div class="row">
+                            <h4>Desea eliminar este registro</h4>
+                        </div>
+                            <div class="col-4"></div>
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                            <div class="pt-3 pb-3 text-center">
+                                <button class="btn btn-outline-success mx-2">
+                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Aceptar</button>
+                            </div>
+                            <div class="pt-3 pb-3 text-center">
+                                <button class="btn btn-outline-success mx-2" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 
 {%endblock%}

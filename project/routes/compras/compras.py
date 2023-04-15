@@ -1,12 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from models.compra.compra_Forms import compra
 
 
 
 compras = Blueprint('compras', __name__)
 
 @compras.route('/compras')
-def compra():
-     return render_template('compras.html')
+def compraM():
+     create_form = compra(request.form)
+     create_form
+     return render_template('compras.html',form=create_form)
 
 # @empleados.route('/empleados',method=["POST"])
 # def registro():

@@ -2,7 +2,7 @@ USE gelatos;
 
 -- Stored Procedure para insertar nuevos Proveedores.
 DROP PROCEDURE IF EXISTS insertar_proveedor;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE insertar_proveedor(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -36,7 +36,7 @@ CREATE PROCEDURE insertar_proveedor(	/* Datos Personales */
         -- Obtenemos el ID del Proveedores que se generó:
         SET iid_proveedor = LAST_INSERT_ID();
     END
-$$
+//
 DELIMITER ;
 
 CALL insertar_proveedor('Janneth', 'Valencia','Palomares','4771231212', 37000, null, '120', 'Calle', 
@@ -49,7 +49,7 @@ CALL insertar_proveedor('Mariana', 'Molino','Parra','4771231212', 37000, null, '
 
 -- Stored Procedure para actualizar Proveedor.
 DROP PROCEDURE IF EXISTS actualizar_proveedor;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE actualizar_proveedor(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -88,7 +88,7 @@ CREATE PROCEDURE actualizar_proveedor(	/* Datos Personales */
                         WHERE   id_proveedor = iid_proveedor;
         
     END
-$$
+//
 DELIMITER ;
 
 CALL actualizar_proveedor('Daniela','Duran','Diaz','4774567890','37209',NULL,'134','Bangladeh',
@@ -97,7 +97,7 @@ CALL actualizar_proveedor('Daniela','Duran','Diaz','4774567890','37209',NULL,'13
 
 -- Stored Procedure para eliminar Proveedor.
 DROP PROCEDURE IF EXISTS eliminar_proveedor;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE eliminar_proveedor(	/* Datos Persona */
 									IN iid_persona INT   -- 1
 				)
@@ -106,7 +106,7 @@ CREATE PROCEDURE eliminar_proveedor(	/* Datos Persona */
 							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
-$$
+//
 DELIMITER ;
 
 CALL eliminar_proveedor(10);

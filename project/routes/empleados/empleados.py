@@ -1,7 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
+<<<<<<< HEAD
 from controllers.controllerEmpleado import obtener_empleados,insertar_empleado,obtener_empleado_por_id,actualizar_empleado
+=======
+from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id
+import json
+from flask import jsonify
+
+>>>>>>> adrian
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
@@ -20,12 +27,18 @@ def empleado():
         colonia = create_form.colonia.data
         correo = create_form.correo.data
         contrasenia = create_form.contrasenia.data
-        rol = create_form.rol.data
         id_Empleado=''
         id_Usuario=''
         id_Persona=''
+        rol1=request.form.get('cbox1')
+        rol2=request.form.get('cbox2')
+        rol3=request.form.get('cbox3')
+        rol4=request.form.get('cbox4')
+        rol5=request.form.get('cbox5')
+        rol6=request.form.get('cbox6')
+        rol7=request.form.get('cbox7')
         # Lógica para insertar empleado en la base de datos
-        realizar_insercion(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+        realizar_insercion(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol7,id_Empleado,id_Usuario,id_Persona)
         # De cualquier modo, y si todo fue bien, redireccionar
         return redirect(url_for('empleados.empleado'))
     else:
@@ -33,6 +46,7 @@ def empleado():
         emp = obtener_empleados()
      
         return render_template('empleados.html', form=create_form, empleados=emp)
+
 
 
 @empleados.route('/insertar_empleado', methods=["POST"])
@@ -49,26 +63,34 @@ def realizar_insercion():
     colonia = request.form['colonia']
     correo = request.form['correo']
     contrasenia = request.form['contrasenia']
-    rol = request.form['rol']
+    rol1=request.form.get('cbox1')
+    rol2=request.form.get('cbox2')
+    rol3=request.form.get('cbox3')
+    rol4=request.form.get('cbox4')
+    rol5=request.form.get('cbox5')
+    rol6=request.form.get('cbox6')
+    rol7=request.form.get('cbox7')
+    roles=list()
+    roles=[rol1,rol2,rol3,rol4,rol5,rol6,rol7]
+    arreglo=[elemento for elemento in roles if elemento is not None]
+    print(arreglo)
+    rol = []
+    for cadena in arreglo:
+        rol.append(int(cadena))
+    print(rol)
+    json_string = json.dumps(rol)
+
     id_Empleado=''
     id_Usuario=''
     id_Persona=''
     # Lógica para insertar empleado en la base de datos
-    insertar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol,id_Empleado,id_Usuario,id_Persona)
+    insertar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, json_string,id_Empleado,id_Usuario,id_Persona)
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect(url_for('empleados.empleado'))
 
-
-# @empleados.route("/empleados/<int:id>")
-# def buscar_empleado_id(id):
-#     # Obtener el juego por ID
-#     emple = obtener_empleado_por_id(id)
-
-#     return redirect(url_for('empleados.actualizar_empleados', empleados=emple))
-
 @empleados.route("/empleadosModificar",methods=['GET','POST'])
 def modificar():
-   create_fprm = Empleados(request.form)
+   create_fprm=Empleados(request.form)
    if request.method=='GET':
       id=request.args.get('id')
       emp=obtener_empleado_por_id(id)
@@ -80,46 +102,38 @@ def modificar():
       create_fprm.amaterno.data=emp[0][3]
       create_fprm.telefono.data=emp[0][4] 
       create_fprm.calle.data=emp[0][8] 
+      create_fprm.codigo_postal.data=emp[0][5] 
       create_fprm.colonia.data=emp[0][9]   
       create_fprm.numero_exterior.data=emp[0][6]   
       create_fprm.numero_interior.data=emp[0][7]   
       create_fprm.correo.data=emp[0][10]   
       create_fprm.contrasenia.data=emp[0][11]          
       emp = obtener_empleados()
-
-    if request.methods =='POST':
-        create_fprm = Empleados(request.form)
-        nombre = request.form['nombre']
-            apaterno = request.form['apaterno']
-            amaterno = request.form['amaterno']
-            telefono = request.form['telefono']
-            codigo_postal = request.form['codigo_postal']
-            numero_exterior = request.form['numero_exterior']
-            numero_interior = request.form['numero_interior']
-            calle = request.form['calle']
-            colonia = request.form['colonia']
-            correo = request.form['correo']
-            contrasenia = request.form['contrasenia']
-            rol = request.form['rol']
-            id_Usuario=emp[0][14]
-            id_Persona=emp[0][13]
-    actualizar_empleado(nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, numero_exterior, calle, colonia, correo, contrasenia, rol, id_Persona, id_Usuario)
-
+      print(emp)
    return render_template('empleadosModificar.html', form= create_fprm, empleados=emp)
 
-# @empleados.route("/empleados")
-# def actualizar_empleados():
-#     id = request.form["id"]
-#     print("Hola estamos en actualizar ")
-#     empleados[5] = form.nombre
-#     apellidoP = request.form["apellidoP"]
-#     apellidoM = request.form["apellidoM"]
-#     edad = request.form["edad"]
-#     materia = request.form["materia"]
-#     controller.controller_maestros.actualizar_maestro(id,nombre, apellidoP, apellidoM, edad, materia)
-#     return redirect("/maestros")
+@empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
+def eliminar_empleado():
+    create_fprm = Empleados(request.form)
+    emp = obtener_empleados()
+    if request.method == 'GET':
+        # id = request.args.get('id')
+        create_fprm.id_persona.data=request.args.get('id')
+    if request.method == 'POST':
+        id=create_fprm.id_persona.data
+        eliminar_empleado_por_id(id)  
+        # emp = obtener_empleados() # Comenta esta línea si no la necesitas
+        return redirect(url_for('empleados.empleado'))
+    return render_template('empleadosEliminar.html', form=create_fprm, empleados=emp)
 
-
+# @empleados.route('/eliminar_empleado_ajax', methods=['POST'])
+# def eliminar_empleado_ajax():
+#     try:
+#         id = request.form.get('id')
+#         eliminar_empleado_por_id(id)
+#         return jsonify({'status': 'OK'})
+#     except Exception as e:
+#         return jsonify({'status': 'ERROR', 'message': str(e)})
 
 # @app.route('/editar_empleado/<id_empleado>', methods=['GET'])
 # def editar_empleado(id_empleado):

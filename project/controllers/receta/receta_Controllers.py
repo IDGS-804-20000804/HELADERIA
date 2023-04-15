@@ -4,8 +4,40 @@ import models.receta.receta_Forms as forms
 
 
 recetaB= Blueprint('recetas', __name__)
-
-@recetaB.route('/recetas')
-def receta():
-    create_form=forms.receta(request.form)
-    return render_template('recetas.html',form=create_form)
+def obtener_recetas():
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    receta = []
+    try:
+        with conexion.cursor() as cursor:
+            # Ejecutar una consulta SELECT para obtener los datos de la vista
+            cursor.execute('SELECT * FROM vista_receta')
+            receta = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al obtener receta: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return receta
+    
+def obtener_receta_por_id(id):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    receta = None
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.execute('CALL buscar_receta_id(%s)',(id))
+            receta = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar receta: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return receta

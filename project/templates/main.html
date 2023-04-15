@@ -12,9 +12,9 @@
   <!-- REFERENCIAS DE LAS LIBRERIAS DE SWEETALERT -->
   <link type="text/css" rel="stylesheet" href='../static/sweetalert2/sweetalert2.min.css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+ -->
 
 </head>
 <body >
@@ -43,12 +43,12 @@
                     Clientes
                 </a>
             </li>
-            <!-- <li class="nav-item m-1">
-                <a href="#" class="nav-link text-dark font-italic bg-light">
+            <li class="nav-item m-1">
+                <a href="almacen" class="nav-link text-dark font-italic bg-light">
                     <i class="fa fa-shopping-basket" ></i>
-                    Productos
+                    Almacen
                 </a>
-            </li> -->
+            </li>
             <li class="nav-item m-1">
                 <a href="materiaPrima" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-star" ></i>
@@ -118,6 +118,7 @@ $(function () {
     });
 });
 
+
 //Mostramos contraseña 
 $(document).ready(function () {
     $('#mostrar_contrasena').click(function () {
@@ -128,23 +129,30 @@ $(document).ready(function () {
       }
     });
   });
+
+  
 </script>
 <!-- REFERENCIAS DE SCRIPT DE JQUERY-->
-<script type="text/javascript" src="../static/jquery/jquery-3.6.0.min.js"></script>
+<!-- <script type="text/javascript" src="../static/jquery/jquery-3.6.0.min.js"></script> -->
 <!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
 <script type="text/javascript" src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- REFERENCIAS DEL SCRIPT DE SWEETALERT -->
 <script type="text/javascript" src='../static/sweetalert2/sweetalert2.all.min.js'></script>
 <script type="text/javascript" src='../static/js/tienda.js'></script>
 <script type="text/javascript" src='../static/js/tabla.js'></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<script type="text/javascript" src='../static/js/main.js'></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            inicializarModulo();
+</script>
 </html>
 
