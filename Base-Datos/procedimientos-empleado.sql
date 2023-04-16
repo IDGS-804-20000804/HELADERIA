@@ -217,3 +217,27 @@ END //
 DELIMITER ;
  
 CALL obtener_info_usuario(3);
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_empleado_id`(
+									IN p_id_empleado INT
+)
+BEGIN
+  SELECT e.id_empleado, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
+         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.contrasenia, u.roles
+	FROM empleado e
+    INNER JOIN (SELECT id_usuario,
+						correo,
+						contrasenia,
+						estatus,
+						(SELECT JSON_ARRAYAGG(fk_rol)
+							FROM rol_usuario
+							WHERE fk_usuario = id_usuario)
+						AS roles
+					FROM usuario
+					WHERE id_usuario = id_usuario) u
+		ON e.fk_usuario = u.id_usuario
+	INNER JOIN persona p
+		ON e.fk_persona = p.id_persona
+	WHERE id_empleado = p_id_empleado;
+END

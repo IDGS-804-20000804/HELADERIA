@@ -3,10 +3,13 @@ function inicializarModulo() {
      $('#detalleEmpleadoModificar').modal('show'); // abrir
      $('#alertaEliminar').modal('show'); // abrir
      $('#alertaEliminar').modal({backdrop: 'static', keyboard: false})
+     $('#detalleEmpleadoModificar').modal({backdrop: 'static', keyboard: false})
+
 
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
-    
+    $('#alertaEliminarCliente').modal('show'); // abrir
+    $('#alertaEliminarCliente').modal({backdrop: 'static', keyboard: false})
 
     //Modales de Materia Prima al modificar
     $('#detallemateriaPrimaModificar').modal('show'); // abrir

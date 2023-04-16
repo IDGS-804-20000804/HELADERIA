@@ -75,7 +75,6 @@ def realizar_insercion():
         rol.append(int(cadena))
     print(rol)
     json_string = json.dumps(rol)
-
     id_Empleado=''
     id_Usuario=''
     id_Persona=''
@@ -91,8 +90,6 @@ def modificar():
       id=request.args.get('id')
       emp=obtener_empleado_por_id(id)
       create_fprm.id_empleado.data=request.args.get('id')
-      create_fprm.id_persona.data=emp[0][13]
-      create_fprm.id_usuario.data=emp[0][14]
       create_fprm.nombre.data=emp[0][1]
       create_fprm.apaterno.data=emp[0][2]
       create_fprm.amaterno.data=emp[0][3]
@@ -103,9 +100,10 @@ def modificar():
       create_fprm.numero_exterior.data=emp[0][6]   
       create_fprm.numero_interior.data=emp[0][7]   
       create_fprm.correo.data=emp[0][10]   
-      create_fprm.contrasenia.data=emp[0][11]          
+      create_fprm.contrasenia.data=emp[0][11]   
+      rol=emp[0][12]
+      print(rol)    
       emp = obtener_empleados()
-      print(emp)
    return render_template('empleadosModificar.html', form= create_fprm, empleados=emp)
 
 @empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
