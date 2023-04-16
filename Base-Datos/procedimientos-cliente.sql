@@ -2,7 +2,7 @@ USE gelatos;
 
 -- Stored Procedure para insertar nuevos Clientes.
 DROP PROCEDURE IF EXISTS insertar_cliente;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -45,7 +45,7 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
         -- Obtenemos el ID del Cliente que se generó:
         SET iid_cliente = LAST_INSERT_ID();
     END
-$$
+//
 DELIMITER ;
 
 CALL insertar_cliente('Ían', 'Gimenez','Villa','4771231212', 37000, null, '112', 'Calle', 
@@ -58,7 +58,7 @@ CALL insertar_cliente('Maria', 'Villegas','Bonilla','4771231212', 37000, null, '
 
 -- Stored Procedure para actualizar Clientes.
 DROP PROCEDURE IF EXISTS actualizar_cliente;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -99,7 +99,7 @@ CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
                         WHERE   id_usuario = iid_usuario;
         
     END
-$$
+//
 DELIMITER ;
 
 CALL actualizar_cliente('Pablo','Mares','Sánchez','4771234567','37287',110,34,'Elefante esa',
@@ -108,7 +108,7 @@ CALL actualizar_cliente('Pablo','Mares','Sánchez','4771234567','37287',110,34,'
 
 -- Stored Procedure para eliminar Clientes.
 DROP PROCEDURE IF EXISTS eliminar_clientes;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE eliminar_clientes(	/* Datos Persona */
 									IN iid_persona INT    -- 1
 				)
@@ -117,7 +117,7 @@ CREATE PROCEDURE eliminar_clientes(	/* Datos Persona */
 							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
-$$
+//
 DELIMITER ;
 
 CALL eliminar_clientes(4);

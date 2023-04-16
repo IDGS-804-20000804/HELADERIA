@@ -351,8 +351,21 @@ SELECT id_materia_prima, nombre, cantidad_usable, descripcion AS unidad_medida, 
 					AND DATE(caducidad) > DATE(NOW())
 					GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
 					HAVING cantidad_total IS NULL OR cantidad_total > 0
-					ORDER BY a.caducidad DESC
+					ORDER BY a.caducidad
 				) AS t) AS t2
                 ON fk_materia_prima = id_materia_prima
                 INNER JOIN unidad_medida
                 ON fk_unidad_medida = id_unidad_medida;
+
+DROP VIEW IF EXISTS stock_en_venta;
+CREATE VIEW stock_en_venta AS
+SELECT id_receta, nombre, ruta_imagen, stock_usable, t1.precio FROM receta r INNER JOIN
+	(SELECT SUM((cantidad - IFNULL(stock_usado, 0))) AS stock_usable, precio, fk_receta
+	FROM (SELECT id_stock, caducidad, cantidad, precio, estatus, fk_receta FROM stock) AS s
+	LEFT JOIN (SELECT SUM(cantidad) AS stock_usado, fk_stock FROM detalle_venta GROUP BY fk_stock) AS dv
+		ON fk_stock = id_stock
+	WHERE s.estatus = TRUE
+	AND DATE(s.caducidad) > DATE(NOW())
+	AND (cantidad - IFNULL(stock_usado, 0)) > 0
+    GROUP BY precio, fk_receta) AS t1
+    ON r.id_receta = t1.fk_receta;
