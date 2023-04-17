@@ -6,20 +6,19 @@ INSERT INTO venta (total, fk_cliente)
 DROP PROCEDURE IF EXISTS insertar_envio;
 DELIMITER //
 CREATE PROCEDURE insertar_envio(	/* Datos Envio*/
-                                    IN	ifecha_entrega	DATETIME,	-- 1
-                                    IN	ifk_venta     INT,			-- 2
-                                    IN	ifk_empleado  INT,			-- 3
+                                    IN	ifk_venta     INT,			-- 1
+                                    IN	ifk_empleado  INT,			-- 2
 
                                     /* Valor de Retorno */
-                                    OUT	iid_envio     INT			-- 4
+                                    OUT	iid_envio     INT			-- 3
                                     
                                     
 				)                                    
     BEGIN        
     
         -- Insertando los datos del Envio:
-        INSERT INTO envio ( fecha_entrega, fk_venta, fk_empleado) 
-					 VALUES ( ifecha_entrega, ifk_venta, ifk_empleado);
+        INSERT INTO envio ( fk_venta, fk_empleado) 
+					 VALUES ( ifk_venta, ifk_empleado);
         -- Obtenemos el ID del Envio que se generó:
         SET iid_envio = LAST_INSERT_ID();
 
@@ -27,7 +26,7 @@ CREATE PROCEDURE insertar_envio(	/* Datos Envio*/
 //
 DELIMITER ;
 
-CALL insertar_envio('2023-04-18 13:00:00',1,1,@id_envio);
+CALL insertar_envio(1,1,@id_envio);
 
 
 -- Stored Procedure para actualizar Envio.

@@ -382,8 +382,6 @@ SELECT id_receta, nombre, ruta_imagen, stock_usable, t1.precio FROM receta r INN
     ON r.id_receta = t1.fk_receta;
 
 
-
-
 DROP PROCEDURE IF EXISTS insertar_venta;
 
 DELIMITER //
@@ -423,7 +421,7 @@ BEGIN
 	    SET did_receta = JSON_EXTRACT(dobjeto_receta, CONCAT('$[0]'));
 	    SET dcantidad_receta = JSON_EXTRACT(dobjeto_receta, CONCAT('$[1]'));
 	    SET dprecio_receta = JSON_EXTRACT(dobjeto_receta, CONCAT('$[2]'));
-		
+
         SET dcomprobacion_existencia = (SELECT COUNT(*) FROM (SELECT SUM((cantidad - IFNULL(stock_usado, 0))) AS stock_usable, precio, fk_receta
             FROM (SELECT id_stock, caducidad, cantidad, precio, estatus, fk_receta FROM stock) AS s
             LEFT JOIN (SELECT SUM(cantidad) AS stock_usado, fk_stock FROM detalle_venta GROUP BY fk_stock) AS dv
@@ -1030,20 +1028,19 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS insertar_envio;
 DELIMITER //
 CREATE PROCEDURE insertar_envio(	/* Datos Envio*/
-                                    IN	ifecha_entrega	DATETIME,	-- 1
-                                    IN	ifk_venta     INT,			-- 2
-                                    IN	ifk_empleado  INT,			-- 3
+                                    IN	ifk_venta     INT,			-- 1
+                                    IN	ifk_empleado  INT,			-- 2
 
                                     /* Valor de Retorno */
-                                    OUT	iid_envio     INT			-- 4
+                                    OUT	iid_envio     INT			-- 3
                                     
                                     
 				)                                    
     BEGIN        
     
         -- Insertando los datos del Envio:
-        INSERT INTO envio ( fecha_entrega, fk_venta, fk_empleado) 
-					 VALUES ( ifecha_entrega, ifk_venta, ifk_empleado);
+        INSERT INTO envio ( fk_venta, fk_empleado) 
+					 VALUES ( ifk_venta, ifk_empleado);
         -- Obtenemos el ID del Envio que se generó:
         SET iid_envio = LAST_INSERT_ID();
 
@@ -1688,4 +1685,31 @@ CALL insertar_stock('2023-05-08 13:26:46', 199.99, 1);
 CALL insertar_stock('2023-05-08 13:26:46', 199.99, 1);
 CALL insertar_stock('2023-05-15 13:26:46', 199.99, 1);
 CALL insertar_stock('2023-05-15 13:26:46', 299.99, 1);
+CALL insertar_stock('2023-05-15 13:26:46', 299.99, 1);
+CALL insertar_stock('2023-05-15 13:26:46', 399.99, 3);
 
+CALL insertar_cliente('Ían', 'Gimenez','Villa','4771231212', 37000, null, '112', 'Calle', 
+'Colonia','ian@email.com','123457',@id_persona, @id_usuario,@id_cliente);
+CALL insertar_cliente('Paco', 'Villanueva','Puerta','4771231212', 37000, null, '113', 'Calle', 
+'Colonia','paco@email.com','1238',@id_persona, @id_usuario,@id_cliente);
+CALL insertar_cliente('Maria', 'Villegas','Bonilla','4771231212', 37000, null, '114', 'Calle', 
+'Colonia','maria@email.com','1236',@id_persona, @id_usuario,@id_cliente);
+
+CALL insertar_empleado('Luis Adrián', 'Hernández','Sánchez','4771231212', 37000, null, '115', 'Calle', 
+'Colonia','adrian@email.com','12345','[1,6]',@id_persona, @id_usuario,@id_empleado);
+CALL insertar_empleado('Nestor', 'Peña','Sánchez','4771231212', 37000, null, '116', 'Calle', 
+'Colonia','nestor@email.com','1234','[2,7,4]',@id_persona, @id_usuario,@id_empleado);
+CALL insertar_empleado('Andres', 'Bautista','Peralta','4771231212', 37000, null, '117', 'Calle', 
+'Colonia','andres@email.com','123','[3]',@id_persona, @id_usuario,@id_empleado);
+
+CALL insertar_proveedor('Janneth', 'Valencia','Palomares','4771231212', 37000, null, '120', 'Calle', 
+'Colonia','janneth@email.com',@id_persona,@id_proveedor);
+CALL insertar_proveedor('Diana', 'Duran','Diaz','4771231212', 37000, null, '121', 'Calle', 
+'Colonia','diana@email.com',@id_persona,@id_proveedor);
+CALL insertar_proveedor('Mariana', 'Molino','Parra','4771231212', 37000, null, '122', 'Calle', 
+'Colonia','mariana@email.com',@id_persona,@id_proveedor);
+
+CALL insertar_venta('[[1,1,299.99],[1,3,199.99]]', 1);
+CALL insertar_venta('[[3,1,399.99]]', 2);
+
+CALL entregar_envio(1, 1);
