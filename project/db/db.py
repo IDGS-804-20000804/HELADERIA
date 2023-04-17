@@ -18,3 +18,6 @@ def get_connection():
                                 user='root',
                                 password='vegetta777',
                                 db='gelatos')
+
+class config:
+    SECRET_KEY='ca#s/3!"&)2rf1'

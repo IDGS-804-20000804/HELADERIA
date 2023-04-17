@@ -1,14 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
-<<<<<<< HEAD
-from controllers.controllerEmpleado import obtener_empleados,insertar_empleado,obtener_empleado_por_id,actualizar_empleado
-=======
 from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id
 import json
 from flask import jsonify
 
->>>>>>> adrian
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
