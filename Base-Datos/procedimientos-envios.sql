@@ -60,13 +60,14 @@ CALL actualizar_envio('2023-04-17 01:30:00',1,1,@id_envio);
 DROP PROCEDURE IF EXISTS entregar_envio;
 DELIMITER //
 CREATE PROCEDURE entregar_envio(	/* Datos Envio */
-									IN iid_envio INT    -- 1
+									IN iid_envio INT,    -- 1
 									IN ifk_empleado INT -- 2
 				)
 	BEGIN
 		UPDATE envio SET  entregado = true,
 						fecha_actualizacion = NOW(),
-                        entregado = TRUE
+                        entregado = TRUE,
+						fk_empleado = ifk_empleado
         WHERE id_envio = iid_envio;
     END
 //
