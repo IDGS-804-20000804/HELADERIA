@@ -8,6 +8,7 @@ function inicializarModulo() {
 
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
+    $('#detalleClienteEditar').modal({backdrop: 'static', keyboard: false})
     $('#alertaEliminarCliente').modal('show'); // abrir
     $('#alertaEliminarCliente').modal({backdrop: 'static', keyboard: false})
 
