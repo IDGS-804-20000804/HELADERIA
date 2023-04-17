@@ -46,13 +46,32 @@ BEGIN
     DECLARE dreceta JSON;
 	DECLARE dids_validos JSON;
     DECLARE did_stock INT;
+    DECLARE dcanitdad_en_stock INT;
 	SET dlistado_existencias = JSON_ARRAY();
 	SET dreceta = JSON_ARRAY();
     CALL consultar_recetas_posibles(dids_validos);
     IF JSON_CONTAINS(dids_validos, CAST(ifk_receta AS JSON)) THEN
-		INSERT INTO stock (caducidad, precio, fk_receta)
-			VALUES (icaducidad, iprecio, ifk_receta);
-		SET did_stock = LAST_INSERT_ID();
+    
+    SET did_stock = (
+      SELECT id_stock FROM stock
+      WHERE DATE(caducidad) = DATE(icaducidad)
+      AND fk_receta = ifk_receta
+      AND precio BETWEEN iprecio - 0.01 AND iprecio + 0.01
+    );
+    IF did_stock > 0 THEN 
+	  SET dcanitdad_en_stock = (
+            SELECT cantidad FROM stock
+            WHERE id_stock = did_stock
+		);
+      UPDATE stock SET
+        estatus = TRUE,
+        cantidad = 1 + dcanitdad_en_stock
+      WHERE id_stock = did_stock;
+    ELSE 
+      INSERT INTO stock (caducidad, precio, cantidad, fk_receta)
+        VALUES (icaducidad, iprecio, 1, ifk_receta);
+      SET did_stock = LAST_INSERT_ID();
+    END IF;
 		SELECT JSON_ARRAYAGG(JSON_OBJECT(
 			   'fk_materia_prima', fk_materia_prima,
 			   'cantidad', cantidad
@@ -85,7 +104,7 @@ BEGIN
                     AND a.fk_materia_prima = dfk_materia_prima
 					GROUP BY a.id_almacen, a.caducidad, a.estatus, a.fk_materia_prima
 					HAVING cantidad_total IS NULL OR cantidad_total > 0
-					ORDER BY a.caducidad DESC
+					ORDER BY a.caducidad
 				) AS t
 			) AS t2;
 			SET dposicion_existencias = 0;
@@ -105,12 +124,12 @@ BEGIN
 						INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
 							VALUES (dcantidad_usable, did_almacen, did_stock);
 						UPDATE almacen SET estatus = FALSE WHERE id_almacen = did_almacen;
+						ITERATE subciclo_tabla_intermedia;
 					ELSE 
 						INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
 							VALUES (dcantidad, did_almacen, did_stock);
 						LEAVE subciclo_tabla_intermedia;
 					END IF;
-					ITERATE subciclo_tabla_intermedia;
 				END LOOP;
 			ELSE 
 				INSERT INTO detalle_almacen_stock(cantidad, fk_almacen, fk_stock)
