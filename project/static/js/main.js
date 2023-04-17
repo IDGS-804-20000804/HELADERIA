@@ -15,6 +15,8 @@ function inicializarModulo() {
     //Modales de Materia Prima al modificar
     $('#detallemateriaPrimaModificar').modal('show'); // abrir
     $('#detallemateriaPrimaModificar').modal({backdrop: 'static', keyboard: false})
+    $('#alertaEliminarMateriaP').modal('show'); // abrir
+    $('#alertaEliminarMateriaP').modal({backdrop: 'static', keyboard: false})
     
      //Modales de Recetas
      $('#detalleRecetaModificar').modal('show'); // abrir
