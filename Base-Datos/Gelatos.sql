@@ -91,15 +91,6 @@ CREATE TABLE almacen (
 	fk_materia_prima INT NOT NULL
 );
 CREATE TABLE receta (
-<<<<<<< HEAD
-	id_receta INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	nombre VARCHAR(255) NOT NULL,
-	precio FLOAT NOT NULL,
-	ruta_imagen VARCHAR(255) NOT NULL,
-	estatus BOOLEAN DEFAULT TRUE NOT NULL,
-	fecha_creacion DATETIME NOT NULL DEFAULT NOW(),
-	fecha_actualizacion DATETIME NOT NULL DEFAULT NOW()
-=======
   id_receta INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(255) NOT NULL,
   precio FLOAT NOT NULL,
@@ -107,7 +98,6 @@ CREATE TABLE receta (
   estatus BOOLEAN DEFAULT TRUE NOT NULL,
   fecha_creacion DATETIME NOT NULL DEFAULT NOW(),
   fecha_actualizacion DATETIME NOT NULL DEFAULT NOW()
->>>>>>> pau
 );
 CREATE TABLE detalle_materia_prima_receta (
 	id_detalle_materia_prima_receta INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
