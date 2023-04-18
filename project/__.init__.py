@@ -7,7 +7,7 @@ from routes.login.login import main
 from routes.empleados.empleados import empleados
 from routes.materiaPrima.materiaPrima import materiaPrima
 from routes.registroUsuario.registroUsuario import registroUsuario
-from routes.ventas.ventas import ventas
+from routes.venta.venta import venta
 from routes.provedor.provedor import provedor
 from routes.recetas.recetas import recetas
 from routes.compras.compras import compras
@@ -27,7 +27,7 @@ app.register_blueprint(registroUsuario)
 app.register_blueprint(login)
 app.register_blueprint(clientes)
 app.register_blueprint(main)
-app.register_blueprint(ventas)
+app.register_blueprint(venta)
 app.register_blueprint(provedor)
 app.register_blueprint(recetas)
 app.register_blueprint(compras)

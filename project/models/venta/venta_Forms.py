@@ -1,11 +1,11 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField, SelectField, DateField
 
-class stock(Form):
+class Venta(Form):
     opciones = [("1", ""), 
                 ("2", ""), 
                 ]
 
-    id_stock = IntegerField('idStock')
-    receta = SelectField("Receta", choices=opciones, validators=[validators.DataRequired()])
-    numReceta = StringField('Número de recetas ha realizar', [
+    id_envio = IntegerField('idEnvio')
+    empleado = SelectField("Empleado", choices=opciones, validators=[validators.DataRequired()])
+    fechaEnvio = DateField('Fecha de venta', [
         validators.DataRequired(message='Este campo es requerido')])

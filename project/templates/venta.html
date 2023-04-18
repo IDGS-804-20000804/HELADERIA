@@ -18,78 +18,21 @@
                     <div class="container">
                         <div class="items">
                             <div class="row">
+                                {% for stock in stock %}
                                 <div class="col-12 col-md-4">
                                     <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Fresa</h5>
+                                        <h5 class="item-title">{{stock[1]}}</h5>
                                         <img class="item-image" src="../static/img/Fresa.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">9.99MXM</h5>
+                                        <!-- {{stock[2]}} Ruta foto -->
+                                        <!-- {{stock[3]}} Cantidad -->
+                                        <h5 class="item-price">{{stock[4]}} MXM</h5>
                                         <div style="text-align: center; ">
-                                           <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br> 
+                                            <button class="item-button btn btn-outline-success  addToCart"
+                                            data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br> 
                                         </div><br>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Chocolate</h5>
-                                        <img class="item-image" src="../static/img/Chocolate.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">9.99MXM</h5>
-                                        <div style="text-align: center;">
-                                        <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br>
-                                            </div><br>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Limon</h5>
-                                        <img class="item-image" src="../static/img/Limon.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">9.99MXM</h5>
-                                        <div style="text-align: center;">
-                                        <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br>
-                                            </div><br>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Vainilla</h5>
-                                        <img class="item-image" src="../static/img/Vainilla.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">19.99MXM</h5>
-                                        <div style="text-align: center;">
-                                        <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
-                                            </div><br>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Oreo</h5>
-                                        <img class="item-image" src="../static/img/Oreo.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">19.99MXM</h5>
-                                        <div style="text-align: center;">
-                                        <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
-                                            </div><br>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="item shadow mb-4">
-                                        <h5 class="item-title">Helado de Cafe</h5>
-                                        <img class="item-image" src="../static/img/cafe.jpg">
-                                        <p>Detalles...</p>
-                                            <h5 class="item-price">6.99MXM</h5>
-                                        <div style="text-align: center;">
-                                        <button class="item-button btn btn-outline-success  addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button>
-                                            </div><br>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
