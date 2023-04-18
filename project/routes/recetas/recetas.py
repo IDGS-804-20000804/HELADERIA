@@ -3,6 +3,7 @@ from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.receta.receta_Forms import receta
 from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id
+from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 
 recetas = Blueprint('recetas', __name__ )
 
@@ -11,16 +12,19 @@ def Lreceta():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
         create_form = receta(request.form)
-      #   id_unidadMedida= ''
-      #   nombre = create_form.nombre.data
-      #   unidadMedida = create_form.unidadMedida.data
-        # De cualquier modo, y si todo fue bien, redireccionar
-     #    return redirect(url_for('materiaPrima.materiaPrima'))
+        
+      
      else:
         create_form = receta()
         r = obtener_recetas()
         print(r)
-        return render_template('recetas.html', form=create_form, receta=r)
+        mp = obtener_materia_prima()
+        print(mp)
+        foto=create_form.foto.data
+        datosMateria=list()
+        nombre = create_form.cantidad.data
+        datosMateria.append(nombre)
+        return render_template('recetas.html', form=create_form, receta=r, materiaPrima=mp, foto=foto, datosMateria=datosMateria)
      
 @recetas.route("/recetasModificar",methods=['GET','POST'])
 def modificar():

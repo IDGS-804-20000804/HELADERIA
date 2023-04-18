@@ -25,6 +25,8 @@ function inicializarModulo() {
       //Modales de Provedor
       $('#detalleProveedorModificar').modal('show'); // abrir
       $('#detalleProveedorModificar').modal({backdrop: 'static', keyboard: false})
+      $('#alertaEliminarProvedor').modal('show'); // abrir
+      $('#alertaEliminarProvedor').modal({backdrop: 'static', keyboard: false})
 
       
 }

@@ -59,7 +59,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="/recetas" id="form1" method="POST">
+                        <form name="sent" action="recetas" id="form1" method="GET">
                             <div hidden> 
                                 {{render_firld(form.id_Receta,class='form-control')}}
                             </div>
@@ -69,31 +69,62 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <!-- <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" /><br> -->
-                                    {{render_firld(form.nombre,class='form-control')}}<br>
+                                     <label for="txtNombre" class="form-label">Materia Prima</label>
+                                    <!-- <input id="txtNombre" type="text" class="form-control" /><br> --> 
+                                    <!-- {{render_firld(form.nombre,class='form-control')}}<br> -->
+                                    <select name="materia" id="materia" class="form-control">
+                                        {% for mt in materiaPrima %}
+                                        <option value="{{mt[1]}}" >{{mt[1]}}</option>
+                                        {% endfor %}
+                                      </select>
                                 </div>
                                 <div class="col-6">
-                                    <!-- <label for="txtCantidad" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtCantidad" type="number" class="form-control" /><br> -->
-                                    {{render_firld(form.cantidad,class='form-control')}}<br>
+                                    <!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
+                                    <input id="txtPrecio" type="text" class="form-control" /> -->
+                                    {{render_firld(form.cantidad,class='form-control', type='number')}}<br><br>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-outline-success" >
+                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Agregar</button><br><br>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-hover" id="datos">
+                                        <thead  style="background: #e2e2e0;">
+                                            <tr>
+                                                <th style=" text-align: center;">Materia Prima</th>
+                                                <th style="  text-align: center;">Cantidad</th>
+                                                <th class="col-2" style="text-align: center;">Remover</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {% for dm in datosMateria %}
+                                            <tr>
+                                                <td style=" text-align: center;" class="col-6">{{dm}}</td>
+                                                <td style=" text-align: center;" class="col-2"><input type="number" class="form-control"></td>
+                                                <td style="text-align: center;" ><a href="g?id={{receta[0]}}"
+                                                    class="btn btn-outline-danger " ><i class="fas fa-pencil-alt"></i>
+                                                 </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tr class='noSearch hide'>
+                                            <td colspan="10000"></td>
+                                    </table>
                                 </div>
                                 <div class="col-6">
                                     <!-- <label for="txtFoto" class="form-label">Foto<span class="text-danger">*</span></label>
                                     <input id="txtFoto" type="input" class="form-control" /> -->
                                     {{render_firld(form.foto,class='form-control')}}
                                 </div>
-                                <div class="col-6">
-                                    <!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
-                                    <input id="txtPrecio" type="text" class="form-control" /> -->
-                                    {{render_firld(form.precio,class='form-control')}}
-                                </div>
+                                
                             </div>
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+
                             <div class="row">
 
                                 <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-info" >
-                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
+                                    
                                     <button class="btn btn-outline-success mx-2">
                                         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
                                 </div>
