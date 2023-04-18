@@ -31,6 +31,7 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
+        flash("Se cancelo correctamente la compra")
     except Exception as e:
         # Si hay algún error, imprimirlo en la consola
         print("Error al insertar Empleado: ", e)
