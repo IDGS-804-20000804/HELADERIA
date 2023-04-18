@@ -32,7 +32,7 @@
                             <td style="text-align: center;" ><a href="materiaPrimaModificar?id={{materiaPrima[0]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
                              </a>
-                             <a href="materiaPEliminar?id={{materiaPrima[0]}}"
+                             <a href="materiaPrima?id={{materiaPrima[0]}}"
                              class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
                           </a>
                             </td>
@@ -78,7 +78,7 @@
                                         <option>Unidad de Medida</option>
                                         <option value="1">Kg</option>
                                     </select> -->
-                                    {{render_firld(form.unidadMedidaGuardar,class='form-control')}}
+                                    {{render_firld(form.unidadMedida,class='form-control')}}
                                 </div>
                             </div>
                                 <div class="col-4"></div>
@@ -94,5 +94,35 @@
             </div>
         </div>
 </div>
-
+<div class="modal fade" id="alertaEliminarMateriaP" tabindex="-1" aria-labelledby="alertaEliminarMateriaP" aria-hidden="true" data-controls-modal="alertaEliminarMateriaP" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form name="sent" action="materiaPEliminar" id="form1" method="POST">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="text-center">
+                               <img src="../static/img/iconos/iconoEliminar.svg" width="120px"><br><br>
+                            </div>
+                            <h4 style='color: #3D7692; font-weight: bold;text-align: center;'>¿DESEA REALIZAR LA ELIMINACIÓN DE LA MATERIA PRIMA?</h4>
+                        </div>
+                        <div hidden> 
+                            {{render_firld(form.id_unidadMedida,class='form-control')}} 
+                        </div>
+                        <div class="col-4"></div>
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                       
+                        <div class="pt-3 pb-3 text-center">
+                                <a href="{{ url_for('materiaPrima.materiaP') }}" class="btn btn-outline-danger mx-2"  class="btn-close" >
+                                CANCELAR</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-outline-success mx-2">
+                                    ACEPTAR</button>
+                        </div>
+                        
+                    </div>
+                    </form>
+                    </div>
+            </div>
+        </div>
+    </div>
 {%endblock%}

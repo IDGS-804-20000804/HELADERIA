@@ -3,14 +3,20 @@ function inicializarModulo() {
      $('#detalleEmpleadoModificar').modal('show'); // abrir
      $('#alertaEliminar').modal('show'); // abrir
      $('#alertaEliminar').modal({backdrop: 'static', keyboard: false})
+     $('#detalleEmpleadoModificar').modal({backdrop: 'static', keyboard: false})
+
 
     //Modales de Clientes al modificar
     $('#detalleClienteEditar').modal('show'); // abrir
-    
+    $('#detalleClienteEditar').modal({backdrop: 'static', keyboard: false})
+    $('#alertaEliminarCliente').modal('show'); // abrir
+    $('#alertaEliminarCliente').modal({backdrop: 'static', keyboard: false})
 
     //Modales de Materia Prima al modificar
     $('#detallemateriaPrimaModificar').modal('show'); // abrir
     $('#detallemateriaPrimaModificar').modal({backdrop: 'static', keyboard: false})
+    $('#alertaEliminarMateriaP').modal('show'); // abrir
+    $('#alertaEliminarMateriaP').modal({backdrop: 'static', keyboard: false})
     
      //Modales de Recetas
      $('#detalleRecetaModificar').modal('show'); // abrir
@@ -19,8 +25,14 @@ function inicializarModulo() {
       //Modales de Provedor
       $('#detalleProveedorModificar').modal('show'); // abrir
       $('#detalleProveedorModificar').modal({backdrop: 'static', keyboard: false})
+      $('#alertaEliminarProvedor').modal('show'); // abrir
+      $('#alertaEliminarProvedor').modal({backdrop: 'static', keyboard: false})
 
       
+}
+
+function abrirModal(){
+    $('#detalleReceta').modal('show');
 }
 
 function clientes(){

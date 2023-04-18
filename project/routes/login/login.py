@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 
 login = Blueprint('login', __name__, url_prefix='/security')
-main = Blueprint('main',__name__, url_prefix='/security')
+main = Blueprint('main',__name__)
 
 @login.route('/login')
 def logins():

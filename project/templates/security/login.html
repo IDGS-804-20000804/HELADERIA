@@ -10,7 +10,7 @@
             <div class="card">
                 <h2 class="text-center pt-3" style="font-weight: bold;">Iniciar sesi&oacute;n</h2>
                 <div class="form pt-2">
-                    <form method="POST" action="/security/login">
+                    <!-- <form method="POST" action="/security/login"> -->
                         <div class="row">
                             <div class="col-6">
                                 {% with messages = get_flashed_messages() %}
@@ -43,16 +43,16 @@
                                 </div>
                                 <div class="pb-4 pt-3 text-center ">
                                     <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
-                                    <button class="btn botonLogin"
+                                    <a class="btn botonLogin" href="{{ url_for('main.mains') }}"
                                         style=" font-family:'Times New Roman', Times, serif;"><b>Iniciar
-                                            Sesi&oacute;n</b></button> <br>
+                                            Sesi&oacute;n</b></a> <br>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <img src="../static/img/logotipo.png" style="height: 350px;">
                             </div>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
