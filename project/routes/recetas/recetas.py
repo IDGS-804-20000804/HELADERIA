@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.receta.receta_Forms import receta
-from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta
+from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta, eliminar_receta_por_id
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
 
@@ -127,3 +127,18 @@ def convertir_a_enteros(lista):
     :return: La lista de listas de enteros resultante.
     """
     return [[int(valor) for valor in sublista] for sublista in lista]
+
+
+@recetas.route('/recetaEliminar', methods=['GET', 'POST'])
+def eliminar_receta():
+    create_fprm = receta(request.form)
+    r = obtener_recetas()
+    if request.method == 'GET':
+        # id = request.args.get('id')
+        create_fprm.id_Receta.data=request.args.get('id')
+    if request.method == 'POST':
+        id=create_fprm.id_Receta.data
+        eliminar_receta_por_id(id)  
+        # emp = obtener_empleados() # Comenta esta línea si no la necesitas
+        return render_template('recetas.html', form=create_fprm, receta=r)
+    return render_template('recetaEliminar.html', form=create_fprm, receta=r)

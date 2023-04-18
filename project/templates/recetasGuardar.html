@@ -13,59 +13,65 @@
                 <span class="h5 text-black" style=" font-size: 25px;"><b>Detalle Recetas</b> </span>
             </div>
             <div class="card-body">
-                <section>
-                <form name="sent" action="insertar_receta" id="form1" method="POST">
-                    <section>
-                    <form method="POST">
-                        <div style="color:#CA9F8B" class="mt-4">
-                            <i class="fas fa-grin-alt"></i>
-                            <label>Datos de Receta</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                {{render_firld(form.nombre,class='form-control')}}<br>
-                            </div>
-                            <div class="col-3">
-                                {{render_firld(form.precio,class='form-control')}}<br>
-                            </div>
-                            <div class="col-3">
-                                {{render_firld(form.cantidad,class='form-control')}}<br>
-                            </div>
-                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-                    <div class="pt-3 pb-3 text-center">
-                        <button class="btn btn-outline-success mx-2">
-                            <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
+                <div class="row">
+                    <div class="col-6">
+                        <section>
+                            <form name="sent" action="insertar_receta" id="form1" method="POST">
+                                <form method="POST">
+                                    <div style="color:#CA9F8B" class="mt-4">
+                                        <i class="fas fa-grin-alt"></i>
+                                        <label>Datos de Receta</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            {{render_firld(form.nombre,class='form-control')}}<br>
+                                        </div>
+                                        <div class="col-12">
+                                            {{render_firld(form.precio,class='form-control')}}<br>
+                                        </div>
+                                        <div class="col-12">
+                                            {{render_firld(form.cantidad,class='form-control')}}<br>
+                                        </div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                <div class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
+                                </div>
+                            </form>
+                        </section>
                     </div>
-                </form>
-            </section>
-            <section>
-                    <form method="POST">
-                        <div class="row">
-                            <div style="color:#CA9F8B" class="mt-4">
-                                <i class="fas fa-grin-alt"></i>
-                                <label>Datos de Materia Prima</label>
-                            </div>
-                            <div class="col-6">
-                                <label for="txtNombre" class="form-label">Materia Prima</label>
-                                <!-- <input id="txtNombre" type="text" class="form-control" /><br>  -->
-                                <!-- {{render_firld(form.nombre,class='form-control')}}<br>  -->
-                                <select name="materia" id="materia" class="form-control">
-                                    {% for mt in materiaPrima %}
-                                    <option value="{{mt[0]}}">{{mt[1]}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                {{render_firld(form.cantidadMateria,class='form-control', type='number')}}<br>
-                            </div>
-                        </div>
-                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-                        <div class="col-12 text-center">
-                            <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
-                        </div>
-
-                    </form>
-                </section>
+                    <div class="col-6">
+                        <section>
+                            <form method="POST">
+                                <div class="row">
+                                    <div style="color:#CA9F8B" class="mt-4">
+                                        <i class="fas fa-grin-alt"></i>
+                                        <label>Datos de Materia Prima</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="txtNombre" class="form-label">Materia Prima</label>
+                                        <!-- <input id="txtNombre" type="text" class="form-control" /><br>  -->
+                                        <!-- {{render_firld(form.nombre,class='form-control')}}<br>  -->
+                                        <select name="materia" id="materia" class="form-control">
+                                            {% for mt in materiaPrima %}
+                                            <option value="{{mt[0]}}">{{mt[1]}}</option>
+                                            {% endfor %}
+                                        </select><br>
+                                    </div>
+                                    <div class="col-12">
+                                        {{render_firld(form.cantidadMateria,class='form-control', type='number')}}<br>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                <div class="col-12 text-center">
+                                    <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
+                                </div>
+        
+                            </form>
+                        </section>
+                    </div>
+                </div>
+¿
                     <table class="table table-hover" id="datos">
                         <thead style="background: #e2e2e0;">
                             <tr>
@@ -89,10 +95,7 @@
                             <td colspan="10000"></td>
                     </table>
                     <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-                    <div class="pt-3 pb-3 text-center">
-                        <button class="btn btn-outline-success mx-2">
-                            <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
-                    </div>
+                    
             </div>
         </div>
     </div>
