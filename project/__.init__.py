@@ -20,6 +20,10 @@ app.secret_key = 'DDBHF17I3I2OREBF'
 
 app.config['DEBUG'] = True
 
+def jinja2_enumerate(iterable, start=0):
+    return enumerate(iterable, start=start)
+
+app.jinja_env.globals.update(enumerate=jinja2_enumerate)
 
 app.register_blueprint(materiaPrima)
 app.register_blueprint(empleados)

@@ -31,6 +31,10 @@ function inicializarModulo() {
       
 }
 
+function abrirModal(){
+    $('#detalleReceta').modal('show');
+}
+
 function clientes(){
     $('#detalleCliente').modal('show'); // abrir
 }
