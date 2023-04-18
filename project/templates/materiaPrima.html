@@ -28,11 +28,11 @@
                         {% for materiaPrima in materiaPrima %}
                         <tr>
                             <td>{{materiaPrima[1]}}</td>
-                            <td>{{materiaPrima[2]}}</td>
+                            <td>{{materiaPrima[3]}}</td>
                             <td style="text-align: center;" ><a href="materiaPrimaModificar?id={{materiaPrima[0]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
                              </a>
-                             <a href="materiaPrima?id={{materiaPrima[0]}}"
+                             <a href="materiaPEliminar?id={{materiaPrima[0]}}"
                              class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
                           </a>
                             </td>
@@ -57,7 +57,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="sent" action="/materiaPrima" id="form1" method="POST">
+                        <form name="sent" action="/insertar_materiaPrima" id="form1" method="POST">
                             <div hidden> 
                                 {{render_firld(form.id_unidadMedida,class='form-control')}}
                             </div>
@@ -78,14 +78,12 @@
                                         <option>Unidad de Medida</option>
                                         <option value="1">Kg</option>
                                     </select> -->
-                                    {{render_firld(form.unidadMedida,class='form-control')}}
+                                    {{render_firld(form.unidadMedidaGuardar,class='form-control')}}
                                 </div>
                             </div>
                                 <div class="col-4"></div>
                                 <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
                                 <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-info" >
-                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
                                     <button class="btn btn-outline-success mx-2">
                                         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
                                 </div>

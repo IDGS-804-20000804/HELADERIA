@@ -2,106 +2,178 @@
 {%block content%}
 {%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
-    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleRecetaModificar"><strong>Agregar</strong></button>
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+            class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <a href="recetas" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end"
+        style="background-color:#CA9F8B"><strong>Regresar</strong></a>
     <!-- CATÁLOGO DE Receta-->
     <div id="divCatalogoReceta" class="col-12">
         <div class="card">
             <div class="card-header text-center bg-light">
-                <span class="h5 text-black"  style=" font-size: 25px;"><b>Cat&aacute;logo de Recetas</b> </span>
+                <span class="h5 text-black" style=" font-size: 25px;"><b>Detalle Recetas</b> </span>
             </div>
             <div class="card-body">
-                <div class="text-center">
-                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscar" type="text" onkeyup="buscarTabla()" /></span>
+                <div class="row">
+                    <div class="col-6">
+                        <section>
+                            <form name="sent" action="recetasModificar" id="form1" method="POST">
+                                <form method="POST">
+                                    <div style="color:#CA9F8B" class="mt-4">
+                                        <i class="fas fa-grin-alt"></i>
+                                        <label>Datos de Receta</label>
+                                    </div>
+                                    <div class="row">
+                                        <div hidden>
+                                            {{render_firld(form.id_Receta,class='form-control')}}<br>
+                                        </div>
+                                        <div class="col-12">
+                                            {{render_firld(form.nombre,class='form-control')}}<br>
+                                        </div>
+                                        <div class="col-12">
+                                            {{render_firld(form.precio,class='form-control')}}<br>
+                                        </div>
+                                        <div class="col-12">
+                                            {{render_firld(form.cantidad,class='form-control')}}<br>
+                                        </div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                <div class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                    <div class="col-6">
+                        <section>
+                            <form method="POST">
+                                <div class="row">
+                                    <div style="color:#CA9F8B" class="mt-4">
+                                        <i class="fas fa-grin-alt"></i>
+                                        <label>Datos de Materia Prima</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="txtNombre" class="form-label">Materia Prima</label>
+                                        <!-- <input id="txtNombre" type="text" class="form-control" /><br>  -->
+                                        <!-- {{render_firld(form.nombre,class='form-control')}}<br>  -->
+                                        <select name="materia" id="materia" class="form-control">
+                                            {% for mt in materiaPrima %}
+                                            <option value="{{mt[0]}}">{{mt[1]}}</option>
+                                            {% endfor %}
+                                        </select><br>
+                                    </div>
+                                    <div class="col-12">
+                                        {{render_firld(form.cantidadMateria,class='form-control', type='number')}}<br>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                <div class="col-12 text-center">
+                                    <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
+                                </div>
+        
+                            </form>
+                        </section>
+                    </div>
                 </div>
-                <br>
-                <table class="table table-hover" id="datos">
-                    <thead  style="background: #e2e2e0;">
-                        <tr>
-                            <th style=" text-align: center;">Nombre</th>
-                            <th style="  text-align: center;">Cantidad</th>
-                            <th style="  text-align: center;">Costo</th>  
-                            <th class="col-2" style="text-align: center;">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {% for receta in receta %}
-                        <tr>
-                            <td style=" text-align: center;">{{receta[1]}}</td>
-                            <td style=" text-align: center;">{{receta[2]}}</td>
-                            <td style=" text-align: center;">{{receta[3]}}</td>
-                            <td style="text-align: center;" ><a href="recetasModificar?id={{receta[0]}}"
-                                class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
-                             </a>
-                             <a href="receta?id={{receta[0]}}"
-                             class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i>
-                          </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tr class='noSearch hide'>
-                        <td colspan="10000"></td>
-                </table>
-                <br>
+¿
+                    <table class="table table-hover" id="datos">
+                        <thead style="background: #e2e2e0;">
+                            <tr>
+                                <th style=" text-align: center;">#</th>
+                                <th style=" text-align: center;">Materia Prima</th>
+                                <th style="  text-align: center;">Cantidad</th>
+                                <th class="col-2" style="text-align: center;">Remover</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, persona in enumerate(lista) %}
+                            <tr>
+                                <td style=" text-align: center;" class="col-2">{{ index + 1 }}</td>
+                                <td style=" text-align: center;" class="col-6">{{ persona[1] }}</td>
+                                <td style=" text-align: center;" class="col-2">{{ persona[2] }}</td>
+                                <td><a href="/removeM/{{index}}" class="btn btn-outline-danger">Eliminar</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tr class='noSearch hide'>
+                            <td colspan="10000"></td>
+                    </table>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                    
             </div>
         </div>
     </div>
-    <!-- FORMULARIO DE Receta-->
-    <div class="container">
-        <br>
-        <div class="modal fade" id="detalleRecetaModificar" tabindex="-1" aria-labelledby="detalleRecetaModificar" aria-hidden="true" data-controls-modal="detalleRecetaModificar" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header" style="background: #3D7692; text-align: center">
-                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Receta</b></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form name="sent" action="/recetas" id="form1" method="POST">
-                            <div hidden> 
-                                {{render_firld(form.id_Receta,class='form-control')}}
-                            </div>
-                            <div style="color:#CA9F8B" class="mt-4">
-                                <i class="fas fa-grin-alt"></i>
-                                <label>Receta</label>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <!-- <label for="txtNombre" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                    <input id="txtNombre" type="text" class="form-control" /><br> -->
-                                    {{render_firld(form.nombre,class='form-control')}}<br>
-                                </div>
-                                <div class="col-6">
-                                    <!-- <label for="txtCantidad" class="form-label">Cantidad<span class="text-danger">*</span></label>
-                                    <input id="txtCantidad" type="number" class="form-control" /><br> -->
-                                    {{render_firld(form.cantidad,class='form-control')}}<br>
-                                </div>
-                                <div class="col-6">
-                                    <!-- <label for="txtFoto" class="form-label">Foto<span class="text-danger">*</span></label>
-                                    <input id="txtFoto" type="input" class="form-control" /> -->
-                                    {{render_firld(form.foto,class='form-control')}}
-                                </div>
-                                <div class="col-6">
-                                    <!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
-                                    <input id="txtPrecio" type="text" class="form-control" /> -->
-                                    {{render_firld(form.precio,class='form-control')}}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-info" >
-                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
-                                    <a href="recetas" class="btn btn-outline-success mx-2">
-                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 </div>
 
 {%endblock%}
+<!-- 
+    <div hidden>
+        {{render_firld(form.id_Receta,class='form-control')}}
+    </div>
+    <div style="color:#CA9F8B" class="mt-4">
+        <i class="fas fa-grin-alt"></i>
+        <label>Receta</label>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="txtNombre" class="form-label">Materia Prima</label> -->
+<!-- <input id="txtNombre" type="text" class="form-control" /><br> -->
+<!-- {{render_firld(form.nombre,class='form-control')}}<br> -->
+<!-- <select name="materia" id="materia" class="form-control">
+                {% for mt in materiaPrima %}
+                <option value="{{mt[1]}}">{{mt[1]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-6"> -->
+<!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
+                <input id="txtPrecio" type="text" class="form-control" /> -->
+<!-- {{render_firld(form.cantidad,class='form-control', type='number')}}<br><br>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-success">
+                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Agregar</button><br><br>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover" id="datos">
+                <thead style="background: #e2e2e0;">
+                    <tr>
+                        <th style=" text-align: center;">Materia Prima</th>
+                        <th style="  text-align: center;">Cantidad</th>
+                        <th class="col-2" style="text-align: center;">Remover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dm in datosMateria %}
+                    <tr>
+                        <td style=" text-align: center;" class="col-6">{{dm}}</td>
+                        <td style=" text-align: center;" class="col-2"><input type="number"
+                                class="form-control"></td>
+                        <td style="text-align: center;"><a href="g?id={{receta[0]}}"
+                                class="btn btn-outline-danger "><i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tr class='noSearch hide'>
+                    <td colspan="10000"></td>
+            </table>
+        </div>
+        <div class="col-6"> -->
+<!-- <label for="txtFoto" class="form-label">Foto<span class="text-danger">*</span></label>
+                <input id="txtFoto" type="input" class="form-control" /> -->
+<!-- {{render_firld(form.foto,class='form-control')}}
+        </div>
+
+    </div>
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+
+    <div class="row">
+
+        <div class="pt-3 pb-3 text-center">
+
+            <button class="btn btn-outline-success mx-2">
+                <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+        </div>
+    </div> -->

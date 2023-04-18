@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, IntegerField, validators,RadioField,SelectMultipleField
+from wtforms import Form, StringField, IntegerField, validators,RadioField,BooleanField
 
 class Empleados(Form):
     opciones_tolerancia = [(1, "Vendedor"), 
@@ -34,4 +34,23 @@ class Empleados(Form):
     contrasenia = StringField('Contraseña', [
         validators.DataRequired(message='Este campo es requerido')])
     rol = RadioField("Rol", choices=opciones_tolerancia, validators=[validators.DataRequired()])
+    cbox1 = BooleanField('1')
+    cbox2 = BooleanField('2')
+    cbox3 = BooleanField('3')
+    cbox4 = BooleanField('4')
+    cbox5 = BooleanField('5')
+    cbox6 = BooleanField('6')
+    cbox7 = BooleanField('7')
+
+
+class FormularioChecklist(Form):
+    cbox1 = BooleanField('Administrador')
+    cbox2 = BooleanField('Cliente')
+    cbox3 = BooleanField('Vendedor')
+    cbox4 = BooleanField('Repartidor')
+    cbox5 = BooleanField('Comprador')
+    cbox6 = BooleanField('Gerente')
+    cbox7 = BooleanField('Productor')
+
+formulario = FormularioChecklist()
    

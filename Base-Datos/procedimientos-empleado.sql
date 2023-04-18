@@ -2,7 +2,7 @@ USE gelatos;
 
 -- Stored Procedure para insertar nuevos Empleados.
 DROP PROCEDURE IF EXISTS insertar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE insertar_empleado(	/* Datos Personales */
                                     IN	inombre          VARCHAR(50),     -- 1
                                     IN  iapaterno		 VARCHAR(50),	  -- 2
@@ -60,7 +60,7 @@ CREATE PROCEDURE insertar_empleado(	/* Datos Personales */
         -- Obtenemos el ID del Empleado que se generó:
         SET iid_empleado = LAST_INSERT_ID();
     END
-$$
+//
 DELIMITER ;
 
 CALL insertar_empleado('Luis Adrián', 'Hernández','Sánchez','4771231212', 37000, null, '115', 'Calle', 
@@ -73,7 +73,7 @@ CALL insertar_empleado('Andres', 'Bautista','Peralta','4771231212', 37000, null,
 
 -- Stored Procedure para actualizar Empleados.
 DROP PROCEDURE IF EXISTS actualizar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE actualizar_empleado(	/* Datos Personales */
                                     IN	inombre         VARCHAR(50),     -- 1
                                     IN  iapaterno		VARCHAR(50),	 -- 2
@@ -134,7 +134,7 @@ CREATE PROCEDURE actualizar_empleado(	/* Datos Personales */
 		END LOOP;
         
     END
-$$
+//
 DELIMITER ;
 
 CALL actualizar_empleado('Pepe','Pepa','Sánchez','4771234567','37287',NULL,466,'Elefante',
@@ -143,7 +143,7 @@ CALL actualizar_empleado('Pepe','Pepa','Sánchez','4771234567','37287',NULL,466,
 
 -- Stored Procedure para eliminar Empleados.
 DROP PROCEDURE IF EXISTS eliminar_empleado;
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 									IN iid_persona INT   -- 1
 				)
@@ -152,7 +152,7 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
     END
-$$
+//
 DELIMITER ;
 
 
@@ -217,3 +217,27 @@ END //
 DELIMITER ;
  
 CALL obtener_info_usuario(3);
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_empleado_id`(
+									IN p_id_empleado INT
+)
+BEGIN
+  SELECT e.id_empleado, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
+         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.contrasenia, u.roles
+	FROM empleado e
+    INNER JOIN (SELECT id_usuario,
+						correo,
+						contrasenia,
+						estatus,
+						(SELECT JSON_ARRAYAGG(fk_rol)
+							FROM rol_usuario
+							WHERE fk_usuario = id_usuario)
+						AS roles
+					FROM usuario
+					WHERE id_usuario = id_usuario) u
+		ON e.fk_usuario = u.id_usuario
+	INNER JOIN persona p
+		ON e.fk_persona = p.id_persona
+	WHERE id_empleado = p_id_empleado;
+END

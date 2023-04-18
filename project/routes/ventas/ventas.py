@@ -8,6 +8,5 @@ ventas = Blueprint('ventas', __name__ )
 
 @ventas.route('/ventas')
 def venta():
-     
      return render_template('ventas.html')
 

@@ -48,3 +48,56 @@ def obtener_materiaP_por_id(id):
         # Cerrar la conexión a la base de datos
         conexion.close()
         return materiaPrima
+    
+def insertar_materiaPrima(nombre,unidadMedida):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('insertar_materia_prima', [nombre,unidadMedida])
+
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al insertar Meteria Prima: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+
+def eliminar_materiaP_por_id(id):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    cliente = None
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.execute('CALL eliminar_materia_prima(%s)', (id,))
+            cliente = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar cliente: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return cliente
+    
+def modificar_materiaP(id_MateriaPrima,nombre,estatus,unidadMedida):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('actualizar_materia_prima', [id_MateriaPrima,nombre,estatus,unidadMedida])
+
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al actualizar Materia PrIMA: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
