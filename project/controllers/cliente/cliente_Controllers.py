@@ -1,5 +1,5 @@
 from db.db import get_connection 
-
+from flask import Flask, flash, Markup
 
 
 def obtener_clientes():
@@ -49,6 +49,7 @@ def modificar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
+        
     except Exception as e:
         # Si hay algún error, imprimirlo en la consola
         print("Error al actualizar Cliente: ", e)

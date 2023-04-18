@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models.clientes.clientes import Clientes
 from controllers.cliente.cliente_Controllers import obtener_clientes, obtener_cliente_por_id, insertar_cliente, modificar_cliente, eliminar_cliente_por_id
 from models.clientes.clientes import Clientes
 from db.db import get_connection 
+from markupsafe import Markup
 
 
 clientes = Blueprint('clientes', __name__)
@@ -117,18 +118,29 @@ def modificar():
    if request.method=='POST':
         id_Persona=create_fprm.id_persona.data
         id_Usuario=create_fprm.id_usuario.data
-        nombre=create_fprm.nombre.data,
-        apaterno=create_fprm.apaterno.data,
-        amaterno=create_fprm.amaterno.data,
-        telefono=create_fprm.telefono.data
-        calle=create_fprm.calle.data
-        colonia=create_fprm.colonia.data 
-        codigo_postal=create_fprm.codigo_postal.data 
-        numero_exterior=create_fprm.numero_exterior.data  
-        numero_interior=create_fprm.numero_interior.data  
-        correo=create_fprm.correo.data   
-        contrasenia=create_fprm.contrasenia.data
+        nombre=create_fprm.nombre.data;
+        apaterno=create_fprm.apaterno.data;
+        amaterno=create_fprm.amaterno.data;
+        telefono=create_fprm.telefono.data;
+        calle=create_fprm.calle.data;
+        colonia=create_fprm.colonia.data;
+        codigo_postal=create_fprm.codigo_postal.data;
+        numero_exterior=create_fprm.numero_exterior.data;
+        numero_interior=create_fprm.numero_interior.data;
+        correo=create_fprm.correo.data;
+        contrasenia=create_fprm.contrasenia.data;
         modificar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,id_Persona,id_Usuario)
+        script = '''
+            <script>
+            Swal.fire({
+                title: 'Éxito',
+                text: 'El empleado ha sido insertado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
+            </script>
+        '''
+        flash(Markup(script))
         return redirect(url_for('clientes.cliente'))
    return render_template('clientesModificar.html', form= create_fprm, clientes=emp)
 

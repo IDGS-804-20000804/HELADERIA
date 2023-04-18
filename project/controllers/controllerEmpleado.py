@@ -1,5 +1,5 @@
 from db.db import get_connection 
-
+from flask import Flask, flash, Markup
 
 
 def obtener_empleados():
@@ -49,6 +49,7 @@ def modificar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_in
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
+        
     except Exception as e:
         # Si hay algún error, imprimirlo en la consola
         print("Error al actualizar Empleado: ", e)
