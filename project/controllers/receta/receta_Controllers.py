@@ -41,3 +41,20 @@ def obtener_receta_por_id(id):
         # Cerrar la conexión a la base de datos
         conexion.close()
         return receta
+    
+def insertar_receta(nombre,cantidad, precio, ruta_imagen,arr_receta):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('insertar_receta', [nombre,cantidad, precio, ruta_imagen,arr_receta])
+
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al insertar Receta: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
