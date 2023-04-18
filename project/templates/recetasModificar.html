@@ -35,17 +35,17 @@
                                         <div class="col-12">
                                             {{render_firld(form.cantidad,class='form-control')}}<br>
                                         </div>
-                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-                                <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-success mx-2">
-                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
-                                </div>
-                            </form>
+                                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                        <div class="pt-3 pb-3 text-center">
+                                            <button class="btn btn-outline-success mx-2">
+                                                <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar Receta</button>
+                                        </div>
+                                </form>
                         </section>
                     </div>
                     <div class="col-6">
                         <section>
-                            <form method="POST">
+                            <form method="POST" action="recetasModificar">
                                 <div class="row">
                                     <div style="color:#CA9F8B" class="mt-4">
                                         <i class="fas fa-grin-alt"></i>
@@ -69,36 +69,38 @@
                                 <div class="col-12 text-center">
                                     <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
                                 </div>
-        
+
                             </form>
                         </section>
                     </div>
                 </div>
-¿
-                    <table class="table table-hover" id="datos">
-                        <thead style="background: #e2e2e0;">
-                            <tr>
-                                <th style=" text-align: center;">#</th>
-                                <th style=" text-align: center;">Materia Prima</th>
-                                <th style="  text-align: center;">Cantidad</th>
-                                <th class="col-2" style="text-align: center;">Remover</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for index, persona in enumerate(lista) %}
-                            <tr>
-                                <td style=" text-align: center;" class="col-2">{{ index + 1 }}</td>
-                                <td style=" text-align: center;" class="col-6">{{ persona[1] }}</td>
-                                <td style=" text-align: center;" class="col-2">{{ persona[2] }}</td>
-                                <td><a href="/removeM/{{index}}" class="btn btn-outline-danger">Eliminar</a></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        <tr class='noSearch hide'>
-                            <td colspan="10000"></td>
-                    </table>
-                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-                    
+                <table class="table table-hover" id="datos">
+                    <thead style="background: #e2e2e0;">
+                        <tr>
+                            <th style=" text-align: center;">#</th>
+                            <th style=" text-align: center;">Materia Prima</th>
+                            <th style="  text-align: center;">Cantidad</th>
+                            <th class="col-2" style="text-align: center;">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for index, sublista in enumerate(lista)%}
+                        {% for item in sublista %}
+                        <tr>
+                            <td style=" text-align: center;" class="col-2">{{ index+1 }}</td>
+                            <td style=" text-align: center;" class="col-6">{{ item[1] }}</td>
+                            <td style=" text-align: center;" class="col-2">{{ item[2] }}</td>
+                            <td><a href="/removeM/{{index}}" class="btn btn-outline-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                    <tr class='noSearch hide'>
+                        <td colspan="10000"></td>
+                </table>
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+
             </div>
         </div>
     </div>
