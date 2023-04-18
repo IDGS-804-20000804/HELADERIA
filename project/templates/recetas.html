@@ -4,8 +4,8 @@
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
             class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B"
-        data-bs-toggle="modal" data-bs-target="#detalleReceta" ><strong>Agregar</strong></button>
+    <a href="recetasGuardar" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B"
+        ><strong>Agregar</strong></a>
     <!-- CATÁLOGO DE Receta-->
     <div id="divCatalogoReceta" class="col-12">
         <div class="card">
@@ -98,7 +98,7 @@
                             </div>
                             <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
                             <div class="col-12 text-center">
-                                <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
+                                <input type="submit" class="btn btn-outline-info" value="Agregar" ><br><br>
                             </div>
                             
                         </form>
