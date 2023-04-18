@@ -130,8 +130,48 @@ SELECT
     INNER JOIN cliente c ON v.fk_cliente = c.id_cliente
     INNER JOIN persona p1 ON c.fk_persona = p1.id_persona
     INNER JOIN empleado e ON en.fk_empleado = e.id_empleado
-    INNER JOIN persona p2 ON e.fk_persona = p2.id_persona
-    WHERE en.entregado=FALSE;
+    INNER JOIN persona p2 ON e.fk_persona = p2.id_persona;
+
+DROP VIEW IF EXISTS vista_envio_cargada;
+CREATE VIEW vista_envio_cargada AS
+SELECT en.id_envio, en.entregado, t1.*, t2.*, DATE(en.fecha_actualizacion) FROM envio en
+	INNER JOIN (SELECT v.id_venta,
+				v.total,
+				c.id_cliente,
+				p.id_persona AS id_persona_cliente,
+                p.nombre AS nombre_cliente,
+                p.apaterno AS apaterno_cliente,
+				p.amaterno AS amaterno_cliente,
+                p.telefono AS telefono_cliente,
+                p.codigo_postal AS codigo_postal_cliente,
+				p.numero_exterior AS numero_exterior_cliente,
+                p.numero_interior AS numero_interior_cliente,
+                p.calle AS calle_cliente,
+				p.colonia AS colonia_cliente
+		FROM venta v
+		INNER JOIN cliente c
+			ON fk_cliente = id_cliente
+		INNER JOIN persona p
+			ON fk_persona = id_persona) t1
+		ON t1.id_venta = en.fk_venta
+	LEFT JOIN (SELECT id_empleado,
+				id_persona AS id_persona_empleado,
+                nombre AS id_nombre_empleado,
+				apaterno AS apaterno_empleado,
+                amaterno AS amaterno_empleado,
+                telefono AS telefono_empleado,
+                codigo_postal AS codigo_postal_empleado,
+				numero_exterior AS numero_exterior_empleado,
+                numero_interior AS numero_interior_empleado,
+                calle AS calle_empleado,
+                colonia AS colonia_empleado
+		FROM empleado em
+		INNER JOIN persona p
+		ON em.fk_persona = p.id_persona) t2
+		ON en.fk_empleado = t2.id_empleado
+		ORDER BY entregado, id_envio;
+
+
 
 DROP VIEW IF EXISTS vista_envio_entregado;
 CREATE VIEW vista_envio_entregado AS
