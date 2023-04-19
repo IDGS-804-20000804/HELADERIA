@@ -1,10 +1,14 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,jsonify
 from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.receta.receta_Forms import receta
-from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta, eliminar_receta_por_id, modificar_receta
+from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta, eliminar_receta_por_id, modificar_receta,stringAleatorio
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
+
+#Para subir archivo tipo foto al servidor
+import os
+from werkzeug.utils import secure_filename 
 
 recetas = Blueprint('recetas', __name__ )
 
@@ -56,7 +60,8 @@ def modificar():
         nombre = create_fprm.nombre.data
         cantidad= create_fprm.cantidad.data
         precio= create_fprm.precio.data
-        foto='uploads/3'
+        file     = request.files['foto'] #recibiendo el archivo
+        NuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
         lista_sin_string = [[sublista[i] for i in range(len(sublista)) if not isinstance(sublista[i], str)] for sublista in listaArreglo[0]]
         modificar_receta(id_Receta,nombre,cantidad, precio, foto,lista_sin_string)
         return redirect(url_for('recetas.indexMain'))
@@ -130,13 +135,15 @@ def remove(index):
 
 @recetas.route('/insertar_receta', methods=["POST"])
 def realizar_insercion():
+
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     create_form = receta()
     r = obtener_recetas()
     nombre = request.form['nombre']
     cantidad= request.form['cantidad']
     precio= request.form['precio']
-    ruta_imagen='uploads/3'
+    file = request.files['foto'] #recibiendo el archivo
+    nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
     arr_receta=nombres
     json_string = json.dumps(arr_receta)
     valores = quitar_titulo(json_string)
@@ -186,3 +193,21 @@ def eliminar_receta():
         # emp = obtener_empleados() # Comenta esta línea si no la necesitas
         return render_template('recetas.html', form=create_fprm, receta=r)
     return render_template('recetaEliminar.html', form=create_fprm, receta=r)
+
+
+
+# Para Recibir la foto --------------------------------------------
+def recibeFoto(file):
+    print(file)
+    basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
+    filename = secure_filename(file.filename) #Nombre original del archivo
+
+    #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
+    extension           = os.path.splitext(filename)[1]
+    nuevoNombreFile     = stringAleatorio() + extension
+    #print(nuevoNombreFile)
+        
+    upload_path = os.path.join(basepath, 'static', 'fotos', nuevoNombreFile)
+    file.save(upload_path)
+
+    return nuevoNombreFile

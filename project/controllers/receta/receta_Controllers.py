@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from db.db import get_connection
+from random import sample
 import models.receta.receta_Forms as forms
 
 
@@ -95,3 +96,17 @@ def modificar_receta(id_Receta,nombre,cantidad, precio, ruta_imagen,arr_receta):
     finally:
         # Cerrar la conexión a la base de datos
         conexion.close()
+
+
+         
+ #Para que la imagen no se repita del nombre jamas --------------------------------------
+
+#Crear un string aleatorio para renombrar la foto 
+# y evitar que exista una foto con el mismo nombre
+def stringAleatorio():
+    string_aleatorio = "0123456789abcdefghijklmnopqrstuvwxyz_"
+    longitud         = 20
+    secuencia        = string_aleatorio.upper()
+    resultado_aleatorio  = sample(secuencia, longitud)
+    string_aleatorio     = "".join(resultado_aleatorio)
+    return string_aleatorio

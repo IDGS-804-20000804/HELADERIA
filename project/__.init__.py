@@ -3,7 +3,6 @@ from flask import Flask, render_template,Blueprint
 from flask_wtf.csrf import CSRFProtect
 from routes.login.login import login
 from routes.clientes.clientes import clientes
-from routes.login.login import main
 from routes.empleados.empleados import empleados
 from routes.materiaPrima.materiaPrima import materiaPrima
 from routes.registroUsuario.registroUsuario import registroUsuario
@@ -12,11 +11,15 @@ from routes.provedor.provedor import provedor
 from routes.recetas.recetas import recetas
 from routes.compras.compras import compras
 from routes.envio.envio import envio
+from routes.main.main import main
 from routes.almacen.almacen import almacen
+from flask_login import login_required, current_user, UserMixin
+
 
 app = flask.Flask(__name__)
 csrf = CSRFProtect(app)
 app.secret_key = 'DDBHF17I3I2OREBF'
+
 
 app.config['DEBUG'] = True
 
