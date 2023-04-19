@@ -223,6 +223,27 @@ def eliminar_empleado():
 #     except Exception as e:
 #         return jsonify({'status': 'ERROR', 'message': str(e)})
 
+# @app.route('/editar_empleado/<id_empleado>', methods=['GET'])
+# def editar_empleado(id_empleado):
+#     # Obtener los datos del empleado con el id_empleado dado
+#     empleado = obtener_empleado_por_id(id_empleado)
+
+#     # Asignar los valores del empleado a las variables del formulario
+#     form.nombre.data = empleado['nombre']
+#     form.apaterno.data = empleado['apaterno']
+#     form.amaterno.data = empleado['amaterno']
+#     form.telefono.data = empleado['telefono']
+#     form.numero_exterior.data = empleado['numero_exterior']
+#     form.codigo_postal.data = empleado['codigo_postal']
+#     form.calle.data = empleado['calle']
+#     form.numero_interior.data = empleado['numero_interior']
+#     form.colonia.data = empleado['colonia']
+#     form.municipio.data = empleado['municipio']
+#     form.estado.data = empleado['estado']
+#     form.pais.data = empleado['pais']
+    
+#     # Renderizar la plantilla con los datos del empleado en los campos del formulario
+#     return render_template('editar_empleado.html', form=form, empleados=empleado)
 
 
 # @empleados.route('/empleados',methods=["POST","GET"])
