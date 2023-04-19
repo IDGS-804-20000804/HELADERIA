@@ -172,6 +172,54 @@ SET SQL_SAFE_UPDATES = 0;
 
 USE gelatos;
 
+DROP VIEW IF EXISTS vista_cargada_compra;
+CREATE VIEW vista_cargada_compra AS
+SELECT id_compra, total, t1.*, t2.*, t3.*
+	FROM compra c
+    INNER JOIN (SELECT pro.id_proveedor,
+		pro.correo AS correo_proveedor,
+        per.id_persona AS id_persona_proveedor,
+        per.nombre AS nombre_proveedor,
+        per.apaterno AS apaterno_proveedor,
+        per.amaterno AS amaterno_proveedor,
+        per.telefono AS tel_proveedor,
+        per.codigo_postal AS cp_proveedor,
+        per.numero_exterior AS numext_proveedor,
+        per.numero_interior AS numint_proveedor,
+        per.calle AS calle_proveedor,
+        per.colonia AS colonia_proveedor
+	FROM proveedor pro
+	INNER JOIN persona per
+		ON per.id_persona = pro.fk_persona) t1
+	ON c.fk_proveedor = t1.id_proveedor
+    INNER JOIN (SELECT em.id_empleado,
+        per.id_persona AS id_persona_empleado,
+        per.nombre AS nombre_empleado,
+        per.apaterno AS apaterno_empleado,
+        per.amaterno AS amaterno_empleado,
+        per.telefono AS tel_empleado,
+        per.codigo_postal AS cp_empleado,
+        per.numero_exterior AS numext_empleado,
+        per.numero_interior AS numint_empleado,
+        per.calle AS calle_empleado,
+        per.colonia AS colonia_empleado,
+        u.id_usuario,
+        u.correo AS correo_empleado
+	FROM empleado em
+	INNER JOIN persona per
+		ON per.id_persona = em.fk_persona
+	INNER JOIN usuario u
+		ON u.id_usuario = em.fk_usuario) t2
+        ON c.fk_empleado = t2.id_empleado
+	INNER JOIN (SELECT dc.cantidad, dc.precio, a.caducidad, mp.nombre, um.descripcion, fk_compra FROM detalle_compra dc
+	INNER JOIN almacen a
+		ON dc.fk_almacen = a.id_almacen
+	INNER JOIN materia_prima mp
+		ON mp.id_materia_prima = a.fk_materia_prima
+	INNER JOIN unidad_medida um
+		ON um.id_unidad_medida = mp.fk_unidad_medida) t3
+        ON c.id_compra = t3.fk_compra;
+
 DROP VIEW IF EXISTS vista_envio_cargada;
 CREATE VIEW vista_envio_cargada AS
 SELECT en.id_envio, en.entregado, t1.*, t2.*, DATE(en.fecha_actualizacion) FROM envio en
@@ -1571,9 +1619,15 @@ DROP PROCEDURE IF EXISTS buscar_receta_id;
 DELIMITER //
 CREATE PROCEDURE buscar_receta_id(IN p_id_receta INT)
 BEGIN
-  SELECT id_receta, nombre, cantidad, precio, ruta_imagen
-  FROM receta
-  WHERE id_receta = p_id_receta;
+  SELECT r.id_receta, r.nombre, r.cantidad, r.precio, r.ruta_imagen, CONCAT("[", GROUP_CONCAT(t1.lista_receta SEPARATOR ','), "]") AS lista_receta
+  FROM receta r
+  INNER JOIN (
+      SELECT CONCAT("[",mp.id_materia_prima,",'", mp.nombre,"',",dmpr.cantidad,"]") AS lista_receta, dmpr.fk_receta
+      FROM detalle_materia_prima_receta dmpr
+      INNER JOIN materia_prima mp ON mp.id_materia_prima = dmpr.fk_materia_prima
+  ) t1 ON r.id_receta = t1.fk_receta
+  WHERE r.id_receta = p_id_receta
+  GROUP BY r.id_receta;
 END //
 DELIMITER ;
 

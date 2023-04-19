@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template,Blueprint
+from flask import Flask, render_template, Blueprint
 from flask_wtf.csrf import CSRFProtect
 from routes.login.login import login
 from routes.clientes.clientes import clientes
@@ -14,10 +14,9 @@ from routes.compras.compras import compras
 from routes.envio.envio import envio
 from routes.almacen.almacen import almacen
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'DDBHF17I3I2OREBF'
 csrf = CSRFProtect(app)
-app.secret_key = 'DDBHF17I3I2OREBF'
-
 app.config['DEBUG'] = True
 
 
@@ -44,5 +43,5 @@ def index():
 # app.register_blueprint(routes_app_teachers)
 
 
-
-app.run()
+if __name__ == '__main__':
+    app.run()

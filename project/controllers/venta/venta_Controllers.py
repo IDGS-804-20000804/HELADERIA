@@ -23,3 +23,18 @@ def obtener_venta():
         # Cerrar la conexión a la base de datos
         conexion.close()
         return venta
+
+@ventasB.route('/venta')
+def insertar_venta(arr_venta, fk_cliente):
+    conexion = get_connection()
+    venta = []
+    try:
+        with conexion.cursor() as cursor:
+            cursor.execute(f'CALL insertar_venta("{arr_venta}", {fk_cliente});')
+            venta = cursor.fetchall()
+        conexion.commit()
+    except Exception as e:
+        print("Error al insertar venta: ", e)
+    finally:
+        conexion.close()
+        return venta

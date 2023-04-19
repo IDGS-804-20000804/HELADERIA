@@ -1,6 +1,9 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField
+
 from wtforms import Form, StringField, IntegerField, validators,RadioField, SelectField, DateField
 
-class Venta(Form):
+class Venta(FlaskForm):
     opciones = [("1", ""), 
                 ("2", ""), 
                 ]

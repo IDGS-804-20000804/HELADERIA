@@ -1,25 +1,24 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from flask_wtf.csrf import CSRFProtect
 from db.db import get_connection
 from models.venta.venta_Forms import Venta
-from controllers.venta.venta_Controllers import obtener_venta
+from controllers.venta.venta_Controllers import obtener_venta, insertar_venta
 
-from flask_wtf.csrf import CSRFProtect
-
-# csrf = CSRFProtect()
-venta = Blueprint('ventas', __name__ )
+venta = Blueprint('ventas', __name__)
 
 @venta.route('/ventas', methods=["POST", "GET"])
 def ventas():
-     if request.method == 'POST':
-        # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
-        create_form = Venta(request.form)
-      #   id_unidadMedida= ''
-      #   nombre = create_form.nombre.data
-      #   unidadMedida = create_form.unidadMedida.data
-        # De cualquier modo, y si todo fue bien, redireccionar
-     #    return redirect(url_for('materiaPrima.materiaPrima'))
-     else:
-         create_form = Venta()
-         en = obtener_venta()
-         return render_template('venta.html', form=create_form, stock=en)
+    if request.method == 'POST':
+        # total_venta = request.form['total_venta']
+        totales = request.form.getlist('totales')
+        ids_recetas = request.form.getlist('ids_recetas')
+        precios_receta = request.form.getlist('precios_receta')
+        result = []
+        for i in range(len(totales)):
+            result.append((ids_recetas[i], totales[i], precios_receta[i]))
+        arr_venta = [[int(x), int(y), float(z)] for x, y, z in result]
+        # receta, cantidad, precio
+        fk_cliente = 1
+        en = insertar_venta(arr_venta, fk_cliente)
+    create_form = Venta()
+    en = obtener_venta()
+    return render_template('venta.html', form=create_form, stock=en)
