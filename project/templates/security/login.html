@@ -10,7 +10,7 @@
             <div class="card">
                 <h2 class="text-center pt-3" style="font-weight: bold;">Iniciar sesi&oacute;n</h2>
                 <div class="form pt-2">
-                    <!-- <form method="POST" action="/security/login"> -->
+                    <form method="POST" action="/security/login">
                         <div class="row">
                             <div class="col-6">
                                 {% with messages = get_flashed_messages() %}
@@ -23,14 +23,14 @@
                                 <div class="mx-5">
                                     <label for="txtUsuario" class="form-label" style="text-align: left; "><i
                                             class="fas fa-user-circle"></i><a> </a>Usuario:</label> <br>
-                                    <input id="txtUsuario" type="text" name="email" class="form-control"
+                                    <input id="txtUsuario" type="text" name="correo" class="form-control"
                                         placeholder="Usuario" style="background: #F4F6F6;">
                                 </div>
                                 <br>
                                 <div class="mx-5">
                                     <label for="txtPassword" class="form-label" style="text-align: left; "><i
                                             class="fas fa-lock"></i><a> </a>Contraseña:</label><br>
-                                    <input id="txtPassword" type="password" name="password" class="form-control"
+                                    <input id="txtPassword" type="password" name="contrasenia" class="form-control"
                                         placeholder="Contraseña" style="background: #F4F6F6;">
                                 </div>
                                 <div class="mx-4">
@@ -43,16 +43,16 @@
                                 </div>
                                 <div class="pb-4 pt-3 text-center ">
                                     <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
-                                    <a class="btn botonLogin" href="{{ url_for('main.mains') }}"
+                                    <button class="btn botonLogin"
                                         style=" font-family:'Times New Roman', Times, serif;"><b>Iniciar
-                                            Sesi&oacute;n</b></a> <br>
+                                            Sesi&oacute;n</b></button> <br>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <img src="../static/img/logotipo.png" style="height: 350px;">
                             </div>
                         </div>
-                    <!-- </form> -->
+                    </form>
                 </div>
             </div>
         </div>
