@@ -33,7 +33,9 @@ def modificar():
     create_fprm=receta(request.form)
     listaM = []  # Inicializar la variable listaM
     mp = obtener_materia_prima()
+    
     if request.method=='GET':
+        lista.clear()
         id=request.args.get('id')
         emp=obtener_receta_por_id(id)
         create_fprm.id_Receta.data=request.args.get('id')
