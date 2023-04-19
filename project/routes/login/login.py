@@ -6,7 +6,7 @@ from models.logi.ModeloLogin import ModeloLogin
 from models.entities.User import User 
 
 login = Blueprint('login', __name__, url_prefix='/security')
-main = Blueprint('main',__name__, url_prefix='/security')
+main = Blueprint('main',__name__)
 
 
 

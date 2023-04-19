@@ -169,5 +169,39 @@
             </div>
         </div>
 </div>
-
+<div class="container">
+    <br>
+    <div class="modal fade" id="alertaEliminarCliente" tabindex="-1" aria-labelledby="alertaEliminarCliente" aria-hidden="true" data-controls-modal="alertaEliminarCliente" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form name="sent" action="clientesEliminar" id="form1" method="POST">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <div class="text-center">
+                                   <img src="../static/img/iconos/iconoEliminar.svg" width="120px"><br><br>
+                                </div>
+                                <h4 style='color: #3D7692; font-weight: bold;text-align: center;'>¿DESEA REALIZAR LA ELIMINACIÓN DEL CLIENTE?</h4>
+                            </div>
+                            <div hidden> 
+                                {{render_firld(form.id_persona,class='form-control')}} 
+                            </div>
+                            <div class="col-4"></div>
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                           
+                            <div class="pt-3 pb-3 text-center">
+                                    <a href="{{ url_for('clientes.cliente') }}" class="btn btn-outline-danger mx-2"  class="btn-close" >
+                                    CANCELAR</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-outline-success mx-2">
+                                        ACEPTAR</button>
+                            </div>
+                            
+                        </div>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {%endblock%}
