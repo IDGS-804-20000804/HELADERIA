@@ -104,30 +104,25 @@ nombres = []
 @compras.route('/comprasGuardar', methods=['GET', 'POST'])
 def index():
     create_form = compra(request.form)
-    provedor=obtener_proveedor()
-    empleado=obtener_empleados()
-    materiaPrima=obtener_materia_prima()
+    provedor = obtener_proveedor()
+    empleado = obtener_empleados()
+    materiaPrima = obtener_materia_prima()
+    
     if request.method == 'POST':
-        if 'materia' in request.form:
-          materia = request.form['materia']
+        materia = request.form.get('materia')
+        cantidadMateria = float(request.form.get('cantidad', 0))
+        precio = float(request.form.get('precio', 0))
+        fechaCaducidad = request.form.get('fechaCaducidad')
+
+        for item in nombres:
+            if item['nombre'] == materia:
+                item['cantidad'] += cantidadMateria
+                item['precio'] += precio
+                break
         else:
-          materia = None
-        if 'cantidad' in request.form:
-          cantidadMateria = request.form['cantidad']
-        else:
-          cantidadMateria = None
-        if 'precio' in request.form:
-          precio = request.form['precio']
-        else:
-          precio = None
-        if 'fechaCaducidad' in request.form:
-          fechaCaducidad = request.form['fechaCaducidad']
-        else:
-          fechaCaducidad = None
-        nombres.append({'nombre': materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
-        print(nombres)
-    else:
-         create_form = compra()
+            nombres.append({'nombre': materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
+
+    create_form = compra()
     return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
 

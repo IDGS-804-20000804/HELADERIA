@@ -70,31 +70,31 @@ def modificar():
         return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html', form= create_fprm, receta=emp, lista=listaArreglo,materiaPrima=mp)
 
-@recetas.route('/recetasModificar', methods=['GET', 'POST'])
-def indexMainModificar():
-    modificar()
-    create_form = receta()
-    r = obtener_recetas()
-    mp = obtener_materia_prima()
-    if request.method == 'POST':
-        materia_seleccionada = request.form['materia']
-        cantidad = create_form.cantidadMateria.data
-        lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
-    else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
-    return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+# @recetas.route('/recetasModificar', methods=['GET', 'POST'])
+# def indexMainModificar():
+#     modificar()
+#     create_form = receta()
+#     r = obtener_recetas()
+#     mp = obtener_materia_prima()
+#     if request.method == 'POST':
+#         materia_seleccionada = request.form['materia']
+#         cantidad = create_form.cantidadMateria.data
+#         lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
+#     else:
+#          create_form = receta()
+#          r = obtener_recetas()
+#          print(r)
+#     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
-@recetas.route('/removeM/<int:index>')
-def removeM(index):
-    create_form = receta()
-    mp = obtener_materia_prima()
-    r = obtener_recetas()
-    listaArreglo.pop(index)
-    return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
+# @recetas.route('/removeM/<int:index>')
+# def removeM(index):
+#     create_form = receta()
+#     mp = obtener_materia_prima()
+#     r = obtener_recetas()
+#     listaArreglo.pop(index)
+#     return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
 
-nombres = []
+
 
 @recetas.route('/recetas', methods=['GET', 'POST'])
 def indexMain():
@@ -111,21 +111,25 @@ def indexMain():
          print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
+nombres = []
+
 @recetas.route('/recetasGuardar', methods=['GET', 'POST'])
 def index():
     create_form = receta()
     r = obtener_recetas()
     mp = obtener_materia_prima()
+    nombresT=[]
     if request.method == 'POST':
         materia_seleccionada = request.form['materia']
-        cantidadMateria = request.form['cantidadMateria']
-        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
+        cantidad_materia = request.form['cantidadMateria']
+        nombresT = agregar_receta(materia_seleccionada, cantidad_materia)
         print(nombres)
     else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
-    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+        create_form = receta()
+        r = obtener_recetas()
+        print(r)
+    return render_template('recetasGuardar.html', nombres=nombresT, form=create_form, receta=r, materiaPrima=mp)
+
 
 
 @recetas.route('/remove/<int:index>')
@@ -136,7 +140,7 @@ def remove(index):
     nombres.pop(index)
     return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
-@recetas.route('/insertar_receta', methods=["POST"])
+@recetas.route('/insertar_receta', methods=['GET', 'POST'])
 def realizar_insercion():
 
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required
-# <<<<<<< HEAD
 # import models.materiaPrima.materiaPrima_Forms as forms
 
 from db.db import get_connection
