@@ -37,8 +37,6 @@ END //
 DELIMITER ;
 
 -- [fk_materia_prima, cantidad]
-CALL insertar_receta('Helado Frambuesa', '20', '299.99', '/uploads/asdasd', '[[1, 10],[2, 15],[3, 3],[4, 5],[5, 4]]');
-
 
 DROP PROCEDURE IF EXISTS actualizar_receta;
 DELIMITER //

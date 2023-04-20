@@ -1,14 +1,13 @@
-
-import flask
 from flask import Blueprint, render_template, request, redirect, url_for, Request, flash, Flask
 from flask_wtf.csrf import CSRFProtect
 from db.db import get_connection 
+from flask_login import LoginManager,login_user,logged_user,login_required
 
 from models.logi.ModeloLogin import ModeloLogin
 from models.entities.User import User 
 
 login = Blueprint('login', __name__, url_prefix='/security')
-
+login_manager_app=LoginManager(login)
 
 @login.route('/login', methods=['GET', 'POST'])
 def logins():
@@ -18,6 +17,7 @@ def logins():
         logued_user = ModeloLogin.inicio(db, user)
         if logued_user is not None:
             if logued_user.contrasenia:
+                        login_user(logued_user)
                         return redirect(url_for('main.mains'))
             else:
                 flash("Contraseña Inválida")
