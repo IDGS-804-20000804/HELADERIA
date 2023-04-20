@@ -7,7 +7,7 @@ from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.materiaPrima.materiaPrima_Forms import MateriaPrima
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima, obtener_materiaP_por_id, insertar_materiaPrima, eliminar_materiaP_por_id, modificar_materiaP
-
+from flask_security import roles_required, login_required
 # csrf = CSRFProtect()
 materiaPrima = Blueprint('materiaPrima', __name__ )
 

@@ -4,11 +4,12 @@ from db.db import get_connection
 from models.logi.ModeloLogin import ModeloLogin
 from models.entities.User import User 
 from flask_security import current_user
-
+from flask_security import roles_required, login_required
 main = Blueprint('main', __name__ )
 
 
 @main.route('/main')
+@login_required
 def mains():
     user_id = current_user.id_usuario
     db = get_connection()

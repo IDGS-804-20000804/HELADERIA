@@ -3,7 +3,7 @@ from flask_wtf.csrf import CSRFProtect
 from db.db import get_connection
 from models.envio.envio_Forms import Envio
 from controllers.envio.envio_Controllers import obtener_envio
-from flask_login import login_required
+from flask_security import roles_required, login_required
 envio = Blueprint('envio', __name__ )
 
 

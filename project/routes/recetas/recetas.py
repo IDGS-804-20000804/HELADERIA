@@ -5,7 +5,7 @@ from models.receta.receta_Forms import receta
 from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta, eliminar_receta_por_id, modificar_receta,stringAleatorio
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
-
+from flask_security import roles_required, login_required
 #Para subir archivo tipo foto al servidor
 import os
 from werkzeug.utils import secure_filename 
@@ -33,6 +33,7 @@ recetas = Blueprint('recetas', __name__ )
 lista=[]
 listaArreglo=[]
 @recetas.route("/recetasModificar",methods=['GET','POST'])
+@login_required
 def modificar():
     create_fprm=receta(request.form)
     listaM = []  # Inicializar la variable listaM
