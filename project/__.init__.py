@@ -17,7 +17,8 @@ from flask_login import LoginManager, login_user, logout_user, login_required
 from models.entities.User import UserDatos
 from models.logi.ModeloLogin import ModeloLogin
 from db.db import get_connection 
-
+from datetime import datetime
+import logging
 
 
 from models.logi.ModeloLogin import ModeloLogin
@@ -54,6 +55,8 @@ app.register_blueprint(almacen)
 
 @app.route('/')
 def index():
+    logging.basicConfig(filename='log.log',level=logging.INFO)            
+    logging.info("Se ingreso a la pagina principal")
     return render_template('index.html')
 
 
@@ -67,11 +70,17 @@ def login():
         if logged_user is not None:
             if logged_user.contrasenia:
                         login_user(logged_user)
+                        logging.basicConfig(filename='log.log',level=logging.WARNING)
+                        logging.warning(f"Se logueo el usuario con el id_usuario :{logged_user.id_usuario}inicio sesion el dia :{datetime.now()}")
                         return redirect(url_for('main.mains'))
             else:
+                logging.basicConfig(filename='log.log',level=logging.WARNING)            
+                logging.warning("Se intento inciar sesion con un password invalido ")
                 flash("Contraseña Inválida")
                 return render_template('/security/login.html')
         else:
+            logging.basicConfig(filename='log.log',level=logging.WARNING)            
+            logging.warning("Se intento inciar sesion con un usuario invalido ")
             flash("Usuario No Encontrado")
             return render_template('/security/login.html')
     else:
