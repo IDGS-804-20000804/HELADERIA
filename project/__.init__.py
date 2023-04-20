@@ -1,4 +1,5 @@
 import flask
+from flask import redirect, url_for
 from flask import Flask, render_template, Blueprint
 from flask_wtf.csrf import CSRFProtect
 from routes.login.login import login
@@ -14,11 +15,24 @@ from routes.compras.compras import compras
 from routes.envio.envio import envio
 from routes.almacen.almacen import almacen
 from routes.recetas.recetasModificar import recetasModificar
+from flask_security import Security, SQLAlchemyUserDatastore
+from models.usuario.usuario import Usuario
+from models.rol.rol import Rol
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'DDBHF17I3I2OREBF'
-csrf = CSRFProtect(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1029384756-MySQL_root@127.0.0.1/gelatos'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECURITY_UNAUTHORIZED_VIEW'] = '/login'
+app.config['SECURITY_ROLES_ACCEPTED'] = ['Administrador','Cliente','Vendedor','Repartidor','Comprador','Gerente','Productor']
 app.config['DEBUG'] = True
+csrf = CSRFProtect(app)
+
+
+db = SQLAlchemy(app)
+user_datastore = SQLAlchemyUserDatastore(db, Usuario, Rol)
+security = Security(app, user_datastore)
 
 def jinja2_enumerate(iterable, start=0):
     return enumerate(iterable, start=start)
@@ -42,6 +56,12 @@ app.register_blueprint(recetasModificar)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/login',methods=['GET','POST'])
+def login_redirect():
+    print('/////////')
+    return redirect(url_for('login.login_view'))
+
 # with app.app_context():
 #     sql_alchemy.create_all()
     
