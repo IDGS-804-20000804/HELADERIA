@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.receta.receta_Forms import receta
-from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta
+from controllers.receta.receta_Controllers import obtener_recetas, obtener_receta_por_id, insertar_receta, eliminar_receta_por_id, modificar_receta
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
 
@@ -26,22 +26,67 @@ recetas = Blueprint('recetas', __name__ )
 #         nombre = create_form.cantidad.data
 #         datosMateria.append(nombre)
 #         return render_template('recetas.html', form=create_form, receta=r, materiaPrima=mp, foto=foto, datosMateria=datosMateria)
-     
-@recetas.route("/recetasModificar",methods=['GET','POST'])
-def modificar():
-   create_fprm=receta(request.form)
-   if request.method=='GET':
-      id=request.args.get('id')
-      emp=obtener_receta_por_id(id)
-      create_fprm.id_Receta.data=request.args.get('id')
-      create_fprm.nombre.data=emp[0][1]
-      create_fprm.cantidad.data=emp[0][2]
-      create_fprm.foto.data=emp[0][4]
-      create_fprm.precio.data=emp[0][3] 
-      emp = obtener_recetas()
-      print(emp)
-   return render_template('recetasModificar.html', form= create_fprm, receta=emp)
+# lista=[]
+# listaArreglo=[]
+# @recetas.route("/recetasModificar",methods=['GET','POST'])
+# def modificar():
+#     create_fprm=receta(request.form)
+#     listaM = []  # Inicializar la variable listaM
+#     mp = obtener_materia_prima()
+    
+#     if request.method=='GET':
+#         lista.clear()
+#         id=request.args.get('id')
+#         emp=obtener_receta_por_id(id)
+#         create_fprm.id_Receta.data=request.args.get('id')
+#         create_fprm.nombre.data=emp[0][1]
+#         create_fprm.cantidad.data=emp[0][2]
+#         create_fprm.foto.data=emp[0][4]
+#         create_fprm.precio.data=emp[0][3] 
+#         texto = emp[0][5]
+#         listaM = eval(texto)
+#         lista.append(listaM)
+#         for elemento in lista:
+#             listaArreglo.append(elemento)
+#         print("Este es el arreglo")
+#         print(listaArreglo)
+#         emp = obtener_recetas()
+#         print(emp)
+#         print(lista)
+#     if request.method=='POST':
+#         id_Receta = create_fprm.id_Receta.data
+#         nombre = create_fprm.nombre.data
+#         cantidad= create_fprm.cantidad.data
+#         precio= create_fprm.precio.data
+#         foto='uploads/3'
+#         lista_sin_string = [[sublista[i] for i in range(len(sublista)) if not isinstance(sublista[i], str)] for sublista in listaArreglo[0]]
+#         modificar_receta(id_Receta,nombre,cantidad, precio, foto,lista_sin_string)
+#         return redirect(url_for('recetas.indexMain'))
+#     return render_template('recetasModificar.html', form= create_fprm, receta=emp, lista=listaArreglo,materiaPrima=mp)
 
+# @recetas.route('/recetasModificar', methods=['GET', 'POST'])
+# def indexMainModificar():
+#     modificar()
+#     create_form = receta()
+#     r = obtener_recetas()
+#     mp = obtener_materia_prima()
+#     if request.method == 'POST':
+#         materia_seleccionada = request.form['materia']
+#         cantidad = create_form.cantidadMateria.data
+#         lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
+#     else:
+#          create_form = receta()
+#          r = obtener_recetas()
+#          print(r)
+#     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+
+# @recetas.route('/removeM/<int:index>')
+# def removeM(index):
+#     create_form = receta()
+#     mp = obtener_materia_prima()
+#     r = obtener_recetas()
+#     listaArreglo.pop(index)
+#     return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
 
 nombres = []
 
@@ -69,6 +114,7 @@ def index():
         materia_seleccionada = request.form['materia']
         cantidadMateria = request.form['cantidadMateria']
         nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
+        print(nombres)
     else:
          create_form = receta()
          r = obtener_recetas()
@@ -127,3 +173,18 @@ def convertir_a_enteros(lista):
     :return: La lista de listas de enteros resultante.
     """
     return [[int(valor) for valor in sublista] for sublista in lista]
+
+
+@recetas.route('/recetaEliminar', methods=['GET', 'POST'])
+def eliminar_receta():
+    create_fprm = receta(request.form)
+    r = obtener_recetas()
+    if request.method == 'GET':
+        # id = request.args.get('id')
+        create_fprm.id_Receta.data=request.args.get('id')
+    if request.method == 'POST':
+        id=create_fprm.id_Receta.data
+        eliminar_receta_por_id(id)  
+        # emp = obtener_empleados() # Comenta esta línea si no la necesitas
+        return render_template('recetas.html', form=create_fprm, receta=r)
+    return render_template('recetaEliminar.html', form=create_fprm, receta=r)

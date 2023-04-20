@@ -3,7 +3,7 @@
 {%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado" onclick="limpiar();"><strong>Agregar</strong></button>
+    <a href="comprasGuardar" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" ><strong>Agregar</strong></a>
     <!-- CATÁLOGO DE EMPLEADO-->
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
@@ -17,15 +17,22 @@
                 <br>
                 <table class="table table-hover" id="datos">
                     <thead>
-                        <tr>
-                            <th style="border: 1px solid black; text-align: center;">Provedor</th>
-                            <th style="border: 1px solid black;  text-align: center;">Materia Prima</th> 
-                            <th style="border: 1px solid black; text-align: center;">Cantidad</th>
-                            <th style="border: 1px solid black; text-align: center;">Precio</th>
-                            <th class="col-2" style="border: 1px solid black; ">Acciones</th>
+                        <tr style="background: #e2e2e0;">
+                            <th style=" text-align: center;">Provedor</th>
+                            <th style="  text-align: center;">Materia Prima</th> 
+                            <th style=" text-align: center;">Precio</th>
+                            <th style=" text-align: center;">Cantidad</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyEmpleados" style="background: #e2e2e0;">
+                    <tbody >
+                        {% for compras in compras %}
+                        <tr>
+                            <td>{{compras[5]}} {{compras[6]}} {{compras[7]}}</td>
+                            <td>{{compras[30]}}</td>
+                            <td>{{compras[28]}}</td>
+                            <td>{{compras[27]}}</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>
@@ -61,27 +68,22 @@
                                         <option>Selecciona un Provedor</option>
                                         <option value="1">Kg</option>
                                     </select> -->
-                                    {{render_firld(form.provedor,class='form-control')}}<br>
                                 </div>
                                 <div class="col-6">
                                     <!-- <label for="txtMateriaP" class="form-label">Materia Prima<span class="text-danger">*</span></label>
                                     <input id="txtMateriaP" type="text" class="form-control"  /> -->
-                                    {{render_firld(form.materiaPrima,class='form-control')}}<br>
                                 </div>
                                 <div class="col-3">
                                     <!-- <label for="txtCantidad" class="form-label">Cantidad<span></span></label>
                                     <input id="txtCantidad" type="text" class="form-control"  > <br> -->
-                                    {{render_firld(form.cantidad,class='form-control')}}<br>
                                 </div>
                                 <div class="col-3">
                                     <!-- <label for="txtPrecio" class="form-label">Precio<span class="text-danger">*</span></label>
                                     <input id="txtPrecio" type="text" class="form-control" > <br> -->
-                                    {{render_firld(form.precio,class='form-control')}}<br>
                                 </div>
                                 <div class="col-6">
                                     <!-- <label for="txtFechaC" class="form-label">Fecha Caducidad <span class="text-danger">*</span></label>
                                     <input id="txtFechaC" type="text" class="form-control" > <br> -->
-                                    {{render_firld(form.fechaCaducidad,class='form-control')}}<br>
                                 </div>
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-info" >

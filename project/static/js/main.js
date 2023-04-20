@@ -21,6 +21,8 @@ function inicializarModulo() {
      //Modales de Recetas
      $('#detalleRecetaModificar').modal('show'); // abrir
      $('#detalleRecetaModificar').modal({backdrop: 'static', keyboard: false})
+     $('#alertaEliminarReceta').modal('show'); // abrir
+     $('#alertaEliminarReceta').modal({backdrop: 'static', keyboard: false})
 
       //Modales de Provedor
       $('#detalleProveedorModificar').modal('show'); // abrir

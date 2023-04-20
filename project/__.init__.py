@@ -13,6 +13,7 @@ from routes.recetas.recetas import recetas
 from routes.compras.compras import compras
 from routes.envio.envio import envio
 from routes.almacen.almacen import almacen
+from routes.recetas.recetasModificar import recetasModificar
 
 app = flask.Flask(__name__)
 csrf = CSRFProtect(app)
@@ -37,6 +38,7 @@ app.register_blueprint(recetas)
 app.register_blueprint(compras)
 app.register_blueprint(envio)
 app.register_blueprint(almacen)
+app.register_blueprint(recetasModificar)
 
 @app.route('/')
 def index():
