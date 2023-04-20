@@ -30,11 +30,16 @@
                     <tbody >
                         {% for envio in envio %}
                         <tr>
-                            <td>{{envio[4]}}</td>
-                            <td>{{envio[5]}} {{envio[6]}}</td>
-                            <td>{{envio[7]}}</td>
-                            <td>{{envio[8]}}</td>
-                            <td>{{envio[1]}}</td>
+                            <td>{{envio[6]}} {{envio[7]}} {{envio[8]}}</td>
+                            <td>{{envio[13]}} #{{envio[11]}}{% if envio[12] is not none %}({{envio[12]}}){% endif %}, {{envio[14]}}, {{envio[11]}}</td>
+                            <td>{{envio[9]}}</td>
+                            {% if envio[1] == 0 %}
+                            <td>En proceso</td>
+                            <td>Pendiente</td>
+                            {% else %}
+                            <td>{{envio[17]}} {{envio[18]}} {{envio[19]}}</td>
+                            <td>{{envio[26]}}</td>
+                            {% endif %}
                             <td>{{envio[3]}}</td>
                             <td style="text-align: center;" ><a href="envio?id={{envio[0]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>

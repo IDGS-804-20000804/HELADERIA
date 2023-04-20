@@ -13,8 +13,7 @@ def obtener_envio():
     envio = []
     try:
         with conexion.cursor() as cursor:
-            # Ejecutar una consulta SELECT para obtener los datos de la vista
-            cursor.execute('SELECT * FROM vista_envio')
+            cursor.execute('SELECT * FROM vista_envio_cargada')
             envio = cursor.fetchall()
         # Confirmar los cambios en la base de datos
         conexion.commit()

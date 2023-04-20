@@ -18,7 +18,6 @@ def envios():
         # De cualquier modo, y si todo fue bien, redireccionar
      #    return redirect(url_for('materiaPrima.materiaPrima'))
      else:
-        create_form = Envio()
-        en = obtener_envio()
-        print(en)
-        return render_template('envio.html', form=create_form, envio=en)
+         create_form = Envio()
+         en = obtener_envio()
+         return render_template('envio.html', form=create_form, envio=en)
