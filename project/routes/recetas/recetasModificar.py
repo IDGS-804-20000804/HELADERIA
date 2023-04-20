@@ -7,7 +7,7 @@ from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_pr
 import json
 
 recetasModificar = Blueprint('recetasModificar', __name__ )
-@recetasModificar.route('/recetas', methods=['GET', 'POST'])
+@recetasModificar.route('/recetasModif', methods=['GET', 'POST'])
 def indexMain():
     create_form = receta()
     r = obtener_recetas()
@@ -22,24 +22,7 @@ def indexMain():
          print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
-# @recetas.route('/recetas', methods=["POST", "GET"])
-# def Lreceta():
-#      if request.method == 'POST':
-#         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
-#         create_form = receta(request.form)
-        
-      
-#      else:
-#         create_form = receta()
-#         r = obtener_recetas()
-#         print(r)
-#         mp = obtener_materia_prima()
-#         print(mp)
-#         foto=create_form.foto.data
-#         datosMateria=list()
-#         nombre = create_form.cantidad.data
-#         datosMateria.append(nombre)
-#         return render_template('recetas.html', form=create_form, receta=r, materiaPrima=mp, foto=foto, datosMateria=datosMateria)
+
 lista=[]
 nombres=[]
 listaArreglo=[]
@@ -128,69 +111,7 @@ def agregar_receta(materia_seleccionada, cantidad_materia):
             return nombres
     nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad_materia})
     return nombres
-# nombres = []
 
-# @recetasModificar.route('/recetas', methods=['GET', 'POST'])
-# def indexMain():
-#     create_form = receta()
-#     r = obtener_recetas()
-#     mp = obtener_materia_prima()
-#     if request.method == 'POST':
-#         materia_seleccionada = request.form['materia']
-#         cantidad = request.form['cantidad']
-#         nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
-#     else:
-#          create_form = receta()
-#          r = obtener_recetas()
-#          print(r)
-#     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
-
-# @recetasModificar.route('/recetasModificar', methods=['GET', 'POST'])
-# def index():
-#     modificar()
-#     create_form = receta()
-#     r = obtener_recetas()
-#     mp = obtener_materia_prima()
-#     if request.method == 'POST':
-#         materia_seleccionada = request.form['materia']
-#         cantidad = create_form.cantidadMateria.data
-#         lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
-#     else:
-#          create_form = receta()
-#          r = obtener_recetas()
-#          print(r)
-#     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
-
-
-# @recetasModificar.route('/remove/<int:index>')
-# def remove(index):
-#     create_form = receta()
-#     mp = obtener_materia_prima()
-#     r = obtener_recetas()
-#     lista.pop(index)
-#     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
-
-# @recetasModificar.route('/insertar_receta', methods=["POST"])
-# def realizar_insercion():
-#     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
-#     create_form = receta()
-#     r = obtener_recetas()
-#     nombre = request.form['nombre']
-#     cantidad= request.form['cantidad']
-#     precio= request.form['precio']
-#     ruta_imagen='uploads/3'
-#     arr_receta=nombres
-#     json_string = json.dumps(arr_receta)
-#     valores = quitar_titulo(json_string)
-#     lista_de_listas = list(valores)
-#     lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
-#     print(nombre+','+cantidad+','+precio+','+ruta_imagen)
-#     print(lista_de_listas_enteros)
-#     txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-#     # Lógica para insertar empleado en la base de datos
-#     insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen,txt)
-#     # De cualquier modo, y si todo fue bien, redireccionar
-#     return render_template('recetas.html',form=create_form, receta=r)
 
 def quitar_titulo(json_string):
     # Cargar la cadena JSON como un objeto Python
@@ -215,16 +136,3 @@ def convertir_a_enteros(lista):
     return [[int(valor) for valor in sublista] for sublista in lista]
 
 
-# @recetasModificar.route('/recetaEliminar', methods=['GET', 'POST'])
-# def eliminar_receta():
-#     create_fprm = receta(request.form)
-#     r = obtener_recetas()
-#     if request.method == 'GET':
-#         # id = request.args.get('id')
-#         create_fprm.id_Receta.data=request.args.get('id')
-#     if request.method == 'POST':
-#         id=create_fprm.id_Receta.data
-#         eliminar_receta_por_id(id)  
-#         # emp = obtener_empleados() # Comenta esta línea si no la necesitas
-#         return render_template('recetas.html', form=create_fprm, receta=r)
-#     return render_template('recetaEliminar.html', form=create_fprm, receta=r)
