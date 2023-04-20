@@ -7,26 +7,26 @@ from models.logi.ModeloLogin import ModeloLogin
 from models.entities.User import User 
 
 login = Blueprint('login', __name__, url_prefix='/security')
-login_manager_app=LoginManager(login)
+# login_manager_app=LoginManager(login)
 
-@login.route('/login', methods=['GET', 'POST'])
-def logins():
-    if request.method == 'POST':
-        db = get_connection()
-        user = User(0, request.form['correo'], request.form['contrasenia'], 1)
-        logued_user = ModeloLogin.inicio(db, user)
-        if logued_user is not None:
-            if logued_user.contrasenia:
-                        login_user(logued_user)
-                        return redirect(url_for('main.mains'))
-            else:
-                flash("Contraseña Inválida")
-                return render_template('/security/login.html')
-        else:
-            flash("Usuario No Encontrado")
-            return render_template('/security/login.html')
-    else:
-        return render_template('/security/login.html')
+# @login.route('/login', methods=['GET', 'POST'])
+# def logins():
+#     if request.method == 'POST':
+#         db = get_connection()
+#         user = User(0, request.form['correo'], request.form['contrasenia'], 1)
+#         logued_user = ModeloLogin.inicio(db, user)
+#         if logued_user is not None:
+#             if logued_user.contrasenia:
+#                         login_user(logued_user)
+#                         return redirect(url_for('main.mains'))
+#             else:
+#                 flash("Contraseña Inválida")
+#                 return render_template('/security/login.html')
+#         else:
+#             flash("Usuario No Encontrado")
+#             return render_template('/security/login.html')
+#     else:
+#         return render_template('/security/login.html')
 
 
 

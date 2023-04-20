@@ -25,7 +25,7 @@
         </div>
         <div class="media-body ">
             <div>
-                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">Nombre</span></h6>
+                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">{{current_user.id_Usuario}}</span></h6>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@
                 </a>
             </li>
             <li class="nav-item m-1">
-                <a href="/" class="nav-link text-dark font-italic bg-light" >
+                <a href="{{url_for('logout')}}" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-cog mr-3  fa-fw"></i>
                     Cerrar Sesi&oacute;n
                 </a>

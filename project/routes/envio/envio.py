@@ -8,7 +8,7 @@ envio = Blueprint('envio', __name__ )
 
 
 @envio.route('/envio', methods=["POST", "GET"])
-
+@login_required
 def envios():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

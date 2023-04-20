@@ -28,11 +28,12 @@ class ModeloLogin():
         conexion = get_connection()
         try:
             with conexion.cursor() as cursor:
-                sql = "CALL obtener_info_usuario({})".format(id_uuario)
+                sql = "CALL obtener_info_usuario({})".format(id_usuario)
                 cursor.execute(sql)
                 row = cursor.fetchone()
                 if row != None:
-                    logged_user = UserDatos(row[0],row[1],row[2],None,row[4])
+                    print(row[4])
+                    logged_user = UserDatos(row[0],row[1],None,None,row[4])
                     # sql2 = "CALL obtener_info_usuario({})".format(idUsuario)
                     # cursor.execute(sql2)
                     # row2 = cursor.fetchall()
