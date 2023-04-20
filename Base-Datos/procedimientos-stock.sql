@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS consultar_stock;
 DELIMITER //
 CREATE PROCEDURE consultar_stock()
 BEGIN
-	SELECT id_stock, caducidad, stock.precio AS stock_precio, stock.estatus AS stock_estatus, nombre, cantidad, receta.precio AS receta_precio, ruta_imagen, receta.estatus AS receta_estatus
+	SELECT id_stock, caducidad, receta.cantidad AS cantidad_receta, stock.precio AS stock_precio, stock.estatus AS stock_estatus, nombre, cantidad, receta.precio AS receta_precio, ruta_imagen, receta.estatus AS receta_estatus
 	FROM stock
 	INNER JOIN
 	receta ON id_receta = fk_receta;
@@ -17,7 +17,7 @@ DROP PROCEDURE IF EXISTS consultar_stock_por_id;
 DELIMITER //
 CREATE PROCEDURE consultar_stock_por_id( IN iid_stock INT )
 BEGIN
-	SELECT id_stock, caducidad, stock.precio AS stock_precio, stock.estatus AS stock_estatus, nombre, cantidad, receta.precio AS receta_precio, ruta_imagen, receta.estatus AS receta_estatus
+	SELECT id_stock, caducidad, receta.cantidad AS cantidad_receta, stock.precio AS stock_precio, stock.estatus AS stock_estatus, nombre, cantidad, receta.precio AS receta_precio, ruta_imagen, receta.estatus AS receta_estatus
 	FROM stock
 	INNER JOIN
 	receta ON id_receta = fk_receta
@@ -49,29 +49,33 @@ BEGIN
     DECLARE dcanitdad_en_stock INT;
 	SET dlistado_existencias = JSON_ARRAY();
 	SET dreceta = JSON_ARRAY();
+
+    DECLARE realizar_commit BOOLEAN;
+    START TRANSACTION;
+    SET realizar_commit = TRUE;
     CALL consultar_recetas_posibles(dids_validos);
     IF JSON_CONTAINS(dids_validos, CAST(ifk_receta AS JSON)) THEN
     
-    SET did_stock = (
-      SELECT id_stock FROM stock
-      WHERE DATE(caducidad) = DATE(icaducidad)
-      AND fk_receta = ifk_receta
-      AND precio BETWEEN iprecio - 0.01 AND iprecio + 0.01
-    );
-    IF did_stock > 0 THEN 
-	  SET dcanitdad_en_stock = (
-            SELECT cantidad FROM stock
-            WHERE id_stock = did_stock
+		SET did_stock = (
+		SELECT id_stock FROM stock
+		WHERE DATE(caducidad) = DATE(icaducidad)
+		AND fk_receta = ifk_receta
+		AND precio BETWEEN iprecio - 0.01 AND iprecio + 0.01
 		);
-      UPDATE stock SET
-        estatus = TRUE,
-        cantidad = 1 + dcanitdad_en_stock
-      WHERE id_stock = did_stock;
-    ELSE 
-      INSERT INTO stock (caducidad, precio, cantidad, fk_receta)
-        VALUES (icaducidad, iprecio, 1, ifk_receta);
-      SET did_stock = LAST_INSERT_ID();
-    END IF;
+		IF did_stock > 0 THEN 
+		SET dcanitdad_en_stock = (
+				SELECT cantidad FROM stock
+				WHERE id_stock = did_stock
+			);
+		UPDATE stock SET
+			estatus = TRUE,
+			cantidad = 1 + dcanitdad_en_stock
+		WHERE id_stock = did_stock;
+		ELSE 
+		INSERT INTO stock (caducidad, precio, cantidad, fk_receta)
+			VALUES (icaducidad, iprecio, 1, ifk_receta);
+		SET did_stock = LAST_INSERT_ID();
+		END IF;
 		SELECT JSON_ARRAYAGG(JSON_OBJECT(
 			   'fk_materia_prima', fk_materia_prima,
 			   'cantidad', cantidad
@@ -139,7 +143,14 @@ BEGIN
 			SET dposicion_receta = dposicion_receta - 1;
             ITERATE ciclo_for;
 		END LOOP;
+	ELSE
+		SET realizar_commit = FALSE;
 	END IF;
+	IF realizar_commit = TRUE THEN
+        COMMIT;
+    ELSE
+        ROLLBACK;
+    END IF;
 END //
 DELIMITER ;
 

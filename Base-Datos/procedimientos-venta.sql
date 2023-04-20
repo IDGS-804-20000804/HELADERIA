@@ -21,9 +21,9 @@ BEGIN
 	DECLARE dprecio_existencia FLOAT;
 	DECLARE dstock_existencia INT;
     DECLARE dposicion_existencias INT;
-    DECLARE realizar_commit BOOLEAN;
     DECLARE dcomprobacion_existencia INT;
     
+    DECLARE realizar_commit BOOLEAN;
     START TRANSACTION;
 	
     SET realizar_commit = TRUE;

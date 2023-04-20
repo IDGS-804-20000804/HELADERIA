@@ -482,13 +482,13 @@ CALL insertar_materia_prima('Colorante rojo', 6);
 CALL insertar_materia_prima('Colorante morado', 6);
 CALL insertar_materia_prima('Colorante cafe', 6);
 
-CALL insertar_receta('Helado de fresa', 2499.99, 'uploads/1',  '[[1,5],[2,3],[3,2],[4,1],[5,3]]');
-CALL insertar_receta('Helado de oreo', 1999.99, 'uploads/2',  '[[1,5],[2,3],[8,20],[4,1],[5,3]]');
-CALL insertar_receta('Helado de vainilla', 1499.99, 'uploads/3',  '[[1,5],[2,6],[4,1],[6,8],[10,3],[5,3]]');
+CALL insertar_receta('Helado de fresa', 20, 2499.99, 'uploads/1',  '[[1,5],[2,3],[3,2],[4,1],[5,3]]');
+CALL insertar_receta('Helado de oreo', 20, 1999.99, 'uploads/2',  '[[1,5],[2,3],[8,20],[4,1],[5,3]]');
+CALL insertar_receta('Helado de vainilla', 20, 1499.99, 'uploads/3',  '[[1,5],[2,6],[4,1],[6,8],[10,3],[5,3]]');
 
 CALL insertar_proveedor('Proveedor', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia','proveedor@gmail.com',@a,@a);
 CALL insertar_empleado('Empleado', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia','empleado@gmail.com','123','[1,2,3]',@a,@a,@a);
-CALL insertar_cliente('Cliente', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia','cloente@gmail.com','123',@a,@a,@a);
+CALL insertar_cliente('Cliente', 'Ivan', 'Ornelas', '4771231212', 37000, null, '111', 'Calle', 'Colonia','cliente@gmail.com','123',@a,@a,@a);
 
 CALL insertar_compra( '[[500, "2024-07-30", 1, 499.99],[500, "2023-04-30", 2, 99.99]]', 1, 1 );
 CALL insertar_compra( '[[500, "2024-01-30", 1, 499.99],[500, "2023-08-30", 2, 99.99]]', 1, 1 );
