@@ -1,5 +1,5 @@
 from db.db import get_connection 
-
+from flask import Flask, flash, Markup
 
 
 def obtener_empleados():
@@ -31,6 +31,7 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
+        flash("Se cancelo correctamente la compra")
     except Exception as e:
         # Si hay algún error, imprimirlo en la consola
         print("Error al insertar Empleado: ", e)
@@ -38,6 +39,24 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
         # Cerrar la conexión a la base de datos
         conexion.close()
      
+def modificar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Persona,id_Usuario):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('actualizar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Persona,id_Usuario])
+
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+        
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al actualizar Empleado: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+
 def obtener_empleado_por_id(id):
     # Obtener conexión a la base de datos
     conexion = get_connection()

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from models.empleados.Empleados import Empleados
-from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id
+from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id, modificar_empleado
 import json
 from flask import jsonify
 
@@ -75,7 +75,6 @@ def realizar_insercion():
         rol.append(int(cadena))
     print(rol)
     json_string = json.dumps(rol)
-
     id_Empleado=''
     id_Usuario=''
     id_Persona=''
@@ -91,8 +90,8 @@ def modificar():
       id=request.args.get('id')
       emp=obtener_empleado_por_id(id)
       create_fprm.id_empleado.data=request.args.get('id')
-      create_fprm.id_persona.data=emp[0][13]
-      create_fprm.id_usuario.data=emp[0][14]
+      create_fprm.id_usuario.data=emp[0][15]
+      create_fprm.id_persona.data=emp[0][14]
       create_fprm.nombre.data=emp[0][1]
       create_fprm.apaterno.data=emp[0][2]
       create_fprm.amaterno.data=emp[0][3]
@@ -102,10 +101,102 @@ def modificar():
       create_fprm.colonia.data=emp[0][9]   
       create_fprm.numero_exterior.data=emp[0][6]   
       create_fprm.numero_interior.data=emp[0][7]   
-      create_fprm.correo.data=emp[0][10]   
-      create_fprm.contrasenia.data=emp[0][11]          
+      create_fprm.correo.data=emp[0][11]   
+      rol=emp[0][13]
+      datos_json = json.loads(rol)
+      for valor in datos_json:
+        if valor == 1:
+            create_fprm.cbox1.data = True
+        elif valor == 2:
+            create_fprm.cbox2.data = True
+        elif valor == 3:
+            create_fprm.cbox3.data = True
+        elif valor == 4:
+            create_fprm.cbox4.data = True
+        elif valor == 5:
+            create_fprm.cbox5.data = True
+        elif valor == 6:
+            create_fprm.cbox6.data = True
+        elif valor == 7:
+            create_fprm.cbox7.data = True
+      print(rol)    
       emp = obtener_empleados()
-      print(emp)
+   if request.method=='POST':
+        id_Persona=create_fprm.id_persona.data
+        id_Usuario=create_fprm.id_usuario.data
+        nombre=create_fprm.nombre.data,
+        apaterno=create_fprm.apaterno.data,
+        amaterno=create_fprm.amaterno.data,
+        telefono=create_fprm.telefono.data
+        calle=create_fprm.calle.data
+        colonia=create_fprm.colonia.data 
+        codigo_postal=create_fprm.codigo_postal.data 
+        numero_exterior=create_fprm.numero_exterior.data  
+        numero_interior=create_fprm.numero_interior.data  
+        correo=create_fprm.correo.data   
+        contrasenia=create_fprm.contrasenia.data
+        # cbox1=create_fprm.cbox1.data
+        # cbox2=create_fprm.cbox2.data
+        # cbox3=create_fprm.cbox3.data
+        # cbox4=create_fprm.cbox4.data
+        # cbox5=create_fprm.cbox5.data
+        # cbox6=create_fprm.cbox6.data
+        # cbox7=create_fprm.cbox7.data
+        # rol2=[cbox1, cbox2, cbox3, cbox4, cbox5, cbox6, cbox7]
+        # print(rol2)
+        seleccionados = []
+        if create_fprm.cbox1.data:
+            seleccionados.append('1')
+        if create_fprm.cbox2.data:
+            seleccionados.append('2')
+        if create_fprm.cbox3.data:
+            seleccionados.append('3')
+        if create_fprm.cbox4.data:
+            seleccionados.append('4')
+        if create_fprm.cbox5.data:
+            seleccionados.append('5')
+        if create_fprm.cbox6.data:
+            seleccionados.append('6')
+        if create_fprm.cbox7.data:
+            seleccionados.append('7')
+        print(seleccionados)
+        
+        rol = []
+        for cadena in seleccionados:
+            rol.append(int(cadena))
+        print(rol)
+        json_string = json.dumps(rol)
+        # print(rol2)
+        # datos_json = json.dumps(rol2)  # convierte la lista rol2 en una cadena JSON
+        # jsonRol=[]
+        # for valor in datos_json:
+        #     if valor == 1:
+        #         create_fprm.cbox1.data = True
+        #         jsonRol.append('1')
+        #     elif valor == 2:
+        #         create_fprm.cbox2.data = True
+        #         jsonRol.append('2')
+        #     elif valor == 3:
+        #         create_fprm.cbox3.data = True
+        #         jsonRol.append('3')
+        #     elif valor == 4:
+        #         create_fprm.cbox4.data = True
+        #         jsonRol.append('4')
+        #     elif valor == 5:
+        #         create_fprm.cbox5.data = True
+        #         jsonRol.append('5')
+        #     elif valor == 6:
+        #         create_fprm.cbox6.data = True
+        #         jsonRol.append('6')
+        #     elif valor == 7:
+        #         create_fprm.cbox7.data = True
+        #         jsonRol.append('7')
+        # json_string = json.dumps(jsonRol)
+        # datos_json_rol = json.loads(json_string)
+        # print(datos_json_rol)
+        datos_json_rol=[4,3]
+        modificar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,json_string,id_Persona,id_Usuario)
+        return redirect(url_for('empleados.empleado'))
    return render_template('empleadosModificar.html', form= create_fprm, empleados=emp)
 
 @empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
@@ -131,6 +222,27 @@ def eliminar_empleado():
 #     except Exception as e:
 #         return jsonify({'status': 'ERROR', 'message': str(e)})
 
+# @app.route('/editar_empleado/<id_empleado>', methods=['GET'])
+# def editar_empleado(id_empleado):
+#     # Obtener los datos del empleado con el id_empleado dado
+#     empleado = obtener_empleado_por_id(id_empleado)
+
+#     # Asignar los valores del empleado a las variables del formulario
+#     form.nombre.data = empleado['nombre']
+#     form.apaterno.data = empleado['apaterno']
+#     form.amaterno.data = empleado['amaterno']
+#     form.telefono.data = empleado['telefono']
+#     form.numero_exterior.data = empleado['numero_exterior']
+#     form.codigo_postal.data = empleado['codigo_postal']
+#     form.calle.data = empleado['calle']
+#     form.numero_interior.data = empleado['numero_interior']
+#     form.colonia.data = empleado['colonia']
+#     form.municipio.data = empleado['municipio']
+#     form.estado.data = empleado['estado']
+#     form.pais.data = empleado['pais']
+    
+#     # Renderizar la plantilla con los datos del empleado en los campos del formulario
+#     return render_template('editar_empleado.html', form=form, empleados=empleado)
 
 
 # @empleados.route('/empleados',methods=["POST","GET"])

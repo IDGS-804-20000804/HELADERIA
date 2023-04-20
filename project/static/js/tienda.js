@@ -4,7 +4,7 @@ addToShoppingCartButtons.forEach((addToCartButton) => {
 });
 
 const comprarButton = document.querySelector('.comprarButton');
-comprarButton.addEventListener('click', comprarButtonClicked);
+comprarButton.addEventListener('submit', comprarButtonClicked);
 
 const shoppingCartItemsContainer = document.querySelector(
   '.shoppingCartItemsContainer'
@@ -17,22 +17,19 @@ function addToCartClicked(event) {
   const itemTitle = item.querySelector('.item-title').textContent;
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-image').src;
-
-  addItemToShoppingCart(itemTitle, itemPrice, itemImage);
+  const itemLimit = item.querySelector('.item-limit').textContent;
+  const item_id_receta = item.querySelector('.item-id_receta').textContent;
+  const item_precio_receta = item.querySelector('.item-precio_receta').textContent;
+  
+  addItemToShoppingCart(itemTitle, itemPrice, itemImage, itemLimit, item_id_receta,item_precio_receta);
 }
 
-function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
+function addItemToShoppingCart(itemTitle, itemPrice, itemImage, itemLimit, item_id_receta, item_precio_receta) {
   const elementsTitle = shoppingCartItemsContainer.getElementsByClassName(
-    'shoppingCartItemTitle'
+    'id_title'
   );
   for (let i = 0; i < elementsTitle.length; i++) {
-    if (elementsTitle[i].innerText === itemTitle) {
-      let elementQuantity = elementsTitle[
-        i
-      ].parentElement.parentElement.parentElement.querySelector(
-        '.shoppingCartItemQuantity'
-      );
-      elementQuantity.value++;
+    if (elementsTitle[i].innerText == (item_id_receta+"-"+itemPrice)) {
       $('.toast').toast('show');
       updateShoppingCartTotal();
       return;
@@ -45,6 +42,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
         <div class="col-6">
             <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
                 <img src=${itemImage} class="shopping-cart-image">
+                <p hidden class="id_title">${item_id_receta}-${itemPrice}</p>
                 <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-3 mb-0">${itemTitle}</h6>
             </div>
         </div>
@@ -56,8 +54,10 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
         <div class="col-4">
             <div
                 class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
-                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number"
-                    value="1">
+                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number" max=${itemLimit} 
+                    value="1" name="totales">
+                <input type="hidden" name="precios_receta" value=${item_precio_receta}>
+                <input type="hidden" name="ids_recetas" value=${item_id_receta}>
                 <button class="btn btn-danger buttonDelete" type="button">X</button>
             </div>
         </div>
@@ -79,6 +79,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
 function updateShoppingCartTotal() {
   let total = 0;
   const shoppingCartTotal = document.querySelector('.shoppingCartTotal');
+  const input_total_venta = document.querySelector('#total_venta');
 
   const shoppingCartItems = document.querySelectorAll('.shoppingCartItem');
 
@@ -98,6 +99,7 @@ function updateShoppingCartTotal() {
     total = total + shoppingCartItemPrice * shoppingCartItemQuantity;
   });
   shoppingCartTotal.innerHTML = `${total.toFixed(2)}MXM`;
+  input_total_venta.value = total;
 }
 
 function removeShoppingCartItem(event) {

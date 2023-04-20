@@ -172,6 +172,54 @@ SET SQL_SAFE_UPDATES = 0;
 
 USE gelatos;
 
+DROP VIEW IF EXISTS vista_cargada_compra;
+CREATE VIEW vista_cargada_compra AS
+SELECT id_compra, total, t1.*, t2.*, t3.*
+	FROM compra c
+    INNER JOIN (SELECT pro.id_proveedor,
+		pro.correo AS correo_proveedor,
+        per.id_persona AS id_persona_proveedor,
+        per.nombre AS nombre_proveedor,
+        per.apaterno AS apaterno_proveedor,
+        per.amaterno AS amaterno_proveedor,
+        per.telefono AS tel_proveedor,
+        per.codigo_postal AS cp_proveedor,
+        per.numero_exterior AS numext_proveedor,
+        per.numero_interior AS numint_proveedor,
+        per.calle AS calle_proveedor,
+        per.colonia AS colonia_proveedor
+	FROM proveedor pro
+	INNER JOIN persona per
+		ON per.id_persona = pro.fk_persona) t1
+	ON c.fk_proveedor = t1.id_proveedor
+    INNER JOIN (SELECT em.id_empleado,
+        per.id_persona AS id_persona_empleado,
+        per.nombre AS nombre_empleado,
+        per.apaterno AS apaterno_empleado,
+        per.amaterno AS amaterno_empleado,
+        per.telefono AS tel_empleado,
+        per.codigo_postal AS cp_empleado,
+        per.numero_exterior AS numext_empleado,
+        per.numero_interior AS numint_empleado,
+        per.calle AS calle_empleado,
+        per.colonia AS colonia_empleado,
+        u.id_usuario,
+        u.correo AS correo_empleado
+	FROM empleado em
+	INNER JOIN persona per
+		ON per.id_persona = em.fk_persona
+	INNER JOIN usuario u
+		ON u.id_usuario = em.fk_usuario) t2
+        ON c.fk_empleado = t2.id_empleado
+	INNER JOIN (SELECT dc.cantidad, dc.precio, a.caducidad, mp.nombre, um.descripcion, fk_compra FROM detalle_compra dc
+	INNER JOIN almacen a
+		ON dc.fk_almacen = a.id_almacen
+	INNER JOIN materia_prima mp
+		ON mp.id_materia_prima = a.fk_materia_prima
+	INNER JOIN unidad_medida um
+		ON um.id_unidad_medida = mp.fk_unidad_medida) t3
+        ON c.id_compra = t3.fk_compra;
+
 DROP VIEW IF EXISTS vista_envio_cargada;
 CREATE VIEW vista_envio_cargada AS
 SELECT en.id_envio, en.entregado, t1.*, t2.*, DATE(en.fecha_actualizacion) FROM envio en
@@ -1131,22 +1179,22 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS insertar_empleado;
 DELIMITER //
 CREATE PROCEDURE insertar_empleado(	/* Datos Personales */
-                                    IN	inombre          VARCHAR(50),     -- 1
-                                    IN  iapaterno		 VARCHAR(50),	  -- 2
-                                    IN  iamaterno		 VARCHAR(50),	  -- 3
-                                    IN	itelefono 		 VARCHAR(10),     -- 4
-                                    IN  icodigo_postal   VARCHAR(6),      -- 5
-                                    IN	inumero_interior VARCHAR(6),   	  -- 6
-                                    IN	inumero_exterior VARCHAR(6),   	  -- 7
+                                    IN	inombre          VARCHAR(255),     -- 1
+                                    IN  iapaterno		 VARCHAR(255),	  -- 2
+                                    IN  iamaterno		 VARCHAR(255),	  -- 3
+                                    IN	itelefono 		 VARCHAR(255),     -- 4
+                                    IN  icodigo_postal   INT,      -- 5
+                                    IN	inumero_interior VARCHAR(255),   	  -- 6
+                                    IN	inumero_exterior VARCHAR(255),   	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
-                                    IN	icolonia         VARCHAR(100),    -- 9
+                                    IN	icolonia         VARCHAR(255),    -- 9
                                     
                                     /* Datos de Usuario */
-                                    IN	icorreo   		VARCHAR(100),    -- 10
-                                    IN	icontrasenia    VARCHAR(100),    -- 11
+                                    IN	icorreo   		VARCHAR(255),    -- 10
+                                    IN	icontrasenia    VARCHAR(255),    -- 11
                                     
                                     /* Datos rol_usuario*/
-                                    IN iid_roles 		VARCHAR(25),	 -- 12
+                                    IN iid_roles 		VARCHAR(255),	 -- 12
 
                                     /* Valores de Retorno */
                                     OUT	iid_persona      INT,           -- 13
@@ -1193,19 +1241,19 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS actualizar_empleado;
 DELIMITER //
 CREATE PROCEDURE actualizar_empleado(	/* Datos Personales */
-                                    IN	inombre         VARCHAR(50),     -- 1
-                                    IN  iapaterno		VARCHAR(50),	 -- 2
-                                    IN  iamaterno		VARCHAR(50),	 -- 3
-                                    IN	itelefono 		VARCHAR(10),     -- 4
-                                    IN  icodigo_postal  VARCHAR(6),      -- 5
-                                    IN	inumero_interior VARCHAR(6),   	 -- 6
-                                    IN	inumero_exterior VARCHAR(6), 	 -- 7
+                                    IN	inombre         VARCHAR(255),     -- 1
+                                    IN  iapaterno		VARCHAR(255),	 -- 2
+                                    IN  iamaterno		VARCHAR(255),	 -- 3
+                                    IN	itelefono 		VARCHAR(255),     -- 4
+                                    IN  icodigo_postal  INT,      -- 5
+                                    IN	inumero_interior VARCHAR(255),   	 -- 6
+                                    IN	inumero_exterior VARCHAR(255), 	 -- 7
                                     IN	icalle       	VARCHAR(255),    -- 8
-                                    IN	icolonia        VARCHAR(100),    -- 9
+                                    IN	icolonia        VARCHAR(255),    -- 9
                                     
                                     /* Datos de Usuario */
-                                    IN	icorreo   		VARCHAR(100),    -- 10
-                                    IN	icontrasenia     VARCHAR(100),   -- 11
+                                    IN	icorreo   		VARCHAR(255),    -- 10
+                                    IN	icontrasenia     VARCHAR(255),   -- 11
                                     
                                     /* Datos rol_usuario*/
                                     IN iid_roles 		VARCHAR(25),	 -- 12
@@ -1389,22 +1437,23 @@ DELIMITER ;
 
 
 
+-- Stored Procedure para insertar nuevos Clientes.
 DROP PROCEDURE IF EXISTS insertar_cliente;
 DELIMITER //
 CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
-                                    IN	inombre          VARCHAR(50),     -- 1
-                                    IN  iapaterno		 VARCHAR(50),	  -- 2
-                                    IN  iamaterno		 VARCHAR(50),	  -- 3
-                                    IN	itelefono 		 VARCHAR(10),     -- 4
-                                    IN  icodigo_postal   VARCHAR(6),      -- 5
-                                    IN	inumero_interior VARCHAR(6),   	  -- 6
-                                    IN	inumero_exterior VARCHAR(6),   	  -- 7
+                                    IN	inombre          VARCHAR(255),     -- 1
+                                    IN  iapaterno		 VARCHAR(255),	  -- 2
+                                    IN  iamaterno		 VARCHAR(255),	  -- 3
+                                    IN	itelefono 		 VARCHAR(255),     -- 4
+                                    IN  icodigo_postal   INT,      -- 5
+                                    IN	inumero_interior VARCHAR(255),   	  -- 6
+                                    IN	inumero_exterior VARCHAR(255),   	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
-                                    IN	icolonia         VARCHAR(100),    -- 9
+                                    IN	icolonia         VARCHAR(255),    -- 9
                                     
                                     /* Datos de Usuario */
-                                    IN	icorreo   		VARCHAR(100),    -- 10
-                                    IN	icontrasenia    VARCHAR(100),    -- 11
+                                    IN	icorreo   		VARCHAR(255),    -- 10
+                                    IN	icontrasenia    VARCHAR(255),    -- 11
 
                                     /* Valores de Retorno */
                                     OUT	iid_persona      INT,           -- 12
@@ -1412,42 +1461,44 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
                                     OUT	iid_cliente      INT            -- 14
 				)                                    
     BEGIN        
-    
-        -- Insertando los datos de la Persona:
-        INSERT INTO persona ( nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, 
-							  numero_exterior, calle, colonia) 
-					 VALUES ( inombre, iapaterno, iamaterno, itelefono, icodigo_postal, inumero_interior, 
-							  inumero_exterior,  icalle, icolonia);
-        -- Obtenemos el ID de Persona que se generó:
-        SET iid_persona = LAST_INSERT_ID();
+        IF (SELECT COUNT(*) FROM usuario WHERE correo = icorreo) = 0 THEN
+            -- Insertando los datos de la Persona:
+            INSERT INTO persona ( nombre, apaterno, amaterno, telefono, codigo_postal, numero_interior, 
+                                numero_exterior, calle, colonia) 
+                        VALUES ( inombre, iapaterno, iamaterno, itelefono, icodigo_postal, inumero_interior, 
+                                inumero_exterior,  icalle, icolonia);
+            -- Obtenemos el ID de Persona que se generó:
+            SET iid_persona = LAST_INSERT_ID();
 
-        -- Insertamos los datos de seguridad del Cliente:
-        INSERT INTO usuario  (correo, contrasenia) VALUES(icorreo, icontrasenia);
-        -- Obtenemos el ID de Usuario que se generó:
-        SET iid_usuario = LAST_INSERT_ID();  
-		
-        INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 5);
-        
-        -- Insertamos en la tabla Cliente:
-        INSERT INTO cliente (fk_persona, fk_usuario) VALUES(iid_persona, iid_usuario);
-        -- Obtenemos el ID del Cliente que se generó:
-        SET iid_cliente = LAST_INSERT_ID();
+            -- Insertamos los datos de seguridad del Cliente:
+            INSERT INTO usuario  (correo, contrasenia) VALUES(icorreo, icontrasenia);
+            -- Obtenemos el ID de Usuario que se generó:
+            SET iid_usuario = LAST_INSERT_ID();  
+            
+            INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 5);
+            
+            -- Insertamos en la tabla Cliente:
+            INSERT INTO cliente (fk_persona, fk_usuario) VALUES(iid_persona, iid_usuario);
+            -- Obtenemos el ID del Cliente que se generó:
+            SET iid_cliente = LAST_INSERT_ID();
+        END IF;
     END
 //
 DELIMITER ;
 
+
 DROP PROCEDURE IF EXISTS actualizar_cliente;
 DELIMITER //
 CREATE PROCEDURE actualizar_cliente(	/* Datos Personales */
-                                    IN	inombre          VARCHAR(50),     -- 1
-                                    IN  iapaterno		 VARCHAR(50),	  -- 2
-                                    IN  iamaterno		 VARCHAR(50),	  -- 3
-                                    IN	itelefono 		 VARCHAR(10),     -- 4
-                                    IN  icodigo_postal   VARCHAR(6),      -- 5
-                                    IN	inumero_interior VARCHAR(6),   	  -- 6
-                                    IN	inumero_exterior VARCHAR(6), 	  -- 7
+                                    IN	inombre          VARCHAR(255),     -- 1
+                                    IN  iapaterno		 VARCHAR(255),	  -- 2
+                                    IN  iamaterno		 VARCHAR(255),	  -- 3
+                                    IN	itelefono 		 VARCHAR(255),     -- 4
+                                    IN  icodigo_postal   INT,      -- 5
+                                    IN	inumero_interior VARCHAR(255),   	  -- 6
+                                    IN	inumero_exterior VARCHAR(255), 	  -- 7
                                     IN	icalle       	 VARCHAR(255),    -- 8
-                                    IN	icolonia         VARCHAR(100),    -- 9
+                                    IN	icolonia         VARCHAR(255),    -- 9
                                     
                                     /* Datos de Usuario */
                                     IN	icorreo   		VARCHAR(100),    -- 10
@@ -1571,9 +1622,15 @@ DROP PROCEDURE IF EXISTS buscar_receta_id;
 DELIMITER //
 CREATE PROCEDURE buscar_receta_id(IN p_id_receta INT)
 BEGIN
-  SELECT id_receta, nombre, cantidad, precio, ruta_imagen
-  FROM receta
-  WHERE id_receta = p_id_receta;
+  SELECT r.id_receta, r.nombre, r.cantidad, r.precio, r.ruta_imagen, CONCAT("[", GROUP_CONCAT(t1.lista_receta SEPARATOR ','), "]") AS lista_receta
+  FROM receta r
+  INNER JOIN (
+      SELECT CONCAT("[",mp.id_materia_prima,",'", mp.nombre,"',",dmpr.cantidad,"]") AS lista_receta, dmpr.fk_receta
+      FROM detalle_materia_prima_receta dmpr
+      INNER JOIN materia_prima mp ON mp.id_materia_prima = dmpr.fk_materia_prima
+  ) t1 ON r.id_receta = t1.fk_receta
+  WHERE r.id_receta = p_id_receta
+  GROUP BY r.id_receta;
 END //
 DELIMITER ;
 

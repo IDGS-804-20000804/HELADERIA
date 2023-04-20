@@ -1,22 +1,7 @@
-from wtforms import Form, StringField, IntegerField, validators
+from flask_wtf import FlaskForm
+from wtforms import Form, StringField, IntegerField, validators, RadioField, SelectField, DateField
 
-class materiaPrimaForm(Form):
-     id = IntegerField('id')
-     nombre = StringField('nombre', [
-         validators.DataRequired(message='You need to write something')
-     ])
-     apellidos = StringField('aPaterno', [
-         validators.DataRequired(message='You need to write something')
-     ])
-     estatura = StringField('aMaterno', [
-         validators.DataRequired(message='You need to write something')
-     ])
-     edad = StringField('Edad', [
-         validators.DataRequired(message='You need to write something')
-     ])
-     correo = StringField('correo', [
-         validators.DataRequired(message='You need to write something')
-     ])
+class LoginForm(FlaskForm):
      numeroCelular = StringField('numeroCel', [
          validators.DataRequired(message='You need to write something')
     ])

@@ -1,5 +1,5 @@
 from db.db import get_connection 
-
+from flask import Flask, flash, Markup
 
 
 def obtener_clientes():
@@ -20,7 +20,44 @@ def obtener_clientes():
         # Cerrar la conexión a la base de datos
         conexion.close()
         return clientes
-     
+
+def insertar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,password):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            id_Persona = 0
+            id_Usuario = 0
+            id_Cliente = 0
+            cursor.callproc('insertar_cliente', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,password,id_Persona,id_Usuario, id_Cliente])
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al insertar Cliente: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+
+
+def modificar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,id_Persona,id_Usuario):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('actualizar_cliente', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,id_Persona,id_Usuario])
+
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+        
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al actualizar Cliente: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
 # def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Empleado,id_Usuario,id_Persona):
 #     # Obtener conexión a la base de datos
 #     conexion = get_connection()
@@ -99,6 +136,24 @@ def obtener_cliente_por_id(id):
 #     return render_template('modificarMaestros.html', form= create_fprm)
 
 
+def eliminar_cliente_por_id(id):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    cliente = None
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.execute('CALL eliminar_clientes(%s)', (id,))
+            cliente = cursor.fetchall()
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar cliente: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()
+        return cliente
 
 
 
