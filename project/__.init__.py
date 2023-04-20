@@ -14,6 +14,7 @@ from routes.compras.compras import compras
 from routes.envio.envio import envio
 from routes.almacen.almacen import almacen
 from routes.recetas.recetasModificar import recetasModificar
+from routes.stock.stock import stock
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'DDBHF17I3I2OREBF'
@@ -38,6 +39,7 @@ app.register_blueprint(compras)
 app.register_blueprint(envio)
 app.register_blueprint(almacen)
 app.register_blueprint(recetasModificar)
+app.register_blueprint(stock)
 
 @app.route('/')
 def index():
