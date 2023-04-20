@@ -1,7 +1,10 @@
 DROP DATABASE IF EXISTS gelatos;
 CREATE DATABASE gelatos;
 USE gelatos;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c03561a7426da945624bc75e308d3441469807b7
 CREATE TABLE unidad_medida (
 	id_unidad_medida INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	descripcion VARCHAR(255) NOT NULL,
