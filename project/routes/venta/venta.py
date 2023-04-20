@@ -22,3 +22,4 @@ def ventas():
     create_form = Venta()
     en = obtener_venta()
     return render_template('venta.html', form=create_form, stock=en)
+
