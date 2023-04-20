@@ -6,6 +6,8 @@ class receta(Form):
         validators.DataRequired(message='Este campo es requerido')])
     cantidad = StringField('Cantidad', [
         validators.DataRequired(message='Este campo es requerido')])
+    cantidadMateria = StringField('Cantidad', [
+        validators.DataRequired(message='Este campo es requerido')])
     foto = FileField('Foto', [
         validators.DataRequired(message='Este campo es requerido')])
     precio=StringField('Precio', [

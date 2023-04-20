@@ -21,12 +21,20 @@ function inicializarModulo() {
      //Modales de Recetas
      $('#detalleRecetaModificar').modal('show'); // abrir
      $('#detalleRecetaModificar').modal({backdrop: 'static', keyboard: false})
+     $('#alertaEliminarReceta').modal('show'); // abrir
+     $('#alertaEliminarReceta').modal({backdrop: 'static', keyboard: false})
 
       //Modales de Provedor
       $('#detalleProveedorModificar').modal('show'); // abrir
       $('#detalleProveedorModificar').modal({backdrop: 'static', keyboard: false})
+      $('#alertaEliminarProvedor').modal('show'); // abrir
+      $('#alertaEliminarProvedor').modal({backdrop: 'static', keyboard: false})
 
       
+}
+
+function abrirModal(){
+    $('#detalleReceta').modal('show');
 }
 
 function clientes(){

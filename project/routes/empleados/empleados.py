@@ -90,7 +90,7 @@ def modificar():
       id=request.args.get('id')
       emp=obtener_empleado_por_id(id)
       create_fprm.id_empleado.data=request.args.get('id')
-      create_fprm.id_usuario.data=emp[0][13]
+      create_fprm.id_usuario.data=emp[0][15]
       create_fprm.id_persona.data=emp[0][14]
       create_fprm.nombre.data=emp[0][1]
       create_fprm.apaterno.data=emp[0][2]
@@ -101,9 +101,8 @@ def modificar():
       create_fprm.colonia.data=emp[0][9]   
       create_fprm.numero_exterior.data=emp[0][6]   
       create_fprm.numero_interior.data=emp[0][7]   
-      create_fprm.correo.data=emp[0][10]   
-      create_fprm.contrasenia.data=emp[0][11]   
-      rol=emp[0][12]
+      create_fprm.correo.data=emp[0][11]   
+      rol=emp[0][13]
       datos_json = json.loads(rol)
       for valor in datos_json:
         if valor == 1:
@@ -223,6 +222,27 @@ def eliminar_empleado():
 #     except Exception as e:
 #         return jsonify({'status': 'ERROR', 'message': str(e)})
 
+# @app.route('/editar_empleado/<id_empleado>', methods=['GET'])
+# def editar_empleado(id_empleado):
+#     # Obtener los datos del empleado con el id_empleado dado
+#     empleado = obtener_empleado_por_id(id_empleado)
+
+#     # Asignar los valores del empleado a las variables del formulario
+#     form.nombre.data = empleado['nombre']
+#     form.apaterno.data = empleado['apaterno']
+#     form.amaterno.data = empleado['amaterno']
+#     form.telefono.data = empleado['telefono']
+#     form.numero_exterior.data = empleado['numero_exterior']
+#     form.codigo_postal.data = empleado['codigo_postal']
+#     form.calle.data = empleado['calle']
+#     form.numero_interior.data = empleado['numero_interior']
+#     form.colonia.data = empleado['colonia']
+#     form.municipio.data = empleado['municipio']
+#     form.estado.data = empleado['estado']
+#     form.pais.data = empleado['pais']
+    
+#     # Renderizar la plantilla con los datos del empleado en los campos del formulario
+#     return render_template('editar_empleado.html', form=form, empleados=empleado)
 
 
 # @empleados.route('/empleados',methods=["POST","GET"])

@@ -81,9 +81,15 @@ DROP PROCEDURE IF EXISTS buscar_receta_id;
 DELIMITER //
 CREATE PROCEDURE buscar_receta_id(IN p_id_receta INT)
 BEGIN
-  SELECT id_receta, nombre, cantidad, precio, ruta_imagen
-  FROM receta
-  WHERE id_receta = p_id_receta;
+  SELECT r.id_receta, r.nombre, r.cantidad, r.precio, r.ruta_imagen, CONCAT("[", GROUP_CONCAT(t1.lista_receta SEPARATOR ','), "]") AS lista_receta
+  FROM receta r
+  INNER JOIN (
+      SELECT CONCAT("[",mp.id_materia_prima,",'", mp.nombre,"',",dmpr.cantidad,"]") AS lista_receta, dmpr.fk_receta
+      FROM detalle_materia_prima_receta dmpr
+      INNER JOIN materia_prima mp ON mp.id_materia_prima = dmpr.fk_materia_prima
+  ) t1 ON r.id_receta = t1.fk_receta
+  WHERE r.id_receta = p_id_receta
+  GROUP BY r.id_receta;
 END //
 DELIMITER ;
 -- CALL buscar_receta_id(3);

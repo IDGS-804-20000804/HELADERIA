@@ -1,0 +1,144 @@
+{%extends 'main.html'%}
+{%block content%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+            class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#3D7692"
+        data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong><i class="fa fa-shopping-cart"
+                aria-hidden="true" style="color: #FFFFFF;"></i></strong></button>
+    <div id="divCatalogoEmpleado" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black" style=" font-size: 25px;"><b>Productos</b> </span>
+            </div>
+            <div class="card-body">
+                <br>
+                <!-- START SECTION STORE -->
+                <section class="store">
+                    <div class="container">
+                        <div class="items">
+                            <div class="row">
+                                {% for stock in stock %}
+                                <div class="col-12 col-md-4">
+                                    <div class="item shadow mb-4">
+                                        <h5 class="item-title">{{stock[1]}}</h5>
+                                        <img class="item-image" src="../static/img/Fresa.jpg">
+                                        <!-- {{stock[2]}} Ruta foto -->
+                                        <p hidden class="item-limit">{{stock[3]}}</p>
+                                        <p hidden class="item-id_receta">{{stock[0]}}</p>
+                                        <p hidden class="item-precio_receta">{{stock[4]}}</p>
+                                        <h5 class="item-price">{{stock[4]}} MXM</h5>
+                                        <div style="text-align: center; ">
+                                            <button class="item-button btn btn-outline-success addToCart"
+                                            data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br> 
+                                        </div><br>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- END SECTION STORE -->
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br>
+        <div class="modal fade" id="detalleEmpleado" tabindex="-1" aria-labelledby="detalleEmpleado" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle de
+                                Compras</b></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-header text-center bg-light">
+                                <span class="h5 text-black" style=" font-size: 25px;"><b>Productos</b> </span>
+                            </div>
+                            <div class="card-body">
+                                <br>
+                                <!-- START SECTION SHOPPING CART -->
+                                <section class="shopping-cart">
+                                    <form action="/ventas" method="post">
+                                        {{ form.csrf_token() }}
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="shopping-cart-header">
+                                                        <h6>Producto</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="shopping-cart-header">
+                                                        <h6 class="text-truncate">Precio</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="shopping-cart-header">
+                                                        <h6>Cantidad</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ? START SHOPPING CART ITEMS -->
+                                            <div class="shopping-cart-items shoppingCartItemsContainer">
+                                            </div>
+                                            <!-- ? END SHOPPING CART ITEMS -->
+    
+                                            <!-- START TOTAL -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="shopping-cart-total d-flex align-items-center">
+                                                        <p class="mb-0">Total</p>
+                                                        <p class="ml-4 mb-0 shoppingCartTotal" id="precio" name="precio">0MXM</p>
+                                                        <input type="hidden" name="total_venta" id="total_venta" value=0>
+                                                        <button class="btn btn-outline-success ml-auto comprarButton" type="submit"
+                                                           >Comprar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <!-- END TOTAL -->
+    
+                                            <!-- START MODAL COMPRA -->
+                                            <div class="modal fade" id="comprarModal" tabindex="-1"
+                                                aria-labelledby="comprarModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="comprarModalLabel">Gracias por su
+                                                                compra</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Pronto recibirá su pedido</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END MODAL COMPRA -->
+                                        </div>
+                                    </form>
+                                </section>
+                                <!-- END SECTION SHOPPING CART -->
+
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {%endblock%}
