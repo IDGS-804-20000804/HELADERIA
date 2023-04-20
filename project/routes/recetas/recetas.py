@@ -88,7 +88,7 @@ recetas = Blueprint('recetas', __name__ )
 #     listaArreglo.pop(index)
 #     return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
 
-nombres = []
+
 
 @recetas.route('/recetas', methods=['GET', 'POST'])
 def indexMain():
@@ -105,21 +105,25 @@ def indexMain():
          print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
+nombres = []
+
 @recetas.route('/recetasGuardar', methods=['GET', 'POST'])
 def index():
     create_form = receta()
     r = obtener_recetas()
     mp = obtener_materia_prima()
+    nombresT=[]
     if request.method == 'POST':
         materia_seleccionada = request.form['materia']
-        cantidadMateria = request.form['cantidadMateria']
-        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
+        cantidad_materia = request.form['cantidadMateria']
+        nombresT = agregar_receta(materia_seleccionada, cantidad_materia)
         print(nombres)
     else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
-    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+        create_form = receta()
+        r = obtener_recetas()
+        print(r)
+    return render_template('recetasModificar.html', nombres=nombresT, form=create_form, receta=r, materiaPrima=mp)
+
 
 
 @recetas.route('/remove/<int:index>')
@@ -188,3 +192,11 @@ def eliminar_receta():
         # emp = obtener_empleados() # Comenta esta línea si no la necesitas
         return render_template('recetas.html', form=create_fprm, receta=r)
     return render_template('recetaEliminar.html', form=create_fprm, receta=r)
+
+def agregar_receta(materia_seleccionada, cantidad_materia):
+    for ingrediente in nombres:
+        if ingrediente['nombre'] == materia_seleccionada:
+            ingrediente['cantidad'] = str(int(ingrediente['cantidad']) + int(cantidad_materia))
+            return nombres
+    nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad_materia})
+    return nombres
