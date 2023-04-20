@@ -67,7 +67,6 @@ def login():
         if logged_user is not None:
             if logged_user.contrasenia:
                         login_user(logged_user)
-                        print(login_user)
                         return redirect(url_for('main.mains'))
             else:
                 flash("Contraseña Inválida")
@@ -83,6 +82,11 @@ def logout():
     logout_user()
     return redirect('/')
 
+def status_401(error):
+    return redirect(url_for('index'))
+
+def status_404(error):
+    return "<h1> Pagina no Encontrada<h1>",404
 
 @login_manager_app.user_loader
 def load_user(id_usuario):
@@ -90,4 +94,7 @@ def load_user(id_usuario):
     return ModeloLogin.get_by_id(db, id_usuario)
 
 if __name__ == '__main__':
+    
+    app.register_error_handler(401,status_401)
+    app.register_error_handler(404,status_404)
     app.run()

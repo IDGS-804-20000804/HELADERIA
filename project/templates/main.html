@@ -25,18 +25,21 @@
         </div>
         <div class="media-body ">
             <div>
-                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">{{current_user.id_Usuario}}</span></h6>
+                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">{{current_user.correo}}</span></h6>
             </div>
         </div>
     </div>
+  
     <div id="global">
         <ul class="nav flex-column bg-white mb-2" >
+            {% if 'Comprador' in role_labels %}
             <li class="nav-item m-1">
                 <a href="empleados" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-tie mr-3 fa-fw"></i>
                     Empleados
                 </a>
             </li>
+            {% endif %}
             <li class="nav-item m-1">
                 <a href="clientes" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-users mr-3 fa-fw"></i>
@@ -49,12 +52,14 @@
                     Almacen
                 </a>
             </li>
+          
             <li class="nav-item m-1">
                 <a href="materiaPrima" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-star" ></i>
                     Materia Prima
                 </a>
             </li>
+          
             <li class="nav-item m-1">
                 <a href="recetas" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa far fa-file-alt" aria-hidden="true"></i>
@@ -97,13 +102,16 @@
                     Stock
                 </a>
             </li>
+          
             <li class="nav-item m-1">
                 <a href="{{url_for('logout')}}" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-cog mr-3  fa-fw"></i>
                     Cerrar Sesi&oacute;n
                 </a>
             </li>
+    
         </ul>
+        
     </div>
 </div>
 
@@ -141,6 +149,7 @@ $(document).ready(function () {
 <script type="text/javascript" src='../static/js/tienda.js'></script>
 <script type="text/javascript" src='../static/js/tabla.js'></script>
 <script type="text/javascript" src='../static/js/main.js'></script>
+<script type="text/javascript" src='../static/js/rol.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

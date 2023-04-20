@@ -10,7 +10,6 @@ from flask_security import roles_required, login_required
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
 @login_required
-@roles_required('Administrador')
 def empleado():
     if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
@@ -49,8 +48,6 @@ def empleado():
 
 
 @empleados.route('/insertar_empleado', methods=["POST"])
-@login_required
-@roles_required ('Administrador')
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
