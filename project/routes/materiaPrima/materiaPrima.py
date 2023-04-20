@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-# <<<<<<< HEAD
+from flask_login import LoginManager, login_user, logout_user, login_required
 # import models.materiaPrima.materiaPrima_Forms as forms
 
 from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.materiaPrima.materiaPrima_Forms import MateriaPrima
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima, obtener_materiaP_por_id, insertar_materiaPrima, eliminar_materiaP_por_id, modificar_materiaP
-
+from flask_security import roles_required, login_required
 # csrf = CSRFProtect()
 materiaPrima = Blueprint('materiaPrima', __name__ )
 
@@ -17,6 +17,7 @@ materiaPrima = Blueprint('materiaPrima', __name__ )
 
 
 @materiaPrima.route('/materiaPrima', methods=["POST", "GET"])
+@login_required
 def materiaP():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

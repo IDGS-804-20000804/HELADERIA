@@ -5,13 +5,14 @@ from controllers.compra.compra_Controllers import obtener_compras, insertar_comp
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, insertar_provedor
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
-
+from flask_security import roles_required, login_required
 
 
 
 compras = Blueprint('compras', __name__)
 
 @compras.route('/compras')
+@login_required
 def compraM():
      emp = obtener_compras()
      print(emp)

@@ -3,11 +3,12 @@ from flask_wtf.csrf import CSRFProtect
 from db.db import get_connection
 from models.envio.envio_Forms import Envio
 from controllers.envio.envio_Controllers import obtener_envio
-
+from flask_security import roles_required, login_required
 envio = Blueprint('envio', __name__ )
 
 
 @envio.route('/envio', methods=["POST", "GET"])
+@login_required
 def envios():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

@@ -8,22 +8,55 @@
         <div class="col-8" style="padding-top: 60px;">
             <div class="card">
                 <h2 class="text-center pt-3" style="font-weight: bold;">Registro</h2>
-                <div class="form pt-2">
+                <form class="form pt-2" action="/security/login_post_registro" method="post" autocomplete="off">
+                    {{ form.csrf_token() }}
                    <div class="row">
                         <div class="col-6">
                             <div class="mx-5" >
                                 <label for="txtNombre" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Nombre:</label> <br>
-                                <input id="txtNombre" type="text"  class="form-control" placeholder="Nombre" style="background: #F4F6F6;">
+                                <input id="txtNombre" name="txtNombre" type="text"  class="form-control" placeholder="Nombre" style="background: #F4F6F6;" value="{{nombre}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtApaterno" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Apellido paterno:</label> <br>
+                                <input id="txtApaterno" name="txtApaterno" type="text"  class="form-control" placeholder="Apellido paterno" style="background: #F4F6F6;" value="{{apaterno}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtAmaterno" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Apellido materno:</label> <br>
+                                <input id="txtAmaterno" name="txtAmaterno" type="text"  class="form-control" placeholder="Apellido materno" style="background: #F4F6F6;" value="{{amaterno}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtTelefono" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Telefono:</label> <br>
+                                <input id="txtTelefono" name="txtTelefono" type="text"  class="form-control" placeholder="Telefono" style="background: #F4F6F6;" value="{{telefono}}">
+                            </div>                            
+                            <div class="mx-5" >
+                                <label for="txtCodigo_postal" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Codigo postal:</label> <br>
+                                <input id="txtCodigo_postal" name="txtCodigo_postal" type="number"  class="form-control" placeholder="CP" style="background: #F4F6F6;" value="{{codigo_postal}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtNumero_interior" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>No. Interior:</label> <br>
+                                <input id="txtNumero_interior" name="txtNumero_interior" type="text"  class="form-control" placeholder="N. interior" style="background: #F4F6F6;" value="{{numero_interior}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtNumero_exterior" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>No. exterior:</label> <br>
+                                <input id="txtNumero_exterior" name="txtNumero_exterior" type="text"  class="form-control" placeholder="N. exterior" style="background: #F4F6F6;" value="{{numero_exterior}}">
+                            </div>
+                            <div class="mx-5" >
+                                <label for="txtCalle" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Calle:</label> <br>
+                                <input id="txtCalle" name="txtCalle" type="text"  class="form-control" placeholder="Calle" style="background: #F4F6F6;" value="{{calle}}">
+                            </div>                            
+                            <div class="mx-5" >
+                                <label for="txtColonia" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Colonia:</label> <br>
+                                <input id="txtColonia" name="txtColonia" type="text"  class="form-control" placeholder="Colonia" style="background: #F4F6F6;" value="{{colonia}}">
                             </div>
                             <br>
                             <div class="mx-5" >
-                                <label for="txtUsuario" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Usuario:</label> <br>
-                                <input id="txtUsuario" type="text"  class="form-control" placeholder="Usuario" style="background: #F4F6F6;">
+                                <label for="txtCorreo" class="form-label" style="text-align: left; "><i class="fas fa-user-circle"></i><a>  </a>Correo:</label> <br>
+                                <input id="txtCorreo" name="txtCorreo" type="email"  class="form-control" placeholder="Usuario" style="background: #F4F6F6;" value="{{correo}}">
                             </div>
                             <br>
                             <div class="mx-5">
                                 <label for="txtPassword" class="form-label" style="text-align: left; "><i class="fas fa-lock"></i><a>  </a>Contraseña:</label><br>
-                                <input id="txtPassword" type="password" class="form-control" placeholder="Contraseña" style="background: #F4F6F6;">
+                                <input id="txtPassword" name="txtPassword" type="password" class="form-control" placeholder="Contraseña" style="background: #F4F6F6;">
                             </div>
                             <div class="mx-4">
                                 <label for="password"></label>
@@ -32,14 +65,14 @@
                                     &nbsp;&nbsp;Mostrar Contraseña</div><br>
                             </div>
                             <div class="pb-4 pt-3 text-center ">
-                                <button class="btn botonLogin" style=" font-family:'Times New Roman', Times, serif;"><a href="login"><b>Registrarse</b></a></button> <br>
+                                <button type="submit" class="btn botonLogin" style=" font-family:'Times New Roman', Times, serif;"><b>Registrarse</b></button> <br>
                             </div>
                         </div>
                         <div class="col-6">
                                 <img src="../static/img/logotipo.png" style="height: 350px;">
                         </div>
                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

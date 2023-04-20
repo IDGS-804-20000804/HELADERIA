@@ -94,17 +94,26 @@ INNER JOIN
     persona p ON pr.fk_persona = p.id_persona
 WHERE  p.estatus = 1;
 
-DROP VIEW IF EXISTS vista_receta;
 CREATE VIEW vista_receta AS
 SELECT 
-    id_receta,
-    nombre,
-    cantidad,
-    precio,
-    ruta_imagen,
-    estatus
-  FROM receta
-WHERE estatus=1;
+	mp.id_materia_prima,
+    mp.nombre AS nombre_materia_prima,
+    um.descripcion AS descripcion_unidad_medida,
+    dmpr.cantidad AS cantidad_materia_prima,
+    r.id_receta,
+    r.nombre AS nombre_receta,
+    r.cantidad AS cantidad_receta,
+    r.precio AS precio_receta,
+    r.ruta_imagen AS ruta_imagen_receta,
+    r.estatus AS estatus_receta
+  FROM receta r
+  INNER JOIN detalle_materia_prima_receta dmpr
+	ON dmpr.fk_receta = r.id_receta
+  INNER JOIN materia_prima mp
+	ON dmpr.fk_materia_prima = mp.id_materia_prima
+  INNER JOIN unidad_medida um
+	ON mp.fk_unidad_medida = um.id_unidad_medida
+WHERE r.estatus = true;
 
 DROP VIEW IF EXISTS vista_envio;
 CREATE VIEW vista_envio AS

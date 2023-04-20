@@ -4,10 +4,12 @@ from models.empleados.Empleados import Empleados
 from controllers.controllerEmpleado import obtener_empleados,insertar_empleado, obtener_empleado_por_id, eliminar_empleado_por_id, modificar_empleado
 import json
 from flask import jsonify
-
+# from flask_login import login_required
+from flask_security import roles_required, login_required
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
+@login_required
 def empleado():
     if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

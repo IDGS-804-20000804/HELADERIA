@@ -3,11 +3,12 @@ from db.db import get_connection
 from models.proveedor.proveedor_Forms import Proveedor
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, obtener_proveedor_por_id, insertar_provedor, modificar_provedor, eliminar_provedor_por_id
 from flask_wtf.csrf import CSRFProtect
-
+from flask_security import roles_required, login_required
 # csrf = CSRFProtect()
 provedor = Blueprint('provedor', __name__ )
 
 @provedor.route('/provedor', methods=["POST", "GET"])
+@login_required
 def provedores():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
