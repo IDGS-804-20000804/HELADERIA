@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField,BooleanField
-
+from wtforms.validators import DataRequired, Length,Email,Regexp
 class Empleados(Form):
     opciones_tolerancia = [(1, "Vendedor"), 
                            (2, "Repartidor"), 

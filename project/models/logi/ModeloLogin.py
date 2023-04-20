@@ -22,7 +22,7 @@ class ModeloLogin():
         except Exception as ex:
             raise Exception(ex)
 
-class ModeloLogins():
+
     @classmethod
     def get_by_id(self, db, id_usuario):
         conexion = get_connection()

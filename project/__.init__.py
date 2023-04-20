@@ -14,6 +14,9 @@ from routes.envio.envio import envio
 from routes.main.main import main
 from routes.almacen.almacen import almacen
 from flask_login import login_required, current_user, UserMixin
+from flask_login import LoginManager, login_user, logout_user, login_required
+from models.entities.User import UserDatos
+from models.logi.ModeloLogin import ModeloLogin
 
 
 app = flask.Flask(__name__)
@@ -23,11 +26,13 @@ app.secret_key = 'DDBHF17I3I2OREBF'
 
 app.config['DEBUG'] = True
 
+
+
+
 def jinja2_enumerate(iterable, start=0):
     return enumerate(iterable, start=start)
 
 app.jinja_env.globals.update(enumerate=jinja2_enumerate)
-
 app.register_blueprint(materiaPrima)
 app.register_blueprint(empleados)
 app.register_blueprint(registroUsuario)
@@ -44,6 +49,10 @@ app.register_blueprint(almacen)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
+
 # with app.app_context():
 #     sql_alchemy.create_all()
     

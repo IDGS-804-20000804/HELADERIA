@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, login_required
 # <<<<<<< HEAD
 # import models.materiaPrima.materiaPrima_Forms as forms
 
@@ -17,6 +18,7 @@ materiaPrima = Blueprint('materiaPrima', __name__ )
 
 
 @materiaPrima.route('/materiaPrima', methods=["POST", "GET"])
+@login_required
 def materiaP():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
