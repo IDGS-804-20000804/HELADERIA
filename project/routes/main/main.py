@@ -35,8 +35,10 @@ def get_role_labels(role_num):
         return ['Comprador']
     elif role_num == 6:
         return ['Gerente']
-    else:
+    elif role_num == 7:
         return ['Productor']
+    else:
+        return ['']
 # def mains():
 #     user_id = current_user.id_usuario
 #     db = get_connection()
