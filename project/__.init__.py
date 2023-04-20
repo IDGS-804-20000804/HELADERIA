@@ -52,6 +52,7 @@ app.register_blueprint(compras)
 app.register_blueprint(envio)
 app.register_blueprint(almacen)
 app.register_blueprint(recetasModificar)
+app.register_blueprint(stock)
 
 @app.route('/')
 def index():
