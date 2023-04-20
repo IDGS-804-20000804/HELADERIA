@@ -15,13 +15,10 @@ from routes.almacen.almacen import almacen
 from flask_login import login_required, current_user, UserMixin
 from flask_login import LoginManager, login_user, logout_user, login_required
 from models.entities.User import UserDatos
-from models.logi.ModeloLogin import ModeloLogin
 from db.db import get_connection 
 
-
-
-from models.logi.ModeloLogin import ModeloLogin
 from models.entities.User import User 
+from models.logi.ModeloLogin import ModeloLogin
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
@@ -51,6 +48,8 @@ app.register_blueprint(recetas)
 app.register_blueprint(compras)
 app.register_blueprint(envio)
 app.register_blueprint(almacen)
+app.register_blueprint(recetasModificar)
+app.register_blueprint(stock)
 
 @app.route('/')
 def index():

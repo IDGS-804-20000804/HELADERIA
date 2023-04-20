@@ -1,0 +1,44 @@
+{%extends 'main.html'%}
+{%block content%}
+{%from "_macros.html" import render_firld%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+            class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <a href="ventas" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B"
+        ><strong>Regresar</strong></a>
+    <!-- CATÁLOGO DE Receta-->
+    <div id="divCatalogoReceta" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black" style=" font-size: 25px;"><b>Stock</b> </span>
+            </div>
+            <div class="card-body">
+                <form name="sent" action="insertar_stock" id="form1" method="POST">
+                <div class="row">
+                    <div class="col-6">
+                            <label for="txtNombre" class="form-label">Stock de recetas</label>
+                            <select name="stock" id="stock" class="form-control">
+                                {% for mt in receta %}
+                                <option value="{{mt}}">{{mt}}</option>
+                                {% endfor %}
+                            </select><br>
+                    </div>
+                    <div class="col-6">
+                        {{render_firld(form.caducidad,class='form-control')}} 
+                    </div>
+                    <div class="col-6">
+                        {{render_firld(form.precio,class='form-control')}}
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                <div class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                                </div>
+                </div> </form>
+            </div>
+        </div>
+    </div>
+    
+
+    {%endblock%}
+   
