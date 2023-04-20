@@ -1485,7 +1485,7 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
             -- Obtenemos el ID de Usuario que se generó:
             SET iid_usuario = LAST_INSERT_ID();  
             
-            INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 5);
+            INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 2);
             
             -- Insertamos en la tabla Cliente:
             INSERT INTO cliente (fk_persona, fk_usuario) VALUES(iid_persona, iid_usuario);
