@@ -24,3 +24,20 @@ def obtener_envio():
         # Cerrar la conexión a la base de datos
         conexion.close()
         return envio
+    
+
+def enviar_envio(idEnvio,idEmpleado):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        with conexion.cursor() as cursor:
+            # Llamar al procedimiento almacenado pasando los parámetros necesarios
+            cursor.callproc('entregar_envio', [idEnvio,idEmpleado])
+        # Confirmar los cambios en la base de datos
+        conexion.commit()
+    except Exception as e:
+        # Si hay algún error, imprimirlo en la consola
+        print("Error al consultar envio: ", e)
+    finally:
+        # Cerrar la conexión a la base de datos
+        conexion.close()

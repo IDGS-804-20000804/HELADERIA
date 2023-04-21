@@ -66,7 +66,7 @@ def modificar():
         file     = request.files['foto'] #recibiendo el archivo
         NuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
         lista_sin_string = [[sublista[i] for i in range(len(sublista)) if not isinstance(sublista[i], str)] for sublista in listaArreglo[0]]
-        modificar_receta(id_Receta,nombre,cantidad, precio, foto,lista_sin_string)
+        modificar_receta(id_Receta,nombre,cantidad, precio, file,lista_sin_string)
         return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html', form= create_fprm, receta=emp, lista=listaArreglo,materiaPrima=mp)
 

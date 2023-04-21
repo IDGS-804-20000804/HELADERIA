@@ -6,6 +6,7 @@ class Envio(Form):
                 ]
 
     id_envio = IntegerField('idEnvio')
+    id_empleado = IntegerField('idEmpleado')
     empleado = SelectField("Empleado", choices=opciones, validators=[validators.DataRequired()])
     fechaEnvio = DateField('Fecha de envio', [
         validators.DataRequired(message='Este campo es requerido')])
