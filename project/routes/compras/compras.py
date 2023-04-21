@@ -15,7 +15,6 @@ compras = Blueprint('compras', __name__)
 @login_required
 def compraM():
      emp = obtener_compras()
-     print(emp)
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
