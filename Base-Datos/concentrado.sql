@@ -1327,18 +1327,6 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 DELIMITER ;
 
 
-DELIMITER //
-CREATE PROCEDURE buscar_empleado_id(IN p_id_empleado INT)
-BEGIN
-  SELECT e.id_empleado, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.estatus
-  FROM empleado e
-  INNER JOIN persona p ON e.fk_persona = p.id_persona
-  INNER JOIN usuario u ON e.fk_usuario = u.id_usuario
-  WHERE e.id_empleado = p_id_empleado;
-END //
-DELIMITER ;
-
 DROP VIEW vista_empleado;
 CREATE VIEW vista_empleado AS
 SELECT 

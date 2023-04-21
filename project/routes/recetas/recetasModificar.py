@@ -19,7 +19,6 @@ def indexMain():
     else:
          create_form = receta()
          r = obtener_recetas()
-         print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
@@ -28,6 +27,7 @@ nombres=[]
 listaArreglo=[]
 @recetasModificar.route("/recetasModificar",methods=['GET','POST'])
 def modificar():
+    
     create_fprm=receta(request.form)
     listaM = []  # Inicializar la variable listaM
     mp = obtener_materia_prima()
@@ -41,19 +41,16 @@ def modificar():
         create_fprm.id_Receta.data=request.args.get('id')
         create_fprm.nombre.data=emp[0][1]
         create_fprm.cantidad.data=emp[0][2]
-        create_fprm.foto.data=emp[0][4]
         create_fprm.precio.data=emp[0][3] 
+        create_fprm.foto.data=emp[0][4]
         texto = emp[0][5]
         listaM = eval(texto)
         lista.append(listaM)
         for elemento in lista:
             listaArreglo.append(elemento)
-        print("Este es el arreglo")
-        print(listaArreglo)
         listaA=transformar_datos(listaArreglo)
         for a in listaA:
             nombres.append(a)
-        print(listaA)
     if request.method=='POST':
         id_Receta = create_fprm.id_Receta.data
         nombre = create_fprm.nombre.data
@@ -66,9 +63,10 @@ def modificar():
         lista_de_listas = list(valores)
         lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
         txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-        modificar_receta(id_Receta,nombre,cantidad, precio, foto,txt)
+        modificar_receta(id_Receta,nombre,cantidad, precio, txt)
         nombres.clear()
         return redirect(url_for('recetasModificar.indexMain'))
+    nombres = nombres
     return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaArreglo,materiaPrima=mp)
 
 @recetasModificar.route('/recetasAgregar', methods=['GET', 'POST'])
@@ -80,11 +78,9 @@ def index():
         materia_seleccionada = request.form['materia']
         cantidad_materia = request.form['cantidadMateria']
         nombres = agregar_receta(materia_seleccionada, cantidad_materia)
-        print(nombres)
     else:
         create_form = receta()
         r = obtener_recetas()
-        print(r)
     return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
 
 @recetasModificar.route('/removeM/<int:index>')
