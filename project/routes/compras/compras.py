@@ -18,12 +18,15 @@ def compraM():
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
+     print(empleado)
      return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp)
 
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
 def compraGuardar():
+     provedor=obtener_proveedor()
+     empleado=obtener_empleados()
      if request.method == 'POST':
         create_form = compra(request.form)
         provedor=obtener_proveedor()
@@ -34,11 +37,9 @@ def compraGuardar():
         arr_receta=nombres
         arr=guardar_en_arreglo(arr_receta)
         arreglo=quitar_prefijo(arr)
-        print('ESTO SE RECIBE SIN TEXTO')
+        print('arreglo')
+        print(arreglo)
         a=convertir_a_lista(arreglo)
-        print(str(a))
-        print(empleados)
-        print(provedores)
         insertar_compra(str(a),provedores, empleados)
         return redirect(url_for('compras.compraM'))
      return render_template('comprasGuadar.html',form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)

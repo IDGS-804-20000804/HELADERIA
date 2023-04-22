@@ -1326,31 +1326,6 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 //
 DELIMITER ;
 
-
-DROP VIEW vista_empleado;
-CREATE VIEW vista_empleado AS
-SELECT 
-    e.id_empleado, 
-    e.fk_usuario,
-    e.fk_persona,
-    u.correo, 
-    u.estatus, 
-    p.nombre, 
-    p.apaterno, 
-    p.amaterno, 
-    p.telefono, 
-    p.codigo_postal, 
-    p.numero_exterior, 
-    p.numero_interior, 
-    p.calle, 
-    p.colonia
-FROM 
-    empleado e
-JOIN 
-    usuario u ON e.fk_usuario = u.id_usuario
-JOIN 
-    persona p ON e.fk_persona = p.id_persona;
-
 DROP PROCEDURE IF EXISTS insertar_compra;
 
 DELIMITER //
@@ -1609,7 +1584,7 @@ DELIMITER //
 CREATE PROCEDURE buscar_proveedor_id(IN p_id_proveedor INT)
 BEGIN
   SELECT pr.id_proveedor, pr.correo, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia
+         p.numero_exterior, p.numero_interior, p.calle, p.colonia, p.id_persona
   FROM proveedor pr
   INNER JOIN persona p ON pr.fk_persona = p.id_persona
   WHERE pr.id_proveedor = p_id_proveedor;
