@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-6">
                         <section>
-                            <form name="sent" action="recetasModificar" id="form1" method="POST">
+                            <form name="sent" action="recetasModifica" id="form1" method="POST">
                                     <div style="color:#CA9F8B" class="mt-4">
                                         <i class="fas fa-grin-alt"></i>
                                         <label>Datos</label>
@@ -83,16 +83,18 @@
                             <th class="col-2" style="text-align: center;">Remover</th>
                         </tr>
                     </thead>
-                    <tbody>
+                     <tbody>
                         
-                        {% for index, persona in enumerate(nombres) %}
-                            <tr>
-                                <td style=" text-align: center;" class="col-2">{{ index + 1 }}</td>
-                                <td style=" text-align: center;" class="col-6">{{ persona['nombre'] }}</td>
-                                <td style=" text-align: center;" class="col-2">{{ persona['cantidad'] }}</td>
-                                <td><a href="/removeM/{{ index }}" class="btn btn-outline-danger">Eliminar</a></td>
-                            </tr>
-                            {% endfor %}
+                        {% for index, sublista in enumerate(lista)%}
+                        {% for item in sublista %}
+                        <tr>
+                            <td style=" text-align: center;" class="col-2">{{ index+1 }}</td>
+                            <td style=" text-align: center;" class="col-6">{{ item[1] }}</td>
+                            <td style=" text-align: center;" class="col-2">{{ item[2] }}</td>
+                            <td><a href="/removeM/{{index}}" class="btn btn-outline-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>

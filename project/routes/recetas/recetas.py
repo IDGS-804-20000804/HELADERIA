@@ -38,7 +38,6 @@ def modificar():
     create_fprm=receta(request.form)
     listaM = []  # Inicializar la variable listaM
     mp = obtener_materia_prima()
-    
     if request.method=='GET':
         lista.clear()
         id=request.args.get('id')
@@ -63,10 +62,9 @@ def modificar():
         nombre = create_fprm.nombre.data
         cantidad= create_fprm.cantidad.data
         precio= create_fprm.precio.data
-        file     = request.files['foto'] #recibiendo el archivo
-        NuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
+        foto='uploads/3'
         lista_sin_string = [[sublista[i] for i in range(len(sublista)) if not isinstance(sublista[i], str)] for sublista in listaArreglo[0]]
-        modificar_receta(id_Receta,nombre,cantidad, precio, file,lista_sin_string)
+        modificar_receta(id_Receta,nombre,cantidad, precio, foto,lista_sin_string)
         return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html', form= create_fprm, receta=emp, lista=listaArreglo,materiaPrima=mp)
 
@@ -118,18 +116,16 @@ def index():
     create_form = receta()
     r = obtener_recetas()
     mp = obtener_materia_prima()
-    nombresT=[]
     if request.method == 'POST':
         materia_seleccionada = request.form['materia']
-        cantidad_materia = request.form['cantidadMateria']
-        nombresT = agregar_receta(materia_seleccionada, cantidad_materia)
+        cantidadMateria = request.form['cantidadMateria']
+        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
         print(nombres)
     else:
-        create_form = receta()
-        r = obtener_recetas()
-        print(r)
-    return render_template('recetasGuardar.html', nombres=nombresT, form=create_form, receta=r, materiaPrima=mp)
-
+         create_form = receta()
+         r = obtener_recetas()
+         print(r)
+    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
 @recetas.route('/remove/<int:index>')
@@ -149,12 +145,13 @@ def realizar_insercion():
     nombre = request.form['nombre']
     cantidad= request.form['cantidad']
     precio= request.form['precio']
-    file = request.files['foto'] #recibiendo el archivo
-    nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
+    # file = request.files['foto'] #recibiendo el archivo
+    # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
     arr_receta=nombres
     json_string = json.dumps(arr_receta)
     valores = quitar_titulo(json_string)
     lista_de_listas = list(valores)
+    ruta_imagen='uploads/1'
     lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
     print(nombre+','+cantidad+','+precio+','+ruta_imagen)
     print(lista_de_listas_enteros)
@@ -204,17 +201,17 @@ def eliminar_receta():
 
 
 # Para Recibir la foto --------------------------------------------
-def recibeFoto(file):
-    print(file)
-    basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
-    filename = secure_filename(file.filename) #Nombre original del archivo
+# def recibeFoto(file):
+#     print(file)
+#     basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
+#     filename = secure_filename(file.filename) #Nombre original del archivo
 
-    #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
-    extension           = os.path.splitext(filename)[1]
-    nuevoNombreFile     = stringAleatorio() + extension
-    #print(nuevoNombreFile)
+#     #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
+#     extension           = os.path.splitext(filename)[1]
+#     nuevoNombreFile     = stringAleatorio() + extension
+#     #print(nuevoNombreFile)
         
-    upload_path = os.path.join(basepath, 'static', 'fotos', nuevoNombreFile)
-    file.save(upload_path)
+#     upload_path = os.path.join(basepath, 'static', 'fotos', nuevoNombreFile)
+#     file.save(upload_path)
 
-    return nuevoNombreFile
+#     return nuevoNombreFile

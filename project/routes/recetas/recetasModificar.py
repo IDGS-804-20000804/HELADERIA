@@ -6,6 +6,9 @@ from controllers.receta.receta_Controllers import obtener_recetas, obtener_recet
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
 
+
+ 
+
 recetasModificar = Blueprint('recetasModificar', __name__ )
 @recetasModificar.route('/recetasModif', methods=['GET', 'POST'])
 def indexMain():
@@ -26,7 +29,7 @@ def indexMain():
 lista=[]
 nombres=[]
 listaArreglo=[]
-@recetasModificar.route("/recetasModificar",methods=['GET','POST'])
+@recetasModificar.route("/recetasModifica",methods=['GET','POST'])
 def modificar():
     create_fprm=receta(request.form)
     listaM = []  # Inicializar la variable listaM
