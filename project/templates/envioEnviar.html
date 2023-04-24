@@ -1,0 +1,131 @@
+{%extends 'main.html'%}
+{%block content%}
+{%from "_macros.html" import render_firld%}
+<div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    <!-- CATÁLOGO DE EMPLEADO-->
+    <div id="divCatalogoEmpleado" class="col-12">
+        <div class="card">
+            <div class="card-header text-center bg-light">
+                <span class="h5 text-black"  style=" font-size: 25px;"><b>Cat&aacute;logo de Envio</b> </span>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="h6">Buscar:  <i class="fas fa-search"></i> <input id="buscarEmpleado" type="text" onkeyup="buscarTabla()" /></span>
+                </div>
+                <br>
+                <table class="table table-hover" id="datos">
+                    <thead  style="background: #e2e2e0;">
+                        <tr>
+                            <th style="  text-align: center;">Nombre del Cliente</th>
+                            <th style="  text-align: center;">Direcci&oacute;n del Cliente</th>
+                            <th style="  text-align: center;">Tel&eacute;fono del Cliente</th>
+                            <th style="  text-align: center;">Empleado</th>
+                            <th style="  text-align: center;">Fecha esperada de entrega</th>
+                            <th style="  text-align: center;">Total</th>
+                            <th class="col-2" style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for envio in envio %}
+                        <tr>
+                            <td>{{envio[6]}} {{envio[7]}} {{envio[8]}}</td>
+                            <td>{{envio[13]}} #{{envio[11]}}{% if envio[12] is not none %}({{envio[12]}}){% endif %}, {{envio[14]}}, {{envio[11]}}</td>
+                            <td>{{envio[9]}}</td>
+                            {% if envio[1] == 0 %}
+                            <td>En proceso</td>
+                            <td>Pendiente</td>
+                            {% else %}
+                            <td>{{envio[17]}} {{envio[18]}} {{envio[19]}}</td>
+                            <td>{{envio[26]}}</td>
+                            {% endif %}
+                            <td>{{envio[3]}}</td>
+                            <td style="text-align: center;" ><a href="envioEstatus/{{envio[0]}}/{{envio[1]}}"
+                                class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
+                             </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tr class='noSearch hide'>
+                        <td colspan="10000"></td>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-- FORMULARIO DE EMPLEADO-->
+    <div class="container">
+        <br>
+        <div class="modal fade" id="detalleEmpleado" tabindex="-1" aria-labelledby="detalleEmpleado" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle Empleado</b></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form">
+                            <div hidden> 
+                                {{render_firld(form.id_envio,class='form-control')}}
+                            </div>
+                            <div style="color:#CA9F8B" class="mt-4">
+                                <i class="fas fa-grin-alt"></i>
+                                <label>Datos Envio</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- <label for="txtEmpleado" class="form-label">Emplado<span class="text-danger">*</span></label> -->
+                                    <!-- <input id="txtCantidad" type="select" class="form-control"  /> -->
+                                    <!-- <select class="form-control">
+                                        <option>Selecciona un empleado</option>
+                                        <option value="1"></option>
+                                    </select> -->
+                                    {{render_firld(form.empleado,class='form-control')}}<br>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label for="txtFechaEnvio" class="form-label">Fecha de envio<span></span></label>
+                                    <input id="txtFechaEnvio" type="date" class="form-control"  > <br> -->
+                                    {{render_firld(form.fechaEnvio,class='form-control')}}<br>
+                                </div>
+                                <div class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-info" >
+                                        <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Nuevo</button>
+                                    <button class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal fade" id="alertaEnvio" tabindex="-1" aria-labelledby="alertaEnvio" aria-hidden="true" data-controls-modal="alertaEnvio" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form name="sent" action="/envioEstatus?id={{idEnvio}}" method="post">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="text-center">
+                               <img src="../static/img/iconos/iconoEliminar.svg" width="120px"><br><br>
+                            </div>
+                            <h4 style='color: #3D7692; font-weight: bold;text-align: center;'>¿DESEA REALIZAR CAMBIOS EN EL ESTATUS?</h4>
+                        </div>
+                        <div class="col-4"></div>
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                        <div class="pt-3 pb-3 text-center">
+                                <a href="{{url_for('envio.envios') }}" class="btn btn-outline-danger mx-2"  class="btn-close" >
+                                CANCELAR</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-outline-success mx-2 " >ACEPTAR</button>
+                             </a>
+                        </div>
+                        
+                    </div>
+                    </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

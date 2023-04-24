@@ -1,3 +1,4 @@
+from werkzeug.security import check_password_hash,generate_password_hash
 from db.db import get_connection 
 from flask import Flask, flash, Markup
 
@@ -27,7 +28,7 @@ def insertar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('insertar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Empleado,id_Usuario,id_Persona])
+            cursor.callproc('insertar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,generate_password_hash(contrasenia),rol,id_Empleado,id_Usuario,id_Persona])
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -45,7 +46,7 @@ def modificar_empleado(nombre,apaterno,amaterno,telefono,codigo_postal,numero_in
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('actualizar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,rol,id_Persona,id_Usuario])
+            cursor.callproc('actualizar_empleado', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,generate_password_hash(contrasenia),rol,id_Persona,id_Usuario])
 
         # Confirmar los cambios en la base de datos
         conexion.commit()

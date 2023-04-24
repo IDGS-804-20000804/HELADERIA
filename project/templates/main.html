@@ -25,85 +25,94 @@
         </div>
         <div class="media-body ">
             <div>
-                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">Nombre</span></h6>
+                <h6 class="m-2"><span id="spanNombreEmpleado" class="fw-bold">{{current_user.correo}}</span></h6>
             </div>
         </div>
     </div>
+  
     <div id="global">
         <ul class="nav flex-column bg-white mb-2" >
+            {% if 1 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="empleados" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-tie mr-3 fa-fw"></i>
                     Empleados
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="clientes" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-users mr-3 fa-fw"></i>
                     Clientes
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 5 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="almacen" class="nav-link text-dark font-italic bg-light">
                     <i class="fa fa-shopping-basket" ></i>
                     Almacen
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 7 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="materiaPrima" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-star" ></i>
                     Materia Prima
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 7 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="recetas" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa far fa-file-alt" aria-hidden="true"></i>
                     Recetas
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 2 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="ventas" class="nav-link text-dark font-italic bg-light">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     Ventas
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="provedor" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-male" aria-hidden="true"></i>
                     Provedores
                 </a>
             </li>
+            {% endif %}
+            {% if 1 in roles or 5 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="compras" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Compras
                 </a>
             </li>
-            <!-- <li class="nav-item m-1">
-                <a href="#" class="nav-link text-dark font-italic bg-light" >
-                    <i  class="fa fa-folder-open mr-3 fa-fw" ></i>
-                    Solicitud de Productos
-                </a>
-            </li> -->
+            {% endif %}
+            {% if 1 in roles or 4 in roles or 6 in roles %}
             <li class="nav-item m-1">
                 <a href="envio" class="nav-link text-dark font-italic bg-light" >
                     <i class="fa fa-truck" aria-hidden="true"></i>
                     Envios
                 </a>
             </li>
+            {% endif %}
             <li class="nav-item m-1">
-                <a href="stock" class="nav-link text-dark font-italic bg-light" >
-                    <i class="fa fa-file" aria-hidden="true"></i>
-                    Stock
-                </a>
-            </li>
-            <li class="nav-item m-1">
-                <a href="/" class="nav-link text-dark font-italic bg-light" >
+                <a href="{{url_for('logout')}}" class="nav-link text-dark font-italic bg-light" >
                     <i class="fas fa-user-cog mr-3  fa-fw"></i>
                     Cerrar Sesi&oacute;n
                 </a>
             </li>
+    
         </ul>
+        
     </div>
 </div>
 
@@ -141,6 +150,7 @@ $(document).ready(function () {
 <script type="text/javascript" src='../static/js/tienda.js'></script>
 <script type="text/javascript" src='../static/js/tabla.js'></script>
 <script type="text/javascript" src='../static/js/main.js'></script>
+<script type="text/javascript" src='../static/js/rol.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

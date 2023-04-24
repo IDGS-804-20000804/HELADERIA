@@ -127,3 +127,7 @@ function comprarButtonClicked() {
 //   }
 // }
 
+function mostrarAlerta(){
+  $('#alertaCompra').modal('show'); // abrir
+     $('#alertaCompra').modal({backdrop: 'static', keyboard: false})
+}

@@ -4,12 +4,13 @@ from controllers.cliente.cliente_Controllers import obtener_clientes, obtener_cl
 from models.clientes.clientes import Clientes
 from db.db import get_connection 
 from markupsafe import Markup
-
+from flask_login import login_required
 
 clientes = Blueprint('clientes', __name__)
 
 
 @clientes.route('/clientes', methods=["POST", "GET"])
+@login_required
 def cliente():
      if request.method == 'POST':
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST

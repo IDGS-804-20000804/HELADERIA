@@ -1,11 +1,21 @@
 {%extends 'main.html'%}
 {%block content%}
+{%from "_macros.html" import render_firld%}
+
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
             class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
+    {% if (1 in roles) or (3 in roles) or (4 in roles) or (6 in roles) or (7 in roles) %}
+    <a href="stock" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end"
+        style="background-color:#CA9F8B"><strong>Agregar Producto</strong></a>
+    {% endif %}
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#3D7692"
         data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong><i class="fa fa-shopping-cart"
                 aria-hidden="true" style="color: #FFFFFF;"></i></strong></button>
+        <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B"
+            data-bs-toggle="modal" data-bs-target="#alertaCompra"><strong>Agregar Producto</strong></button>
+    </li>
+
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
             <div class="card-header text-center bg-light">
@@ -22,7 +32,7 @@
                                 <div class="col-12 col-md-4">
                                     <div class="item shadow mb-4">
                                         <h5 class="item-title">{{stock[1]}}</h5>
-                                        <img class="item-image" src="../static/img/Fresa.jpg">
+                                        <img class="item-image" src="../static/img/{{stock[0]}}.jpg">
                                         <!-- {{stock[2]}} Ruta foto -->
                                         <p hidden class="item-limit">{{stock[3]}}</p>
                                         <p hidden class="item-id_receta">{{stock[0]}}</p>
@@ -30,7 +40,9 @@
                                         <h5 class="item-price">{{stock[4]}} MXM</h5>
                                         <div style="text-align: center; ">
                                             <button class="item-button btn btn-outline-success addToCart"
-                                            data-bs-toggle="modal" data-bs-target="#detalleEmpleado" style="border-radius: 15px;"><i class="fas fa-cart-plus"></i>Agregar</button><br> 
+                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado"
+                                                style="border-radius: 15px;"><i
+                                                    class="fas fa-cart-plus"></i>Agregar</button><br>
                                         </div><br>
                                     </div>
                                 </div>
@@ -87,29 +99,32 @@
                                             <div class="shopping-cart-items shoppingCartItemsContainer">
                                             </div>
                                             <!-- ? END SHOPPING CART ITEMS -->
-    
+
                                             <!-- START TOTAL -->
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="shopping-cart-total d-flex align-items-center">
                                                         <p class="mb-0">Total</p>
-                                                        <p class="ml-4 mb-0 shoppingCartTotal" id="precio" name="precio">0MXM</p>
-                                                        <input type="hidden" name="total_venta" id="total_venta" value=0>
-                                                        <button class="btn btn-outline-success ml-auto comprarButton" type="submit"
-                                                           >Comprar</button>
+                                                        <p class="ml-4 mb-0 shoppingCartTotal" id="precio"
+                                                            name="precio">0MXM</p>
+                                                        <input type="hidden" name="total_venta" id="total_venta"
+                                                            value=0>
+                                                        <button class="btn btn-outline-success ml-auto comprarButton"
+                                                            type="submit">Comprar</button>
                                                     </div>
                                                 </div>
                                             </div>
-    
+
                                             <!-- END TOTAL -->
-    
+
                                             <!-- START MODAL COMPRA -->
                                             <div class="modal fade" id="comprarModal" tabindex="-1"
                                                 aria-labelledby="comprarModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="comprarModalLabel">Gracias por su
+                                                            <h5 class="modal-title" id="comprarModalLabel">Gracias por
+                                                                su
                                                                 compra</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -141,4 +156,61 @@
         </div>
     </div>
 
-    {%endblock%}
+    <div class="container">
+        <br>
+        <div class="modal fade" id="alertaCompra" tabindex="-1" aria-labelledby="alertaCompra" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #3D7692; text-align: center">
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle de
+                                Compra</b></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% if form.errors %}
+                        <ul>
+                            {% for error in form.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form method="POST" action="ventaCompra">
+                            <div class="row">
+                                <div class="col-12">
+                                    {{render_firld(form.card_name,class='form-control')}}
+                                </div>
+
+                                <div class="col-6">
+                                    {{render_firld(form.card_number,class='form-control')}}
+                                </div>
+
+                                <div class="col-6">
+                                    {{render_firld(form.card_number,class='form-control')}}
+                                </div>
+
+                                <div class="col-4">
+                                    {{render_firld(form.card_exp_month,class='form-control')}}
+                                </div>
+
+                                <div class="col-4">
+                                    {{render_firld(form.card_exp_year,class='form-control')}}
+                                </div>
+
+                                <div class="col-4">
+                                    {{render_firld(form.card_cvv,class='form-control')}}
+                                </div>
+                                <div class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-success mx-2">
+                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Comprar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
