@@ -83,15 +83,15 @@
                             <th class="col-2" style="text-align: center;">Remover</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for n in nombres %}
-                        <tr>
-                          <th style="text-align: center;" class="col">{{ n[0] }}</th>
-                          <th style="text-align: center;" class="col">{{ n[1] }}</th>
-                          <th style="text-align: center;" class="col">{{ n[2] }}</th>
-                          <th><a href="/removeM/{{ loop.index0  }}" class="btn btn-outline-danger">Eliminar</a></th>
-                        </tr>
-                        {% endfor %}
+                     <tbody>
+                        {% for index, persona in enumerate(lista) %}
+                                <tr>
+                                    <td style=" text-align: center;" class="col-2">{{ index + 1 }}</td>
+                                    <td style=" text-align: center;" class="col-6">{{ persona['nombre'] }}</td>
+                                    <td style=" text-align: center;" class="col-2">{{ persona['cantidad'] }}</td>
+                                    <td><a href="/removeM/{{ index }}" class="btn btn-outline-danger">Eliminar</a></td>
+                                </tr>
+                                {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>

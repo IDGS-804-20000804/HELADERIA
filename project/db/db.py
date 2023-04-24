@@ -1,3 +1,4 @@
+CONFLICT (content): Merge conflict in project/__.init__.py
 # from decouple import config
 # import pymysql
 
@@ -16,7 +17,7 @@ import pymysql
 def get_connection():
     return pymysql.connect(host='localhost',
                                 user='root',
-                                password='vegetta777',
+                                password='1029384756-MySQL_root',
                                 db='gelatos')
 
 class config:

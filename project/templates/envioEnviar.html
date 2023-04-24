@@ -3,7 +3,6 @@
 {%from "_macros.html" import render_firld%}
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B" data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong>Agregar</strong></button>
     <!-- CATÁLOGO DE EMPLEADO-->
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
@@ -41,7 +40,7 @@
                             <td>{{envio[26]}}</td>
                             {% endif %}
                             <td>{{envio[3]}}</td>
-                            <td style="text-align: center;" ><a href="envioEstatus?id={{envio[0]}}"
+                            <td style="text-align: center;" ><a href="envioEstatus/{{envio[0]}}/{{envio[1]}}"
                                 class="btn btn-outline-warning " ><i class="fas fa-pencil-alt"></i>
                              </a>
                             </td>
@@ -102,5 +101,31 @@
             </div>
         </div>
 </div>
-
+<div class="modal fade" id="alertaEnvio" tabindex="-1" aria-labelledby="alertaEnvio" aria-hidden="true" data-controls-modal="alertaEnvio" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form name="sent" action="/envioEstatus?id={{idEnvio}}" method="post">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="text-center">
+                               <img src="../static/img/iconos/iconoEliminar.svg" width="120px"><br><br>
+                            </div>
+                            <h4 style='color: #3D7692; font-weight: bold;text-align: center;'>¿DESEA REALIZAR CAMBIOS EN EL ESTATUS?</h4>
+                        </div>
+                        <div class="col-4"></div>
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+                        <div class="pt-3 pb-3 text-center">
+                                <a href="{{url_for('envio.envios') }}" class="btn btn-outline-danger mx-2"  class="btn-close" >
+                                CANCELAR</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-outline-success mx-2 " >ACEPTAR</button>
+                             </a>
+                        </div>
+                        
+                    </div>
+                    </form>
+                    </div>
+            </div>
+        </div>
+    </div>
 {%endblock%}

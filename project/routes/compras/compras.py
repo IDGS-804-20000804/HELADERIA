@@ -5,20 +5,17 @@ from controllers.compra.compra_Controllers import obtener_compras, insertar_comp
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, insertar_provedor
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
 import json
-from flask_security import roles_required, login_required
-
+import ast
 
 
 compras = Blueprint('compras', __name__)
 
 @compras.route('/compras')
-@login_required
 def compraM():
      emp = obtener_compras()
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
-     print(empleado)
      return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp)
 
 
@@ -33,36 +30,43 @@ def compraGuardar():
         provedor=obtener_proveedor()
         empleado=obtener_empleados()
         materiaPrima=obtener_materia_prima()
-        empleados = request.form['empleado']
-        provedores = request.form['provedor']
+        empleados = request.form.get('empleado', None)
+        provedores = request.form.get('provedor', None)
         arr_receta=nombres
         arr=guardar_en_arreglo(arr_receta)
         arreglo=quitar_prefijo(arr)
-        print('arreglo')
-        print(arreglo)
-        a=convertir_a_lista(arreglo)
-        insertar_compra(str(a),provedores, empleados)
+        a=convertir_lista(arreglo)
+        txtJ=convertir_a_json(a)
+        insertar_compra(txtJ,provedores, empleados)
         return redirect(url_for('compras.compraM'))
      return render_template('comprasGuadar.html',form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
-def convertir_a_lista(lista_de_cadenas):
+def convertir_lista(cadenas):
     lista_resultado = []
-    for cadena in lista_de_cadenas:
-        # Eliminar los caracteres no deseados de la cadena y convertirla en una lista de valores
-        valores = cadena.strip("[']").split("', '")
-        
-        # Convertir los valores en los tipos de datos correctos y crear una nueva lista
-        nueva_lista = [
-            int(valores[1]),   # Cantidad
-            valores[3],        # Fecha de vencimiento
-            int(valores[0]),   # ID del producto
-            float(valores[2])  # Precio unitario
-        ]
-        
-        # Agregar la nueva lista a la lista de resultados
-        lista_resultado.append(nueva_lista)
-        
+    for cadena in cadenas:
+        # Eliminar corchetes y comillas sobrantes
+        cadena_limpia = cadena.replace("[", "").replace("]", "").replace("'", "").replace(")", "").replace("(", "")
+        campos = cadena_limpia.split(", ")
+        # Convertir campos a los tipos de datos correctos
+        id_producto = int(campos[1])
+        cantidad = float(campos[2]) 
+        precio = float(campos[3])
+        fecha = campos[4].replace("(", "").replace(")", "")  # Eliminar paréntesis de la fecha
+        # Crear lista con los valores convertidos
+        lista_producto = [int(round(cantidad)),fecha ,id_producto , round(precio, 2)]
+        lista_resultado.append(lista_producto)
     return lista_resultado
+
+def convertir_a_json(lista):
+    nueva_lista = []
+    for l in lista:
+        cantidad = l[0]
+        fecha = l[1]
+        id_producto = l[2]
+        precio = l[3]
+        nueva_lista.append([cantidad, fecha, id_producto, precio])
+    json_data = json.dumps(nueva_lista)
+    return json_data
 
 def guardar_en_arreglo(lista):
     arreglo = []
@@ -111,18 +115,22 @@ def index():
     materiaPrima = obtener_materia_prima()
     
     if request.method == 'POST':
-        materia = request.form.get('materia')
+        materia = (request.form.get('materia')).split(",")
+        id_materia = materia[0]
+        nombre_materia = materia[1]
         cantidadMateria = float(request.form.get('cantidad', 0))
         precio = float(request.form.get('precio', 0))
         fechaCaducidad = request.form.get('fechaCaducidad')
 
         for item in nombres:
-            if item['nombre'] == materia:
+            if item['nombre'] == nombre_materia:
+                item['nombre'] += nombre_materia
+                item['id_materia'] += id_materia
                 item['cantidad'] += cantidadMateria
                 item['precio'] += precio
                 break
         else:
-            nombres.append({'nombre': materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
+            nombres.append({'nombre': nombre_materia, 'id_materia': id_materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
 
     create_form = compra()
     return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
@@ -136,7 +144,8 @@ def removeC(index):
     empleado=obtener_empleados()
     materiaPrima=obtener_materia_prima()
     nombres.pop(index)
-    return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
+    return redirect(url_for('compras.index'))
+    # return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
 
 # @empleados.route('/empleados',method=["POST"])
