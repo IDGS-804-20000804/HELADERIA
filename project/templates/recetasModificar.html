@@ -84,29 +84,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        {% for index, persona in enumerate(nombres) %}
-                            <tr>
-                                <td style=" text-align: center;" class="col-2">{{ index + 1 }}</td>
-                                <td style=" text-align: center;" class="col-6">{{ persona['nombre'] }}</td>
-                                <td style=" text-align: center;" class="col-2">{{ persona['cantidad'] }}</td>
-                                <td><a href="/removeM/{{ index }}" class="btn btn-outline-danger">Eliminar</a></td>
-                            </tr>
-                            {% endfor %}
+                        {% for n in nombres %}
+                        <tr>
+                          <th style="text-align: center;" class="col">{{ n[0] }}</th>
+                          <th style="text-align: center;" class="col">{{ n[1] }}</th>
+                          <th style="text-align: center;" class="col">{{ n[2] }}</th>
+                          <th><a href="/removeM/{{ loop.index0  }}" class="btn btn-outline-danger">Eliminar</a></th>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                     <tr class='noSearch hide'>
                         <td colspan="10000"></td>
-                </table>
-                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-
+                    </table>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                </div>
             </div>
         </div>
+        
     </div>
-
-</div>
-
-{%endblock%}
-<!-- 
+    
+    {%endblock%}
+    <!-- 
     <div hidden>
         {{render_firld(form.id_Receta,class='form-control')}}
     </div>

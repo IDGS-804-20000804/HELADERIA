@@ -12,6 +12,8 @@ from routes.compras.compras import compras
 from routes.envio.envio import envio
 from routes.main.main import main
 from routes.almacen.almacen import almacen
+from routes.recetas.recetasModificar import recetasModificar
+from routes.stock.stock import stock
 from flask_login import login_required, current_user, UserMixin
 from flask_login import LoginManager, login_user, logout_user, login_required
 from models.entities.User import UserDatos
@@ -32,7 +34,7 @@ login_manager_app=LoginManager(app)
 
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'DDBHF17I3I2OREBF'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:vegetta777@127.0.0.1/gelatos'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1029384756-MySQL_root@127.0.0.1/gelatos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECURITY_ROLES_ACCEPTED'] = ['Administrador','Cliente','Vendedor','Repartidor','Comprador','Gerente','Productor']
 

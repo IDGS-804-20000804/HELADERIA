@@ -1326,43 +1326,6 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 //
 DELIMITER ;
 
-
-DELIMITER //
-CREATE PROCEDURE buscar_empleado_id(IN p_id_empleado INT)
-BEGIN
-  SELECT e.id_empleado, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia, u.correo, u.estatus
-  FROM empleado e
-  INNER JOIN persona p ON e.fk_persona = p.id_persona
-  INNER JOIN usuario u ON e.fk_usuario = u.id_usuario
-  WHERE e.id_empleado = p_id_empleado;
-END //
-DELIMITER ;
-
-DROP VIEW vista_empleado;
-CREATE VIEW vista_empleado AS
-SELECT 
-    e.id_empleado, 
-    e.fk_usuario,
-    e.fk_persona,
-    u.correo, 
-    u.estatus, 
-    p.nombre, 
-    p.apaterno, 
-    p.amaterno, 
-    p.telefono, 
-    p.codigo_postal, 
-    p.numero_exterior, 
-    p.numero_interior, 
-    p.calle, 
-    p.colonia
-FROM 
-    empleado e
-JOIN 
-    usuario u ON e.fk_usuario = u.id_usuario
-JOIN 
-    persona p ON e.fk_persona = p.id_persona;
-
 DROP PROCEDURE IF EXISTS insertar_compra;
 
 DELIMITER //
@@ -1485,7 +1448,7 @@ CREATE PROCEDURE insertar_cliente(	/* Datos Personales */
             -- Obtenemos el ID de Usuario que se generó:
             SET iid_usuario = LAST_INSERT_ID();  
             
-            INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 5);
+            INSERT INTO rol_usuario (fk_usuario, fk_rol) VALUES (iid_usuario, 2);
             
             -- Insertamos en la tabla Cliente:
             INSERT INTO cliente (fk_persona, fk_usuario) VALUES(iid_persona, iid_usuario);
@@ -1621,7 +1584,7 @@ DELIMITER //
 CREATE PROCEDURE buscar_proveedor_id(IN p_id_proveedor INT)
 BEGIN
   SELECT pr.id_proveedor, pr.correo, p.nombre, p.apaterno, p.amaterno, p.telefono, p.codigo_postal, 
-         p.numero_exterior, p.numero_interior, p.calle, p.colonia
+         p.numero_exterior, p.numero_interior, p.calle, p.colonia, p.id_persona
   FROM proveedor pr
   INNER JOIN persona p ON pr.fk_persona = p.id_persona
   WHERE pr.id_proveedor = p_id_proveedor;
