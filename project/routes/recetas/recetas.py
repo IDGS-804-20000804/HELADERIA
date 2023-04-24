@@ -138,27 +138,28 @@ def remove(index):
 
 @recetas.route('/insertar_receta', methods=['GET', 'POST'])
 def realizar_insercion():
-
-    # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
-    create_form = receta()
-    r = obtener_recetas()
-    nombre = request.form['nombre']
-    cantidad= request.form['cantidad']
-    precio= request.form['precio']
-    # file = request.files['foto'] #recibiendo el archivo
-    # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
-    arr_receta=nombres
-    json_string = json.dumps(arr_receta)
-    valores = quitar_titulo(json_string)
-    lista_de_listas = list(valores)
-    ruta_imagen='uploads/1'
-    lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
-    print(nombre+','+cantidad+','+precio+','+ruta_imagen)
-    print(lista_de_listas_enteros)
-    txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-    # Lógica para insertar empleado en la base de datos
-    insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen,txt)
-    # De cualquier modo, y si todo fue bien, redireccionar
+    if request.method == 'POST':
+        # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
+        create_form = receta()
+        r = obtener_recetas()
+        nombre = request.form['nombre']
+        cantidad= request.form['cantidad']
+        precio= request.form['precio']
+        # file = request.files['foto'] #recibiendo el archivo
+        # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
+        arr_receta=nombres
+        json_string = json.dumps(arr_receta)
+        valores = quitar_titulo(json_string)
+        lista_de_listas = list(valores)
+        ruta_imagen='uploads/1'
+        lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
+        print(nombre+','+cantidad+','+precio+','+ruta_imagen)
+        print(lista_de_listas_enteros)
+        txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
+        # Lógica para insertar empleado en la base de datos
+        insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen,txt)
+        # De cualquier modo, y si todo fue bien, redireccionar
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetas.html',form=create_form, receta=r)
 
 def quitar_titulo(json_string):

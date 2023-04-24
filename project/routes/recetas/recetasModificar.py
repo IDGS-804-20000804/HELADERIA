@@ -71,7 +71,7 @@ def modificar():
         txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
         modificar_receta(id_Receta,nombre,cantidad, precio, foto,txt)
         nombres.clear()
-        return redirect(url_for('recetasModificar.indexMain'))
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaArreglo,materiaPrima=mp)
 
 @recetasModificar.route('/recetasAgregar', methods=['GET', 'POST'])
