@@ -1,3 +1,4 @@
+CONFLICT (content): Merge conflict in project/__.init__.py
 # from decouple import config
 # import pymysql
 

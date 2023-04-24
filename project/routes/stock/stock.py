@@ -13,11 +13,8 @@ stock = Blueprint('stock', __name__)
 def stockProducto():
     if request.method == 'GET':
         create_form = Stock()
-        emp = consultar_recetas_posibles()
-        print(emp)
-        receta=quitar_parentesis(emp)
-        print(receta)
-    return render_template('stock.html',form=create_form,receta=receta)
+        emp = obtener_stock()
+    return render_template('stock.html',form=create_form,receta=emp)
 
 
 def quitar_parentesis(tupla):
