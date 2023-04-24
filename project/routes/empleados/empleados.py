@@ -48,6 +48,7 @@ def empleado():
 
 
 @empleados.route('/insertar_empleado', methods=["POST"])
+@login_required
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
@@ -86,6 +87,7 @@ def realizar_insercion():
     return redirect(url_for('empleados.empleado'))
 
 @empleados.route("/empleadosModificar",methods=['GET','POST'])
+@login_required
 def modificar():
    create_fprm=Empleados(request.form)
    if request.method=='GET':
@@ -202,6 +204,7 @@ def modificar():
    return render_template('empleadosModificar.html', form= create_fprm, empleados=emp)
 
 @empleados.route('/empleadosEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_empleado():
     create_fprm = Empleados(request.form)
     emp = obtener_empleados()
