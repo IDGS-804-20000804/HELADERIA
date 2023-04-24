@@ -30,6 +30,10 @@ function inicializarModulo() {
       $('#alertaEliminarProvedor').modal('show'); // abrir
       $('#alertaEliminarProvedor').modal({backdrop: 'static', keyboard: false})
 
+      //Modales de Provedor
+      $('#alertaEnvio').modal('show'); // abrir
+      $('#alertaEnvio').modal({backdrop: 'static', keyboard: false})
+
       
 }
 
