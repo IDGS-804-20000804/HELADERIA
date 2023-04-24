@@ -16,17 +16,13 @@ from flask_login import login_required, current_user, UserMixin
 from flask_login import LoginManager, login_user, logout_user, login_required
 from models.entities.User import UserDatos
 from db.db import get_connection 
-<<<<<<< HEAD
 from datetime import datetime
 import logging
 
 
-from models.logi.ModeloLogin import ModeloLogin
-=======
-
->>>>>>> d74926922e91be68ae0a26df89c2dcb4511b38f8
+from models.login.ModeloLogin import ModeloLogin
 from models.entities.User import User 
-from models.logi.ModeloLogin import ModeloLogin
+from models.login.ModeloLogin import ModeloLogin
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)

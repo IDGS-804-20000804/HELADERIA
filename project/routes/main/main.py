@@ -2,7 +2,7 @@ import ast
 from flask import Blueprint, render_template, request, redirect, url_for,Request,flash
 from flask_wtf.csrf import CSRFProtect
 from db.db import get_connection 
-from models.logi.ModeloLogin import ModeloLogin
+from models.login.ModeloLogin import ModeloLogin
 from models.entities.User import User 
 from flask_security import current_user
 from flask_security import roles_required, login_required
