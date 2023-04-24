@@ -26,4 +26,4 @@ class UserDatos(UserMixin):
         self.roles=roles
 
   
-#rint(generate_password_hash("Hola"))
+print(generate_password_hash("123"))
