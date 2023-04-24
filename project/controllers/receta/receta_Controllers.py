@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from db.db import get_connection
+from random import sample
 import models.receta.receta_Forms as forms
 
 
@@ -11,7 +12,7 @@ def obtener_recetas():
     try:
         with conexion.cursor() as cursor:
             # Ejecutar una consulta SELECT para obtener los datos de la vista
-            cursor.execute('SELECT * FROM vista_receta')
+            cursor.execute('SELECT id_receta, nombre_receta, cantidad_receta, precio_receta, ruta_imagen_receta FROM vista_receta GROUP BY id_receta, nombre_receta, cantidad_receta, precio_receta, ruta_imagen_receta;')
             receta = cursor.fetchall()
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -30,7 +31,7 @@ def obtener_receta_por_id(id):
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.execute('CALL buscar_receta_id(%s)',(id))
+            cursor.execute('CALL buscar_receta_id(%s)', id)
             receta = cursor.fetchall()
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -79,13 +80,13 @@ def eliminar_receta_por_id(id):
         return receta
     
 
-def modificar_receta(id_Receta,nombre,cantidad, precio, ruta_imagen,arr_receta):
+def modificar_receta(id_Receta,nombre,cantidad, precio,arr_receta):
     # Obtener conexión a la base de datos
     conexion = get_connection()
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('actualizar_receta', [id_Receta, nombre,cantidad, precio, ruta_imagen,arr_receta])
+            cursor.callproc('actualizar_receta', [id_Receta, nombre,cantidad, precio, '',arr_receta])
 
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -95,3 +96,17 @@ def modificar_receta(id_Receta,nombre,cantidad, precio, ruta_imagen,arr_receta):
     finally:
         # Cerrar la conexión a la base de datos
         conexion.close()
+
+
+         
+ #Para que la imagen no se repita del nombre jamas --------------------------------------
+
+#Crear un string aleatorio para renombrar la foto 
+# y evitar que exista una foto con el mismo nombre
+def stringAleatorio():
+    string_aleatorio = "0123456789abcdefghijklmnopqrstuvwxyz_"
+    longitud         = 20
+    secuencia        = string_aleatorio.upper()
+    resultado_aleatorio  = sample(secuencia, longitud)
+    string_aleatorio     = "".join(resultado_aleatorio)
+    return string_aleatorio

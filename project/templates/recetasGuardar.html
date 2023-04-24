@@ -31,6 +31,13 @@
                                         <div class="col-12">
                                             {{render_firld(form.cantidad,class='form-control')}}<br>
                                         </div>
+                                        <div class="row mt-4">
+                                            <div class="col">
+                                                <label for="foto">Foto del Helado</label>
+                                                <input type="file" name="foto" class="form-control-file" accept="image/*" required>
+                                            </div>
+                                        </div>
+                
                                 <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
                                 <div class="pt-3 pb-3 text-center">
                                     <button class="btn btn-outline-success mx-2">
@@ -66,7 +73,7 @@
                                 <div class="col-12 text-center">
                                     <input type="submit" class="btn btn-outline-info" value="Agregar"><br><br>
                                 </div>
-        
+                              
                             </form>
                         </section>
                     </div>

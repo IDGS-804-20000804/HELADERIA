@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, IntegerField, validators,RadioField,BooleanField
-
+from wtforms.validators import DataRequired, Length,Email,Regexp
 class Empleados(Form):
     opciones_tolerancia = [(1, "Vendedor"), 
                            (2, "Repartidor"), 
@@ -12,15 +12,30 @@ class Empleados(Form):
     id_empleado = IntegerField('idEmpleado')
     id_usuario = IntegerField('idPersona')
     nombre = StringField('Nombre', [
-        validators.DataRequired(message='Este campo es requerido')])
+        validators.DataRequired(message='Este campo es requerido'),
+        validators.Length(min=4, max=15, message='Este campo debe tener entre 4 y 15 caracteres'),
+        validators.Regexp('^[a-zA-Z ]+$', message='Este campo solo debe contener letras y espacios')
+    ])
     apaterno = StringField('Apellido Paterno', [
-        validators.DataRequired(message='Este campo es requerido')])
+        validators.DataRequired(message='Este campo es requerido'),
+        validators.Length(min=4, max=15, message='Este campo debe tener entre 4 y 15 caracteres'),
+        validators.Regexp('^[a-zA-Z ]+$', message='Este campo solo debe contener letras y espacios')
+    ])
     amaterno = StringField('Apellido Materno', [
-        validators.DataRequired(message='Este campo es requerido')])
+        validators.DataRequired(message='Este campo es requerido'),
+        validators.Length(min=4, max=15, message='Este campo debe tener entre 4 y 15 caracteres'),
+        validators.Regexp('^[a-zA-Z ]+$', message='Este campo solo debe contener letras y espacios')
+    ])
     telefono = StringField('Teléfono', [
-        validators.DataRequired(message='Este campo es requerido')])
+        validators.DataRequired(message='Este campo es requerido'),
+        validators.Length(min=10, max=10, message='El número de teléfono debe tener 10 dígitos'),
+        validators.Regexp('^[0-9]+$', message='El número de teléfono debe contener sólo dígitos')
+    ])
     codigo_postal = StringField('Código Postal', [
-        validators.DataRequired(message='Este campo es requerido')])
+        validators.DataRequired(message='Este campo es requerido'),
+        validators.Length(min=5, max=5, message='El código postal debe tener 5 dígitos'),
+        validators.Regexp('^[0-9]+$', message='El código postal debe contener sólo dígitos')
+    ])
     numero_interior = StringField('Número Interior', [
         validators.DataRequired(message='Este campo es requerido')])
     numero_exterior = StringField('Número exterior', [
@@ -30,7 +45,9 @@ class Empleados(Form):
     colonia = StringField('Colonia', [
         validators.DataRequired(message='Este campo es requerido')])
     correo = StringField('Correo', [
-        validators.DataRequired(message='Este campo es requerido')])
+        DataRequired(message='Este campo es requerido'),
+        Email(message='Por favor ingrese un correo electrónico válido')
+    ])
     contrasenia = StringField('Contraseña', [
         validators.DataRequired(message='Este campo es requerido')])
     rol = RadioField("Rol", choices=opciones_tolerancia, validators=[validators.DataRequired()])

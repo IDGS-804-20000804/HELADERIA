@@ -8,22 +8,23 @@ import json
 
 
 
-
 compras = Blueprint('compras', __name__)
 
 @compras.route('/compras')
 def compraM():
      emp = obtener_compras()
-     print(emp)
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
+     print(empleado)
      return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp)
 
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
 def compraGuardar():
+     provedor=obtener_proveedor()
+     empleado=obtener_empleados()
      if request.method == 'POST':
         create_form = compra(request.form)
         provedor=obtener_proveedor()
@@ -35,32 +36,41 @@ def compraGuardar():
         arr=guardar_en_arreglo(arr_receta)
         arreglo=quitar_prefijo(arr)
         print('ESTO SE RECIBE SIN TEXTO')
-        a=convertir_a_lista(arreglo)
-        print(str(a))
-        print(empleados)
-        print(provedores)
-        insertar_compra(str(a),provedores, empleados)
+        print(arreglo)
+        a=convertir_lista(arreglo)
+        txtJ=convertir_a_json(a)
+        insertar_compra(txtJ,provedores, empleados)
         return redirect(url_for('compras.compraM'))
      return render_template('comprasGuadar.html',form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
-def convertir_a_lista(lista_de_cadenas):
+def convertir_lista(cadenas):
     lista_resultado = []
-    for cadena in lista_de_cadenas:
-        # Eliminar los caracteres no deseados de la cadena y convertirla en una lista de valores
-        valores = cadena.strip("[']").split("', '")
-        
-        # Convertir los valores en los tipos de datos correctos y crear una nueva lista
-        nueva_lista = [
-            int(valores[1]),   # Cantidad
-            valores[3],        # Fecha de vencimiento
-            int(valores[0]),   # ID del producto
-            float(valores[2])  # Precio unitario
-        ]
-        
-        # Agregar la nueva lista a la lista de resultados
-        lista_resultado.append(nueva_lista)
-        
+    for cadena in cadenas:
+        # Eliminar corchetes y comillas sobrantes
+        cadena_limpia = cadena.replace("[", "").replace("]", "").replace("'", "")
+        # Dividir cadena en campos
+        campos = cadena_limpia.split(", ")
+        # Convertir campos a los tipos de datos correctos
+        id_producto = int(campos[0])
+        precio = float(campos[1])
+        cantidad = float(campos[2])
+        fecha = campos[3].replace("(", "").replace(")", "")  # Eliminar paréntesis de la fecha
+        # Crear lista con los valores convertidos
+        lista_producto = [cantidad, fecha, id_producto, precio]
+        lista_producto = [int(round(cantidad * 100)), fecha, id_producto, round(precio, 2)]
+        lista_resultado.append(lista_producto)
     return lista_resultado
+
+def convertir_a_json(lista):
+    nueva_lista = []
+    for l in lista:
+        cantidad = int(round(l[0] / 5))
+        fecha = l[1]
+        id_producto = l[2]
+        precio = round(l[3] * 0.2, 2)
+        nueva_lista.append([cantidad, fecha, id_producto, precio])
+    json_data = json.dumps(nueva_lista)
+    return json_data
 
 def guardar_en_arreglo(lista):
     arreglo = []
