@@ -13,16 +13,18 @@ compras = Blueprint('compras', __name__)
 @compras.route('/compras')
 def compraM():
      emp = obtener_compras()
-     print(emp)
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
+     print(empleado)
      return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp)
 
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
 def compraGuardar():
+     provedor=obtener_proveedor()
+     empleado=obtener_empleados()
      if request.method == 'POST':
         create_form = compra(request.form)
         provedor=obtener_proveedor()

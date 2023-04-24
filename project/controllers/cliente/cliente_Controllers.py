@@ -1,3 +1,4 @@
+from werkzeug.security import check_password_hash,generate_password_hash
 from db.db import get_connection 
 from flask import Flask, flash, Markup
 
@@ -21,13 +22,15 @@ def obtener_clientes():
         conexion.close()
         return clientes
 
-def insertar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,password,id_Persona,id_Usuario, id_Cliente):
+def insertar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,password):
     # Obtener conexión a la base de datos
     conexion = get_connection()
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-           
+            id_Persona=0
+            id_Usuario=0
+            id_Cliente=0
             cursor.callproc('insertar_cliente', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,password,id_Persona,id_Usuario, id_Cliente])
         # Confirmar los cambios en la base de datos
         conexion.commit()
@@ -45,7 +48,7 @@ def modificar_cliente(nombre,apaterno,amaterno,telefono,codigo_postal,numero_int
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('actualizar_cliente', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,contrasenia,id_Persona,id_Usuario])
+            cursor.callproc('actualizar_cliente', [nombre,apaterno,amaterno,telefono,codigo_postal,numero_interior,numero_exterior,calle,colonia,correo,generate_password_hash(contrasenia),id_Persona,id_Usuario])
 
         # Confirmar los cambios en la base de datos
         conexion.commit()

@@ -1,4 +1,6 @@
 /env
 .env
 /.vscode
-./*/*/__pycache__
+/sqlmap-dev
+**/__pycache__/
+*.log
