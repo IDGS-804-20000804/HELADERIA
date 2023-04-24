@@ -609,3 +609,13 @@ INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:27:06] "GET /static/img/imagenFondo.
 INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:27:06] "[36mGET /static/img/logotipo.png HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:27:06] "GET /static/font_awesome_5_15_3/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in 'C:\\HELADERIA\\HELADERIA\\project\\routes\\provedor\\provedor.py', reloading
+INFO:root:Se ingreso a la pagina principal
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/styles/styleHome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/logotipo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/imagenMujer.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/Limon.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/Vainilla.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/Oreo.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/img/helado2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 09:31:29] "[36mGET /static/images/bg.svg HTTP/1.1[0m" 304 -
