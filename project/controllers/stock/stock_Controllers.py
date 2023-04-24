@@ -1,34 +1,40 @@
 from db.db import get_connection 
 from flask import Flask, flash, Markup
 import json
+import ast
 
 def obtener_stock():
     # Obtener conexión a la base de datos
     conexion = get_connection()
-    stock = None
     try:
         with conexion.cursor() as cursor:
-            oids = 0  # Creamos una lista vacía para almacenar el resultado
-            # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            print('11111111111')
-            result_args = cursor.execute(f'CALL consultar_recetas_posibles({oids})')
-            print('2222222222222')
-            print(oids)
-            print(result_args)
-            print('3333333333333')
-            # Retrieve JSON output
-            user_details = result_args[1]
-        # Confirmar los cambios en la base de datos
-        conexion.commit()
+            cursor.callproc('consultar_recetas_posibles_tabla')
+            results = cursor.fetchone()
+            conexion.commit()
+        resultados_finales = obtener_stock_nombres_ids(results)
+        return resultados_finales
     except Exception as e:
-        # Si hay algún error, imprimirlo en la consola
         print("Error al consultar stock: ", e)
     finally:
-        # Cerrar la conexión a la base de datos
         conexion.close()
-        return stock
 
-    
+def obtener_stock_nombres_ids(result):
+    # Obtener conexión a la base de datos
+    conexion = get_connection()
+    try:
+        string = str(result)
+        ids = string.replace("[","").replace("]","").replace("',","").replace("'","")
+        with conexion.cursor() as cursor:
+            cursor.execute(f'SELECT * FROM receta WHERE id_receta IN {ids}')
+            results = cursor.fetchall()  # Fetch all rows
+            conexion.commit()
+        return results
+    except Exception as e:
+        print("Error al consultar stock: ", e)
+    finally:
+        conexion.close()
+
+
 
 # def consultar_recetas_posibles(id):
 #     # Conexión a la base de datos

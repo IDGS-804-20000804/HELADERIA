@@ -16,7 +16,7 @@ import pymysql
 def get_connection():
     return pymysql.connect(host='localhost',
                                 user='root',
-                                password='1029384756-MySQL_root',
+                                password='root',
                                 db='gelatos')
 
 class config:

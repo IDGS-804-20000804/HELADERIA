@@ -36,7 +36,6 @@ def cliente():
      else:
         create_form = Clientes()
         emp = obtener_clientes()
-        print(emp)
         return render_template('clientes.html',form=create_form, clientes=emp)
      
 @clientes.route('/insertar_cliente', methods=["POST"])
