@@ -9,8 +9,9 @@ from flask_security import roles_required, login_required
 main = Blueprint('main', __name__ )
 
 
-@login_required
+
 @main.route('/main')
+@login_required
 def mains():
     user_id = current_user.id_usuario
     db = get_connection()

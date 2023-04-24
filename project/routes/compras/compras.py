@@ -24,6 +24,7 @@ def compraM():
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
+@login_required
 def compraGuardar():
      if request.method == 'POST':
         create_form = compra(request.form)
@@ -102,6 +103,7 @@ def convertir_a_enteros(lista):
 
 nombres = []
 @compras.route('/comprasGuardar', methods=['GET', 'POST'])
+@login_required
 def index():
     create_form = compra(request.form)
     provedor=obtener_proveedor()
@@ -132,6 +134,7 @@ def index():
 
 
 @compras.route('/removeC/<int:index>')
+@login_required
 def removeC(index):
     create_form = compra()
     provedor=obtener_proveedor()
