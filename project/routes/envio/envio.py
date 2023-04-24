@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
+from flask_security import current_user
 from db.db import get_connection
 from models.envio.envio_Forms import Envio
 from controllers.envio.envio_Controllers import obtener_envio, enviar_envio
@@ -27,12 +28,12 @@ def envios():
 @login_required
 def enviosRealizados():
      en = obtener_envio()
+     idEnvio=request.args.get('id')
      if request.method == 'POST':
-        id=request.args.get('id')
-        idEmpleado=request.args.get('idEmpleado')
+        user_id = current_user.id_usuario
         # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
         create_form = Envio(request.form)
-        enviar_envio(id,idEmpleado)
+        enviar_envio(idEnvio,user_id)
         return redirect(url_for('envio.envios'))
       #   id_unidadMedida= ''
       #   nombre = create_form.nombre.data
@@ -42,5 +43,5 @@ def enviosRealizados():
      else:
          create_form = Envio()
          en = obtener_envio()
-     return render_template('envioEnviar.html', form=create_form, envio=en)
+         return render_template('envioEnviar.html', form=create_form, envio=en, idEnvio = idEnvio)
      

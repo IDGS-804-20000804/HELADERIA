@@ -26,13 +26,13 @@ def obtener_envio():
         return envio
     
 
-def enviar_envio(idEnvio,idEmpleado):
+def enviar_envio(idEnvio,idUsuario):
     # Obtener conexión a la base de datos
     conexion = get_connection()
     try:
         with conexion.cursor() as cursor:
             # Llamar al procedimiento almacenado pasando los parámetros necesarios
-            cursor.callproc('entregar_envio', [idEnvio,idEmpleado])
+            cursor.callproc('entregar_envio', [idEnvio,idUsuario])
         # Confirmar los cambios en la base de datos
         conexion.commit()
     except Exception as e:
