@@ -32,7 +32,6 @@ class ModeloLogin():
                 cursor.execute(sql)
                 row = cursor.fetchone()
                 if row != None:
-                    print(row[4])
                     logged_user = UserDatos(row[0],row[1],None,None,row[4])
                     # sql2 = "CALL obtener_info_usuario({})".format(idUsuario)
                     # cursor.execute(sql2)

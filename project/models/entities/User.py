@@ -24,6 +24,3 @@ class UserDatos(UserMixin):
         self.contrasenia = contrasenia
         self.estatus=estatus
         self.roles=roles
-
-  
-#rint(generate_password_hash("Hola"))

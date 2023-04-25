@@ -451,7 +451,6 @@ DELIMITER ;
 
 INSERT INTO roles (nombre) VALUES ('Administrador');
 INSERT INTO roles (nombre) VALUES ('Cliente');
-INSERT INTO roles (nombre) VALUES ('Vendedor');
 INSERT INTO roles (nombre) VALUES ('Repartidor');
 INSERT INTO roles (nombre) VALUES ('Comprador');
 INSERT INTO roles (nombre) VALUES ('Gerente');

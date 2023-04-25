@@ -4,6 +4,9 @@ from models.proveedor.proveedor_Forms import Proveedor
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, obtener_proveedor_por_id, insertar_provedor, modificar_provedor, eliminar_provedor_por_id
 from flask_wtf.csrf import CSRFProtect
 from flask_security import roles_required, login_required
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 # csrf = CSRFProtect()
 provedor = Blueprint('provedor', __name__ )
 
@@ -21,10 +24,14 @@ def provedores():
      else:
         create_form = Proveedor()
         pro = obtener_proveedor()
-        print(pro)
-        return render_template('provedor.html', form=create_form, proveedor=pro)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles)
+        return render_template('provedor.html', form=create_form, proveedor=pro, roles=list)
      
 @provedor.route("/provedorModificar",methods=['GET','POST'])
+@login_required
 def modificar():
    create_fprm=Proveedor(request.form)
    if request.method=='GET':
@@ -43,7 +50,6 @@ def modificar():
       create_fprm.numero_interior.data=emp[0][8]   
       create_fprm.correo.data=emp[0][1]   
       emp = obtener_proveedor()
-      print(emp)
    if request.method=='POST':
         id_Persona=create_fprm.id_persona.data
         id_Provedor=create_fprm.id_proveedor.data
@@ -62,6 +68,7 @@ def modificar():
    return render_template('provedorModificar.html', form= create_fprm, proveedor=emp)
 
 @provedor.route('/insertar_provedor', methods=["POST"])
+@login_required
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
@@ -82,6 +89,7 @@ def realizar_insercion():
     return redirect(url_for('provedor.provedores'))
 
 @provedor.route('/proveedorEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_provedor():
     create_fprm = Proveedor(request.form)
     emp = obtener_proveedor()

@@ -7,9 +7,11 @@ from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_pr
 import json
 from flask_security import roles_required, login_required
 #Para subir archivo tipo foto al servidor
+import ast
 import os
 from werkzeug.utils import secure_filename 
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
 recetas = Blueprint('recetas', __name__ )
 
 # @recetas.route('/recetas', methods=["POST", "GET"])
@@ -125,8 +127,11 @@ def indexMain():
     else:
          create_form = receta()
          r = obtener_recetas()
-         print(r)
-    return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+    user_id = current_user.id_usuario
+    db = get_connection()
+    datos = ModeloLogin.get_by_id(db, user_id)
+    list = ast.literal_eval(datos.roles)
+    return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp, roles=list)
 
 nombres = []
 
@@ -136,49 +141,55 @@ def index():
     r = obtener_recetas()
     mp = obtener_materia_prima()
     if request.method == 'POST':
-        materia_seleccionada = request.form['materia']
+        materia = (request.form.get('materia')).split(",")
+        id_materia_prima = materia[0]
+        materia_seleccionada = materia[1]
         cantidadMateria = request.form['cantidadMateria']
-        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
-        print(nombres)
+        # nombres.append({'nombre': materia_seleccionada, 'id_materia_prima': id_materia_prima, 'cantidad': cantidadMateria})
+        agregar_receta(materia_seleccionada, cantidadMateria, id_materia_prima)
     else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
+        create_form = receta()
+        r = obtener_recetas()
     return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
+def agregar_receta(materia_seleccionada, cantidad_materia, id_materia_prima):
+    for ingrediente in nombres:
+        if ingrediente['nombre'] == materia_seleccionada and ingrediente['id_materia_prima'] == int(id_materia_prima):
+            ingrediente['cantidad'] = str(int(ingrediente['cantidad']) + int(cantidad_materia))
+            return nombres
+        
+    nombres.append({'id_materia_prima': int(id_materia_prima), 'nombre': materia_seleccionada, 'cantidad': cantidad_materia})
+    
+    # Sumar la cantidad de ingredientes con el mismo ID
+    for i in range(len(nombres)):
+        if nombres[i]['id_materia_prima'] == int(id_materia_prima) and nombres[i]['nombre'] != materia_seleccionada:
+            nombres[i]['cantidad'] = str(int(nombres[i]['cantidad']) + int(cantidad_materia))
+            return nombres
+    
+    return nombres
 
 @recetas.route('/remove/<int:index>')
 def remove(index):
     create_form = receta()
     mp = obtener_materia_prima()
     r = obtener_recetas()
-    print(nombres)
     nombres.pop(index)
-    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+    return redirect(url_for('recetas.index'))
 
 @recetas.route('/insertar_receta', methods=['GET', 'POST'])
 def realizar_insercion():
-
-    # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
-    create_form = receta()
-    r = obtener_recetas()
-    nombre = request.form['nombre']
-    cantidad= request.form['cantidad']
-    precio= request.form['precio']
-    # file = request.files['foto'] #recibiendo el archivo
-    # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
-    arr_receta=nombres
-    json_string = json.dumps(arr_receta)
-    valores = quitar_titulo(json_string)
-    lista_de_listas = list(valores)
-    ruta_imagen='uploads/1'
-    lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
-    print(nombre+','+cantidad+','+precio+','+ruta_imagen)
-    print(lista_de_listas_enteros)
-    txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-    # Lógica para insertar empleado en la base de datos
-    insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen,txt)
-    # De cualquier modo, y si todo fue bien, redireccionar
+    if request.method == 'POST':
+        create_form = receta()
+        r = obtener_recetas()
+        nombre = request.form['nombre']
+        cantidad= request.form['cantidad']
+        precio= request.form['precio']
+        arr_receta=nombres
+        arr_receta_parse = [[int(item['id_materia_prima']), int(item['cantidad'])] for item in arr_receta]
+        arr_receta_parse_string = str(arr_receta_parse)
+        ruta_imagen='uploads/1'
+        insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen, arr_receta_parse_string)
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetas.html',form=create_form, receta=r)
 
 def quitar_titulo(json_string):
@@ -215,7 +226,7 @@ def eliminar_receta():
         id=create_fprm.id_Receta.data
         eliminar_receta_por_id(id)  
         # emp = obtener_empleados() # Comenta esta línea si no la necesitas
-        return render_template('recetas.html', form=create_fprm, receta=r)
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetaEliminar.html', form=create_fprm, receta=r)
 
 

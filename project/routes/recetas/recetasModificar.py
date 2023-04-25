@@ -23,7 +23,6 @@ def indexMain():
     else:
          create_form = receta()
          r = obtener_recetas()
-         print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
@@ -51,19 +50,16 @@ def modificar():
         create_fprm.foto.data=emp[0][4]
         create_fprm.precio.data=emp[0][3] 
         texto = emp[0][5]
-        print(texto)
         listaM = eval(texto)
         lista.append(listaM)
         for elemento in lista:
             listaArreglo.append(elemento)
-        print("Este es el arreglo")
-        print(listaArreglo)
         listaA=transformar_datos(listaArreglo)
         for a in listaA:
             nombres.append(a)
-        print('hOLA')
-        print(listaA)
     if request.method=='POST':
+        print('-----------------------HOLA DESDE MODIFICAR------------------')
+        redirect(url_for('recetasModificar.modificar'))
         id_Receta = create_fprm.id_Receta.data
         nombre = create_fprm.nombre.data
         cantidad= create_fprm.cantidad.data
@@ -73,11 +69,11 @@ def modificar():
         json_string = json.dumps(arr_receta)
         valores = quitar_titulo(json_string)
         lista_de_listas = list(valores)
-        lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
-        txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-        modificar_receta(id_Receta,nombre,cantidad, precio, foto,txt)
+        lista_de_listas_parse = [[int(item[0]), int(item[2])] for item in valores]
+        lista_de_listas_parse_string = str(lista_de_listas_parse)
         nombres.clear()
-        return redirect(url_for('recetasModificar.indexMain'))
+        modificar_receta(id_Receta,nombre,cantidad, precio, foto, lista_de_listas_parse_string)
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaA,materiaPrima=mp)
 
 
@@ -87,17 +83,23 @@ def index():
     create_fprm=receta(request.form)
     r = obtener_recetas()
     mp = obtener_materia_prima()
+    id= session.get('mi_dato')
+    emp=obtener_receta_por_id(id)
+    create_fprm.id_Receta.data=id
+    create_fprm.nombre.data=emp[0][1]
+    create_fprm.cantidad.data=emp[0][2]
+    create_fprm.foto.data=emp[0][4]
+    create_fprm.precio.data=emp[0][3] 
     if request.method == 'POST':
-        materia_seleccionada = request.form['materia']
+        materia = (request.form.get('materia')).split(",")
+        print(materia)
+        id_materia_prima = materia[0]
+        materia_seleccionada = materia[1]
         cantidad_materia = request.form['cantidadMateria']
-        nombres = agregar_receta(materia_seleccionada, cantidad_materia)
-        print(nombres)
-        listaA=[]
+        nombres = agregar_receta(materia_seleccionada, cantidad_materia, id_materia_prima)
         for a in nombres:
             listaA.append(a)
         id= session.get('mi_dato')
-        print('------------------')
-        print(id)
         emp=obtener_receta_por_id(id)
         create_fprm.id_Receta.data=id
         create_fprm.nombre.data=emp[0][1]
@@ -106,37 +108,52 @@ def index():
         create_fprm.precio.data=emp[0][3] 
     else:
         r = obtener_recetas()
-        print(r)
     return render_template('recetasModificar.html', lista=listaA, form=create_fprm, receta=r, materiaPrima=mp)
+
+listaA=[]
 
 @recetasModificar.route('/removeM/<int:index>')
 def removeM(index):
-    create_form = receta()
+    create_fprm=receta(request.form)
     mp = obtener_materia_prima()
     r = obtener_recetas()
     nombres.pop(index)
-    listaA=[]
     for a in nombres:
         listaA.append(a)
-    return render_template('recetasModificar.html', lista=listaA, form=create_form, receta=r, materiaPrima=mp)
+    id= session.get('mi_dato')
+    emp=obtener_receta_por_id(id)
+    create_fprm.id_Receta.data=id
+    create_fprm.nombre.data=emp[0][1]
+    create_fprm.cantidad.data=emp[0][2]
+    create_fprm.foto.data=emp[0][4]
+    create_fprm.precio.data=emp[0][3]
+    return redirect(url_for('recetasModificar.index'))
 
 def transformar_datos(datos):
     resultado = []
     for i, item in enumerate(datos[0]):
-        nombre = str(item[0])
+        id = str(item[0])
+        nombre = str(item[1])
         cantidad = str(item[2])
-        resultado.append({'nombre': nombre, 'cantidad': cantidad})
+        resultado.append({'id': id,'nombre': nombre, 'cantidad': cantidad})
     return resultado
 
 
-def agregar_receta(materia_seleccionada, cantidad_materia):
+def agregar_receta(materia_seleccionada, cantidad_materia, id_materia_prima):
     for ingrediente in nombres:
-        if ingrediente['nombre'] == materia_seleccionada:
+        if ingrediente['nombre'] == materia_seleccionada and ingrediente['id'] == int(id_materia_prima):
             ingrediente['cantidad'] = str(int(ingrediente['cantidad']) + int(cantidad_materia))
             return nombres
-    nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad_materia})
+        
+    nombres.append({'id': int(id_materia_prima), 'nombre': materia_seleccionada, 'cantidad': cantidad_materia})
+    
+    # Sumar la cantidad de ingredientes con el mismo ID
+    for i in range(len(nombres)):
+        if nombres[i]['id'] == int(id_materia_prima) and nombres[i]['nombre'] != materia_seleccionada:
+            nombres[i]['cantidad'] = str(int(nombres[i]['cantidad']) + int(cantidad_materia))
+            return nombres
+    
     return nombres
-
 
 def quitar_titulo(json_string):
     # Cargar la cadena JSON como un objeto Python

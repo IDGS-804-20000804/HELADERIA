@@ -4,9 +4,13 @@ from controllers.controllerEmpleado import obtener_empleados
 from controllers.compra.compra_Controllers import obtener_compras, insertar_compra
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, insertar_provedor
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
+from flask_login import login_required, current_user, UserMixin
 import json
-
-
+import ast
+from db.db import get_connection 
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 
 compras = Blueprint('compras', __name__)
 
@@ -16,12 +20,16 @@ def compraM():
      create_form = compra(request.form)
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
-     print(empleado)
-     return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp)
+     user_id = current_user.id_usuario
+     db = get_connection()
+     datos = ModeloLogin.get_by_id(db, user_id)
+     list = ast.literal_eval(datos.roles)
+     return render_template('compras.html',form=create_form, provedor=provedor, empleado=empleado,compras=emp, roles=list)
 
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
+@login_required
 def compraGuardar():
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
@@ -30,13 +38,11 @@ def compraGuardar():
         provedor=obtener_proveedor()
         empleado=obtener_empleados()
         materiaPrima=obtener_materia_prima()
-        empleados = request.form['empleado']
-        provedores = request.form['provedor']
+        empleados = request.form.get('empleado', None)
+        provedores = request.form.get('provedor', None)
         arr_receta=nombres
         arr=guardar_en_arreglo(arr_receta)
         arreglo=quitar_prefijo(arr)
-        print('ESTO SE RECIBE SIN TEXTO')
-        print(arreglo)
         a=convertir_lista(arreglo)
         txtJ=convertir_a_json(a)
         insertar_compra(txtJ,provedores, empleados)
@@ -47,27 +53,25 @@ def convertir_lista(cadenas):
     lista_resultado = []
     for cadena in cadenas:
         # Eliminar corchetes y comillas sobrantes
-        cadena_limpia = cadena.replace("[", "").replace("]", "").replace("'", "")
-        # Dividir cadena en campos
+        cadena_limpia = cadena.replace("[", "").replace("]", "").replace("'", "").replace(")", "").replace("(", "")
         campos = cadena_limpia.split(", ")
         # Convertir campos a los tipos de datos correctos
-        id_producto = int(campos[0])
-        precio = float(campos[1])
-        cantidad = float(campos[2])
-        fecha = campos[3].replace("(", "").replace(")", "")  # Eliminar paréntesis de la fecha
+        id_producto = int(campos[1])
+        cantidad = float(campos[2]) 
+        precio = float(campos[3])
+        fecha = campos[4].replace("(", "").replace(")", "")  # Eliminar paréntesis de la fecha
         # Crear lista con los valores convertidos
-        lista_producto = [cantidad, fecha, id_producto, precio]
-        lista_producto = [int(round(cantidad * 100)), fecha, id_producto, round(precio, 2)]
+        lista_producto = [int(round(cantidad)),fecha ,id_producto , round(precio, 2)]
         lista_resultado.append(lista_producto)
     return lista_resultado
 
 def convertir_a_json(lista):
     nueva_lista = []
     for l in lista:
-        cantidad = int(round(l[0] / 5))
+        cantidad = l[0]
         fecha = l[1]
         id_producto = l[2]
-        precio = round(l[3] * 0.2, 2)
+        precio = l[3]
         nueva_lista.append([cantidad, fecha, id_producto, precio])
     json_data = json.dumps(nueva_lista)
     return json_data
@@ -111,6 +115,7 @@ def convertir_a_enteros(lista):
 
 nombres = []
 @compras.route('/comprasGuardar', methods=['GET', 'POST'])
+@login_required
 def index():
     create_form = compra(request.form)
     provedor = obtener_proveedor()
@@ -118,31 +123,37 @@ def index():
     materiaPrima = obtener_materia_prima()
     
     if request.method == 'POST':
-        materia = request.form.get('materia')
+        materia = (request.form.get('materia')).split(",")
+        id_materia = materia[0]
+        nombre_materia = materia[1]
         cantidadMateria = float(request.form.get('cantidad', 0))
         precio = float(request.form.get('precio', 0))
         fechaCaducidad = request.form.get('fechaCaducidad')
 
         for item in nombres:
-            if item['nombre'] == materia:
+            if item['nombre'] == nombre_materia:
+                item['nombre'] += nombre_materia
+                item['id_materia'] += id_materia
                 item['cantidad'] += cantidadMateria
                 item['precio'] += precio
                 break
         else:
-            nombres.append({'nombre': materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
+            nombres.append({'nombre': nombre_materia, 'id_materia': id_materia, 'cantidad': cantidadMateria, 'precio': precio, 'fechaCaducidad': fechaCaducidad})
 
     create_form = compra()
     return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
 
 @compras.route('/removeC/<int:index>')
+@login_required
 def removeC(index):
     create_form = compra()
     provedor=obtener_proveedor()
     empleado=obtener_empleados()
     materiaPrima=obtener_materia_prima()
     nombres.pop(index)
-    return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
+    return redirect(url_for('compras.index'))
+    # return render_template('comprasGuadar.html', nombres=nombres,form=create_form, provedor=provedor, empleado=empleado,materiaPrima=materiaPrima)
 
 
 # @empleados.route('/empleados',method=["POST"])

@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required
 # import models.materiaPrima.materiaPrima_Forms as forms
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 from db.db import get_connection
 from flask_wtf.csrf import CSRFProtect
 from models.materiaPrima.materiaPrima_Forms import MateriaPrima
@@ -30,8 +32,11 @@ def materiaP():
      else:
         create_form = MateriaPrima()
         mp = obtener_materia_prima()
-        print(mp)
-        return render_template('materiaPrima.html', form=create_form, materiaPrima=mp)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles)
+        return render_template('materiaPrima.html', form=create_form, materiaPrima=mp, roles=list)
 
 @materiaPrima.route("/materiaPrimaModificar",methods=['GET','POST'])
 def modificar():

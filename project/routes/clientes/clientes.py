@@ -5,7 +5,9 @@ from models.clientes.clientes import Clientes
 from db.db import get_connection 
 from markupsafe import Markup
 from flask_login import login_required
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 clientes = Blueprint('clientes', __name__)
 
 
@@ -36,10 +38,14 @@ def cliente():
      else:
         create_form = Clientes()
         emp = obtener_clientes()
-        print(emp)
-        return render_template('clientes.html',form=create_form, clientes=emp)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles)
+        return render_template('clientes.html',form=create_form, clientes=emp, roles=list)
      
 @clientes.route('/insertar_cliente', methods=["POST"])
+@login_required
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
@@ -95,6 +101,7 @@ def realizar_insercion():
 #       return render_template('clientesModificar.html', form= create_fprm,clientes=emp)
 #    return render_template('clientesModificar.html', form= create_fprm, clientes=emp)
 @clientes.route("/clientesModificar",methods=['GET','POST'])
+@login_required
 def modificar():
    create_fprm=Clientes(request.form)
    if request.method=='GET':
@@ -115,7 +122,6 @@ def modificar():
       create_fprm.correo.data=emp[0][10]   
       create_fprm.contrasenia.data=emp[0][11]          
       emp = obtener_clientes()
-      print(emp)
    if request.method=='POST':
         id_Persona=create_fprm.id_persona.data
         id_Usuario=create_fprm.id_usuario.data
@@ -147,6 +153,7 @@ def modificar():
 
 
 @clientes.route('/clientesEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_cliente():
     create_fprm = Clientes(request.form)
     emp = obtener_clientes()

@@ -5,18 +5,15 @@
 <div class="page-content p-5" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
             class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">M&oacute;dulos</small></button>
-    <!-- {% if (1 in roles) or (3 in roles) or (4 in roles) or (6 in roles) or (7 in roles) %} -->
     
-    <!-- {% endif %} -->
+    {% if (1 in roles) or (3 in roles) or (4 in roles) or (6 in roles) or (7 in roles) %}
+    <a href="stock" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end"
+        style="background-color:#CA9F8B"><strong>Agregar stock</strong></a>
+    {% endif %}
     <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#3D7692"
-        data-bs-toggle="modal" data-bs-target="#detalleEmpleado"><strong><i class="fa fa-shopping-cart"
-                aria-hidden="true" style="color: #FFFFFF;"></i></strong></button>
-        <button type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end" style="background-color:#CA9F8B"
-            data-bs-toggle="modal" data-bs-target="#alertaCompra"><strong>Metodo de Pago</strong></button>
-            <a href="stock" type="button" class="btn rounded-pill shadow-sm px-4 mb-4 float-end"
-        style="background-color:#CA9F8B"><strong>Agregar Producto</strong></a>
+    data-bs-toggle="modal" data-bs-target="#detalleCompra"><strong><i class="fa fa-shopping-cart"
+            aria-hidden="true" style="color: #FFFFFF;"></i></strong></button>
     </li>
-
     <div id="divCatalogoEmpleado" class="col-12">
         <div class="card">
             <div class="card-header text-center bg-light">
@@ -41,7 +38,7 @@
                                         <h5 class="item-price">{{stock[4]}} MXM</h5>
                                         <div style="text-align: center; ">
                                             <button class="item-button btn btn-outline-success addToCart"
-                                                data-bs-toggle="modal" data-bs-target="#detalleEmpleado"
+                                                data-bs-toggle="modal" data-bs-target="#detalleCompra"
                                                 style="border-radius: 15px;"><i
                                                     class="fas fa-cart-plus"></i>Agregar</button><br>
                                         </div><br>
@@ -59,7 +56,7 @@
     </div>
     <div class="container">
         <br>
-        <div class="modal fade" id="detalleEmpleado" tabindex="-1" aria-labelledby="detalleEmpleado" aria-hidden="true">
+        <div class="modal fade" id="detalleCompra" tabindex="-1" aria-labelledby="detalleCompra" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
@@ -109,45 +106,25 @@
                                                         <p class="ml-4 mb-0 shoppingCartTotal" id="precio"
                                                             name="precio">0MXM</p>
                                                         <input type="hidden" name="total_venta" id="total_venta"
-                                                            value=0>
-                                                        <button class="btn btn-outline-success ml-auto comprarButton"
-                                                            type="submit">Comprar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- END TOTAL -->
-
-                                            <!-- START MODAL COMPRA -->
-                                            <div class="modal fade" id="comprarModal" tabindex="-1"
-                                                aria-labelledby="comprarModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="comprarModalLabel">Gracias por
-                                                                su
-                                                                compra</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
+                                                            value=0>&nbsp;&nbsp;&nbsp;
+                                                        <div class="pt-3 pb-3 text-center">
+                                                            <button class="btn btn-outline-success ml-auto comprarButton"
+                                                                data-bs-dismiss="modal" aria-label="Close"    
+                                                                data-bs-toggle="modal" data-bs-target="#alertaCompra" onclick="ocultarCompra()">
+                                                                <strong>Metodo de pago</strong></button>
+                                                            <button type="submit" class="btn btn-outline-success ml-auto comprarButton"  
+                                                                id="btn-cerrar" disabled>
+                                                                <strong><i class="fas fa-save"></i>&nbsp;&nbsp;Comprar</strong>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <p>Pronto recibirá su pedido</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Cerrar</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- END MODAL COMPRA -->
+                                            <!-- END TOTAL -->
                                         </div>
                                     </form>
                                 </section>
                                 <!-- END SECTION SHOPPING CART -->
-
                                 <br>
                             </div>
                         </div>
@@ -163,49 +140,53 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #3D7692; text-align: center">
-                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Detalle de
-                                Compra</b></span>
+                        <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Metodo de Pago</b></span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         {% if form.errors %}
-                        <ul>
-                            {% for error in form.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
+                            <ul>
+                                {% for field, errors in form.errors.items() %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
                         {% endif %}
-                        <form method="POST" action="ventaCompra">
+                        <form method="POST" action="ventas">
                             <div class="row">
+                                <div class="col-12"></div>
                                 <div class="col-12">
-                                    {{render_firld(form.card_name,class='form-control')}}
+                                    {{ render_firld(form.card_name, class='form-control', id='card-name') }}
+                                </div>
+                                
+                                <div class="col-12"><br></div>
+                                <div class="col-12">
+                                    {{ render_firld(form.card_number, class='form-control', id='card-number') }}
                                 </div>
 
-                                <div class="col-6">
-                                    {{render_firld(form.card_number,class='form-control')}}
-                                </div>
-
-                                <div class="col-6">
-                                    {{render_firld(form.card_number,class='form-control')}}
+                                <div class="col-12"><br></div>
+                                <div class="col-4">
+                                    {{ render_firld(form.card_exp_month, class='form-control', id='card-exp-month') }}
                                 </div>
 
                                 <div class="col-4">
-                                    {{render_firld(form.card_exp_month,class='form-control')}}
+                                    {{ render_firld(form.card_exp_year, class='form-control', id='card-exp-year') }}
                                 </div>
 
                                 <div class="col-4">
-                                    {{render_firld(form.card_exp_year,class='form-control')}}
+                                    {{ render_firld(form.card_cvv, class='form-control', id='card-cvv') }}
                                 </div>
-
-                                <div class="col-4">
-                                    {{render_firld(form.card_cvv,class='form-control')}}
-                                </div>
-                                <div class="pt-3 pb-3 text-center">
-                                    <button class="btn btn-outline-success mx-2">
-                                        <i class="fas fa-save"></i>&nbsp;&nbsp;Comprar</button>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                                
+                                <div type="button" class="pt-3 pb-3 text-center">
+                                    <button class="btn btn-outline-success comprarButton" data-bs-dismiss="modal" aria-label="Close"    
+                                        data-bs-toggle="modal" data-bs-target="#detalleCompra" onclick="mostrarCompra()" 
+                                        id="btn-comprar" disabled>
+                                        <strong><i class="fas fa-save"></i>&nbsp;&nbsp;Comprar</strong>
+                                    </button>       
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>

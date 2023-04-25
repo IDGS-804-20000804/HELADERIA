@@ -34,7 +34,7 @@ login_manager_app=LoginManager(app)
 
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'DDBHF17I3I2OREBF'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345678@127.0.0.1/gelatos'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345678@127.0.0.1:3306/gelatos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECURITY_ROLES_ACCEPTED'] = ['Administrador','Cliente','Vendedor','Repartidor','Comprador','Gerente','Productor']
 
@@ -96,10 +96,10 @@ def logout():
     return redirect('/')
 
 def status_401(error):
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 def status_404(error):
-    return "<h1> Pagina no Encontrada<h1>",404
+    return render_template('404.html'),404
 
 @login_manager_app.user_loader
 def load_user(id_usuario):
