@@ -106,17 +106,15 @@
                                                         <p class="ml-4 mb-0 shoppingCartTotal" id="precio"
                                                             name="precio">0MXM</p>
                                                         <input type="hidden" name="total_venta" id="total_venta"
-                                                            value=0>
-                                                        <div type="submit" class="pt-3 pb-3 text-center">
+                                                            value=0>&nbsp;&nbsp;&nbsp;
+                                                        <div class="pt-3 pb-3 text-center">
                                                             <button class="btn btn-outline-success ml-auto comprarButton"
                                                                 data-bs-dismiss="modal" aria-label="Close"    
                                                                 data-bs-toggle="modal" data-bs-target="#alertaCompra" onclick="ocultarCompra()">
                                                                 <strong>Metodo de pago</strong></button>
-                                                            <button class="btn btn-outline-success ml-auto comprarButton" 
-                                                                data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" 
-                                                                data-bs-target="#mensajeCompra" onclick="ocultarMetodoPago()" 
+                                                            <button type="submit" class="btn btn-outline-success ml-auto comprarButton"  
                                                                 id="btn-cerrar" disabled>
-                                                                <strong><i class="fas fa-save"></i>&nbsp;&nbsp;Cerrar</strong>
+                                                                <strong><i class="fas fa-save"></i>&nbsp;&nbsp;Comprar</strong>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -135,27 +133,6 @@
             </div>
         </div>
     </div>
-
-    <!-- START MODAL COMPRA -->
-    <div class="modal fade" id="mensajeCompra" tabindex="-1" aria-labelledby="mensajeCompra" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background: #3D7692; text-align: center">
-                    <span class="h5 text-black " style="font-variant: small-caps; font-size: 20px; "><b>Gracias por su compra</b></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-outline-success ml-auto comprarButton"
-                            data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END MODAL COMPRA -->
 
     <div class="container">
         <br>

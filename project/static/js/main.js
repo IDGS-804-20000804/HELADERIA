@@ -92,8 +92,8 @@ const cardName = document.getElementById('card-name');
 
     function validarFormulario() {
         if (cardName.value.length >= 3 && cardName.value.length <= 30 && 
-            cardNumber.value.length <= 16 && 
-            cardExpMonth.value >= 1 && cardExpMonth.value <= 12 &&
+            cardNumber.value.length === 16 && 
+            cardExpMonth.value >= 4 && cardExpMonth.value <= 12 &&
             cardExpYear.value.length === 4 && cardExpYear.value >= 2023 &&
             cardCvv.value.length === 3 &&
             cardName.value !== '' && cardNumber.value !== '' && cardExpMonth.value !== '' &&
