@@ -29,6 +29,7 @@ def indexMain():
 lista=[]
 nombres=[]
 listaArreglo=[]
+listaA=[]
 
 @recetasModificar.route("/recetasModificar",methods=['GET','POST'])
 @login_required
@@ -38,9 +39,6 @@ def modificar():
     mp = obtener_materia_prima()
     recetaL=obtener_recetas()
     if request.method=='GET':
-        # lista.clear()
-        # listaArreglo.clear()
-        # lista.clear()
         id=request.args.get('id')
         session['mi_dato'] = id
         emp=obtener_receta_por_id(id)
@@ -50,6 +48,11 @@ def modificar():
         create_fprm.foto.data=emp[0][4]
         create_fprm.precio.data=emp[0][3] 
         texto = emp[0][5]
+        print('------------------------------------HOLA -----------------')
+        print(texto)
+        lista.clear()
+        listaArreglo.clear()
+        
         listaM = eval(texto)
         lista.append(listaM)
         for elemento in lista:
@@ -81,15 +84,15 @@ def modificar():
 @recetasModificar.route('/recetasAgregar', methods=['GET', 'POST'])
 def index():
     create_fprm=receta(request.form)
-    r = obtener_recetas()
     mp = obtener_materia_prima()
-    id= session.get('mi_dato')
-    emp=obtener_receta_por_id(id)
-    create_fprm.id_Receta.data=id
-    create_fprm.nombre.data=emp[0][1]
-    create_fprm.cantidad.data=emp[0][2]
-    create_fprm.foto.data=emp[0][4]
-    create_fprm.precio.data=emp[0][3] 
+    if request.method == 'GET':
+        id= session.get('mi_dato')
+        emp=obtener_receta_por_id(id)
+        create_fprm.id_Receta.data=id
+        create_fprm.nombre.data=emp[0][1]
+        create_fprm.cantidad.data=emp[0][2]
+        create_fprm.foto.data=emp[0][4]
+        create_fprm.precio.data=emp[0][3] 
     if request.method == 'POST':
         materia = (request.form.get('materia')).split(",")
         print(materia)
@@ -97,6 +100,7 @@ def index():
         materia_seleccionada = materia[1]
         cantidad_materia = request.form['cantidadMateria']
         nombres = agregar_receta(materia_seleccionada, cantidad_materia, id_materia_prima)
+        listaA.clear()
         for a in nombres:
             listaA.append(a)
         id= session.get('mi_dato')
@@ -106,11 +110,11 @@ def index():
         create_fprm.cantidad.data=emp[0][2]
         create_fprm.foto.data=emp[0][4]
         create_fprm.precio.data=emp[0][3] 
-    else:
-        r = obtener_recetas()
+    
+    r = obtener_recetas()
     return render_template('recetasModificar.html', lista=listaA, form=create_fprm, receta=r, materiaPrima=mp)
 
-listaA=[]
+
 
 @recetasModificar.route('/removeM/<int:index>')
 def removeM(index):
@@ -118,15 +122,10 @@ def removeM(index):
     mp = obtener_materia_prima()
     r = obtener_recetas()
     nombres.pop(index)
+    listaA.clear()
     for a in nombres:
         listaA.append(a)
-    id= session.get('mi_dato')
-    emp=obtener_receta_por_id(id)
-    create_fprm.id_Receta.data=id
-    create_fprm.nombre.data=emp[0][1]
-    create_fprm.cantidad.data=emp[0][2]
-    create_fprm.foto.data=emp[0][4]
-    create_fprm.precio.data=emp[0][3]
+    
     return redirect(url_for('recetasModificar.index'))
 
 def transformar_datos(datos):

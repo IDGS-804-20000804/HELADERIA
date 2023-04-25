@@ -35,8 +35,10 @@ def realizar_insercion():
     caducidad = request.form['caducidad']
     precio = request.form['precio']
     fc=caducidad+" 00:00:00"
-    
     # Lógica para insertar empleado en la base de datos
+    print(fc)
+    print(precio)
+    print(stock)
     insertar_stock( fc,precio,stock )
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect(url_for('ventas.ventas'))
