@@ -7,6 +7,10 @@ import json
 from flask import jsonify
 # from flask_login import login_required
 from flask_security import roles_required, login_required
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
+from db.db import get_connection 
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
@@ -43,8 +47,11 @@ def empleado():
     else:
         create_form = Empleados()
         emp = obtener_empleados()
-     
-        return render_template('empleados.html', form=create_form, empleados=emp)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles) 
+        return render_template('empleados.html', form=create_form, empleados=emp, roles=list)
 
 
 
@@ -73,11 +80,9 @@ def realizar_insercion():
     roles=list()
     roles=[rol1,rol2,rol3,rol4,rol5,rol6,rol7]
     arreglo=[elemento for elemento in roles if elemento is not None]
-    print(arreglo)
     rol = []
     for cadena in arreglo:
         rol.append(int(cadena))
-    print(rol)
     json_string = json.dumps(rol)
     id_Empleado=''
     id_Usuario=''
@@ -124,7 +129,6 @@ def modificar():
             create_fprm.cbox6.data = True
         elif valor == 7:
             create_fprm.cbox7.data = True
-      print(rol)    
       emp = obtener_empleados()
    if request.method=='POST':
         id_Persona=create_fprm.id_persona.data
@@ -164,12 +168,10 @@ def modificar():
             seleccionados.append('6')
         if create_fprm.cbox7.data:
             seleccionados.append('7')
-        print(seleccionados)
         
         rol = []
         for cadena in seleccionados:
             rol.append(int(cadena))
-        print(rol)
         json_string = json.dumps(rol)
         # print(rol2)
         # datos_json = json.dumps(rol2)  # convierte la lista rol2 en una cadena JSON

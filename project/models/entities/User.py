@@ -24,6 +24,3 @@ class UserDatos(UserMixin):
         self.contrasenia = contrasenia
         self.estatus=estatus
         self.roles=roles
-
-  
-print(generate_password_hash("123"))

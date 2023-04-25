@@ -5,7 +5,9 @@ import datetime
 from models.stock.stock_Forms import Stock
 import json
 import ast
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 stock = Blueprint('stock', __name__)
 
 
@@ -14,7 +16,11 @@ def stockProducto():
     if request.method == 'GET':
         create_form = Stock()
         emp = obtener_stock()
-    return render_template('stock.html',form=create_form,receta=emp)
+    user_id = current_user.id_usuario
+    db = get_connection()
+    datos = ModeloLogin.get_by_id(db, user_id)
+    list = ast.literal_eval(datos.roles)
+    return render_template('stock.html',form=create_form,receta=emp, roles=list)
 
 
 def quitar_parentesis(tupla):
@@ -29,7 +35,6 @@ def realizar_insercion():
     caducidad = request.form['caducidad']
     precio = request.form['precio']
     fc=caducidad+" 00:00:00"
-    print(fc)
     
     # Lógica para insertar empleado en la base de datos
     insertar_stock( fc,precio,stock )
