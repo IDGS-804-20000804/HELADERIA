@@ -25,6 +25,7 @@ def provedores():
         return render_template('provedor.html', form=create_form, proveedor=pro)
      
 @provedor.route("/provedorModificar",methods=['GET','POST'])
+@login_required
 def modificar():
    create_fprm=Proveedor(request.form)
    if request.method=='GET':
@@ -62,6 +63,7 @@ def modificar():
    return render_template('provedorModificar.html', form= create_fprm, proveedor=emp)
 
 @provedor.route('/insertar_provedor', methods=["POST"])
+@login_required
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
@@ -82,6 +84,7 @@ def realizar_insercion():
     return redirect(url_for('provedor.provedores'))
 
 @provedor.route('/proveedorEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_provedor():
     create_fprm = Proveedor(request.form)
     emp = obtener_proveedor()

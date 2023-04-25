@@ -4,6 +4,7 @@ from controllers.controllerEmpleado import obtener_empleados
 from controllers.compra.compra_Controllers import obtener_compras, insertar_compra
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, insertar_provedor
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
+from flask_login import login_required, current_user, UserMixin
 import json
 import ast
 
@@ -21,6 +22,7 @@ def compraM():
 
 
 @compras.route('/insertar_compra', methods=['GET', 'POST'])
+@login_required
 def compraGuardar():
      provedor=obtener_proveedor()
      empleado=obtener_empleados()
@@ -106,6 +108,7 @@ def convertir_a_enteros(lista):
 
 nombres = []
 @compras.route('/comprasGuardar', methods=['GET', 'POST'])
+@login_required
 def index():
     create_form = compra(request.form)
     provedor = obtener_proveedor()
@@ -135,6 +138,7 @@ def index():
 
 
 @compras.route('/removeC/<int:index>')
+@login_required
 def removeC(index):
     create_form = compra()
     provedor=obtener_proveedor()
