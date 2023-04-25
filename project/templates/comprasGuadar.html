@@ -25,14 +25,14 @@
                         
                         <div class="col-6">
                             <section>
-                                <form method="POST">
+                                <form method="POST" action="comprasGuardar">
                                     <div class="row">
                                         <div class="col-12">
                                             <label for="txtNombre" class="form-label">Materia Prima</label>
                                             <!-- <input id="txtNombre" type="text" class="form-control" /><br>  -->
                                             <select name="materia" id="materia" class="form-control">
                                                 {% for mt in materiaPrima %}
-                                                <option value="{{mt[0]}}">{{mt[1]}}</option>
+                                                <option value="{{mt[0]}},{{mt[1]}}">{{mt[1]}}</option>
                                                 {% endfor %}
                                             </select><br>
                                         </div>
@@ -113,10 +113,10 @@
                                     {% for index, persona in enumerate(nombres) %}
                                     <tr>
                                         <td style=" text-align: center;" class="col-1">{{ index + 1 }}</td>
-                                        <td style=" text-align: center;" class="col-6">{{ persona['nombre'] }}</td>
-                                        <td style=" text-align: center;" class="col-2">{{ persona['cantidad'] }}</td>
-                                        <td style=" text-align: center;" class="col-2">{{ persona['precio'] }}</td>
-                                        <td style=" text-align: center;" class="col-6">{{ persona['fechaCaducidad'] }}</td>
+                                        <td style=" text-align: center;" class="col-6">{{ persona.nombre }}</td>
+                                        <td style=" text-align: center;" class="col-2">{{ persona.cantidad }}</td>
+                                        <td style=" text-align: center;" class="col-2">{{ persona.precio }}</td>
+                                        <td style=" text-align: center;" class="col-6">{{ persona.fechaCaducidad }}</td>
                                         <td><a href="/removeC/{{ index }}" class="btn btn-outline-danger">Eliminar</a></td>
                                     </tr>
                                     {% endfor %}

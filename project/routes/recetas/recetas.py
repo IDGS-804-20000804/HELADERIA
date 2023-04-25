@@ -32,68 +32,86 @@ recetas = Blueprint('recetas', __name__ )
 #         return render_template('recetas.html', form=create_form, receta=r, materiaPrima=mp, foto=foto, datosMateria=datosMateria)
 lista=[]
 listaArreglo=[]
-@recetas.route("/recetasModificar",methods=['GET','POST'])
+# @recetas.route("/recetasModificar",methods=['GET','POST'])
+# @login_required
+# def modificar():
+#     create_fprm=receta(request.form)
+#     listaM = []  # Inicializar la variable listaM
+#     mp = obtener_materia_prima()
+#     recetaL=obtener_recetas()
+#     if request.method=='GET':
+#         # lista.clear()
+#         # listaArreglo.clear()
+#         # lista.clear()
+#         id=request.args.get('id')
+#         emp=obtener_receta_por_id(id)
+#         create_fprm.id_Receta.data=request.args.get('id')
+#         create_fprm.nombre.data=emp[0][1]
+#         create_fprm.cantidad.data=emp[0][2]
+#         create_fprm.foto.data=emp[0][4]
+#         create_fprm.precio.data=emp[0][3] 
+#         texto = emp[0][5]
+#         listaM = eval(texto)
+#         lista.append(listaM)
+#         for elemento in lista:
+#             listaArreglo.append(elemento)
+#         print("Este es el arreglo")
+#         print(listaArreglo)
+#         listaA=transformar_datos(listaArreglo)
+#         for a in listaA:
+#             nombres.append(a)
+#         print('hOLA')
+#         print(listaA)
+#     if request.method=='POST':
+#         id_Receta = create_fprm.id_Receta.data
+#         nombre = create_fprm.nombre.data
+#         cantidad= create_fprm.cantidad.data
+#         precio= create_fprm.precio.data
+#         foto='uploads/3'
+#         arr_receta=nombres
+#         json_string = json.dumps(arr_receta)
+#         valores = quitar_titulo(json_string)
+#         lista_de_listas = list(valores)
+#         lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
+#         txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
+#         modificar_receta(id_Receta,nombre,cantidad, precio, foto,txt)
+#         nombres.clear()
+#         return redirect(url_for('recetasModificar.indexMain'))
+#     return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaA,materiaPrima=mp)
+
+# def transformar_datos(datos):
+#     resultado = []
+#     for i, item in enumerate(datos[0]):
+#         nombre = str(i+1)
+#         cantidad = str(item[0])
+#         resultado.append({'nombre': nombre, 'cantidad': cantidad})
+#     return resultado
+
+@recetas.route('/recetasModificar', methods=['GET', 'POST'])
 @login_required
-def modificar():
-    create_fprm=receta(request.form)
-    listaM = []  # Inicializar la variable listaM
+def indexMainModificar():
+    modificar()
+    create_form = receta()
+    r = obtener_recetas()
     mp = obtener_materia_prima()
-    
-    if request.method=='GET':
-        lista.clear()
-        id=request.args.get('id')
-        emp=obtener_receta_por_id(id)
-        create_fprm.id_Receta.data=request.args.get('id')
-        create_fprm.nombre.data=emp[0][1]
-        create_fprm.cantidad.data=emp[0][2]
-        create_fprm.foto.data=emp[0][4]
-        create_fprm.precio.data=emp[0][3] 
-        texto = emp[0][5]
-        listaM = eval(texto)
-        lista.append(listaM)
-        for elemento in lista:
-            listaArreglo.append(elemento)
-        print("Este es el arreglo")
-        print(listaArreglo)
-        emp = obtener_recetas()
-        print(emp)
-        print(lista)
-    if request.method=='POST':
-        id_Receta = create_fprm.id_Receta.data
-        nombre = create_fprm.nombre.data
-        cantidad= create_fprm.cantidad.data
-        precio= create_fprm.precio.data
-        file     = request.files['foto'] #recibiendo el archivo
-        NuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
-        lista_sin_string = [[sublista[i] for i in range(len(sublista)) if not isinstance(sublista[i], str)] for sublista in listaArreglo[0]]
-        modificar_receta(id_Receta,nombre,cantidad, precio, foto,lista_sin_string)
-        return redirect(url_for('recetas.indexMain'))
-    return render_template('recetasModificar.html', form= create_fprm, receta=emp, lista=listaArreglo,materiaPrima=mp)
+    if request.method == 'POST':
+        materia_seleccionada = request.form['materia']
+        cantidad = create_form.cantidadMateria.data
+        lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
+    else:
+         create_form = receta()
+         r = obtener_recetas()
+         print(r)
+    return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
-# @recetas.route('/recetasModificar', methods=['GET', 'POST'])
-# def indexMainModificar():
-#     modificar()
-#     create_form = receta()
-#     r = obtener_recetas()
-#     mp = obtener_materia_prima()
-#     if request.method == 'POST':
-#         materia_seleccionada = request.form['materia']
-#         cantidad = create_form.cantidadMateria.data
-#         lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
-#     else:
-#          create_form = receta()
-#          r = obtener_recetas()
-#          print(r)
-#     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
-
-# @recetas.route('/removeM/<int:index>')
-# def removeM(index):
-#     create_form = receta()
-#     mp = obtener_materia_prima()
-#     r = obtener_recetas()
-#     listaArreglo.pop(index)
-#     return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
-
+@recetas.route('/removeM/<int:index>')
+@login_required
+def removeM(index):
+    create_form = receta()
+    mp = obtener_materia_prima()
+    r = obtener_recetas()
+    listaArreglo.pop(index)
+    return render_template('recetasModificar.html', nombres=nombres, form=create_form, receta=r, materiaPrima=mp)
 
 
 @recetas.route('/recetas', methods=['GET', 'POST'])
@@ -114,33 +132,35 @@ def indexMain():
 nombres = []
 
 @recetas.route('/recetasGuardar', methods=['GET', 'POST'])
+@login_required
 def index():
     create_form = receta()
     r = obtener_recetas()
     mp = obtener_materia_prima()
-    nombresT=[]
     if request.method == 'POST':
         materia_seleccionada = request.form['materia']
-        cantidad_materia = request.form['cantidadMateria']
-        nombresT = agregar_receta(materia_seleccionada, cantidad_materia)
+        cantidadMateria = request.form['cantidadMateria']
+        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
         print(nombres)
     else:
-        create_form = receta()
-        r = obtener_recetas()
-        print(r)
-    return render_template('recetasGuardar.html', nombres=nombresT, form=create_form, receta=r, materiaPrima=mp)
-
+         create_form = receta()
+         r = obtener_recetas()
+         print(r)
+    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
 @recetas.route('/remove/<int:index>')
+@login_required
 def remove(index):
     create_form = receta()
     mp = obtener_materia_prima()
     r = obtener_recetas()
+    print(nombres)
     nombres.pop(index)
     return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
-@recetas.route('/insertar_receta', methods=['GET', 'POST'])
+@recetas.route('/insertar_receta', methods=["POST"])
+@login_required
 def realizar_insercion():
 
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
@@ -149,12 +169,13 @@ def realizar_insercion():
     nombre = request.form['nombre']
     cantidad= request.form['cantidad']
     precio= request.form['precio']
-    file = request.files['foto'] #recibiendo el archivo
-    nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
+    # file = request.files['foto'] #recibiendo el archivo
+    # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
     arr_receta=nombres
     json_string = json.dumps(arr_receta)
     valores = quitar_titulo(json_string)
     lista_de_listas = list(valores)
+    ruta_imagen='uploads/1'
     lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
     print(nombre+','+cantidad+','+precio+','+ruta_imagen)
     print(lista_de_listas_enteros)
@@ -188,6 +209,7 @@ def convertir_a_enteros(lista):
 
 
 @recetas.route('/recetaEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_receta():
     create_fprm = receta(request.form)
     r = obtener_recetas()
@@ -204,17 +226,17 @@ def eliminar_receta():
 
 
 # Para Recibir la foto --------------------------------------------
-def recibeFoto(file):
-    print(file)
-    basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
-    filename = secure_filename(file.filename) #Nombre original del archivo
+# def recibeFoto(file):
+#     print(file)
+#     basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
+#     filename = secure_filename(file.filename) #Nombre original del archivo
 
-    #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
-    extension           = os.path.splitext(filename)[1]
-    nuevoNombreFile     = stringAleatorio() + extension
-    #print(nuevoNombreFile)
+#     #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
+#     extension           = os.path.splitext(filename)[1]
+#     nuevoNombreFile     = stringAleatorio() + extension
+#     #print(nuevoNombreFile)
         
-    upload_path = os.path.join(basepath, 'static', 'fotos', nuevoNombreFile)
-    file.save(upload_path)
+#     upload_path = os.path.join(basepath, 'static', 'fotos', nuevoNombreFile)
+#     file.save(upload_path)
 
-    return nuevoNombreFile
+#     return nuevoNombreFile

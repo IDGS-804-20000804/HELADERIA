@@ -19,7 +19,7 @@
                             <label for="txtNombre" class="form-label">Stock de recetas</label>
                             <select name="stock" id="stock" class="form-control">
                                 {% for mt in receta %}
-                                <option value="{{mt}}">{{mt}}</option>
+                                <option value="{{mt[0]}}">{{mt[1]}}</option>
                                 {% endfor %}
                             </select><br>
                     </div>
