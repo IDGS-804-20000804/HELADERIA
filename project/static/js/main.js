@@ -33,12 +33,15 @@ function inicializarModulo() {
       //Modales de Provedor
       $('#alertaEnvio').modal('show'); // abrir
       $('#alertaEnvio').modal({backdrop: 'static', keyboard: false})
-
       
 }
 
 function abrirModal(){
     $('#detalleReceta').modal('show');
+
+    //Modales de Ventas
+    $('#alertaCompra').modal('show'); // abrir
+    $('#alertaCompra').modal({backdrop: 'static', keyboard: false})
 }
 
 function clientes(){
@@ -57,6 +60,53 @@ alert(arr)
 sessionStorage.setItem('rol',arr)
 
 }
+
+function ocultarCompra(){
+    $('#detalleCompra').modal('hiden'); // cerrar
+    $('#alertaCompra').modal('show'); // abrir
+}
+
+function mostrarCompra(){
+    $('#alertaCompra').modal('hiden'); // cerrar
+    $('#detalleCompra').modal('show'); // abrir
+}
+
+function ocultarMetodoPago(){
+    $('#detalleCompra').modal('hiden'); // cerrar
+    $('#mensajeCompra').modal('show'); // abrir
+}
+
+const cardName = document.getElementById('card-name');
+    const cardNumber = document.getElementById('card-number');
+    const cardExpMonth = document.getElementById('card-exp-month');
+    const cardExpYear = document.getElementById('card-exp-year');
+    const cardCvv = document.getElementById('card-cvv');
+    const comprarBtn = document.getElementById('btn-comprar');
+    const cerrarBtn = document.getElementById('btn-cerrar');
+
+    cardName.addEventListener('change', validarFormulario);
+    cardNumber.addEventListener('change', validarFormulario);
+    cardExpMonth.addEventListener('change', validarFormulario);
+    cardExpYear.addEventListener('change', validarFormulario);
+    cardCvv.addEventListener('change', validarFormulario); 
+
+    function validarFormulario() {
+        if (cardName.value.length >= 3 && cardName.value.length <= 30 && 
+            cardNumber.value.length <= 16 && 
+            cardExpMonth.value >= 1 && cardExpMonth.value <= 12 &&
+            cardExpYear.value.length === 4 && cardExpYear.value >= 2023 &&
+            cardCvv.value.length === 3 &&
+            cardName.value !== '' && cardNumber.value !== '' && cardExpMonth.value !== '' &&
+            cardExpYear.value !== '' && cardCvv.value !== '') {
+            comprarBtn.removeAttribute('disabled');
+            cerrarBtn.removeAttribute('disabled');
+        } else {
+            comprarBtn.setAttribute('disabled', true);
+            cerrarBtn.setAttribute('disabled', true);
+        }
+    }
+    
+
 // function eliminarEmpleado(id) {
 //     var eliminarEmpleadoUrl = '{{ url_for(empleados.eliminar_empleado_ajax)}}';
 //         Swal.fire({
