@@ -108,9 +108,6 @@ def removeM(index):
     listaA=[]
     for a in nombres:
         listaA.append(a)
-    listaA=[]
-    for a in nombres:
-        listaA.append(a)
     id= session.get('mi_dato')
     print('------------------')
     print(id)
