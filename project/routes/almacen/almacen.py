@@ -13,7 +13,6 @@ almacen = Blueprint('almacen', __name__)
 def almacenP():
     
     emp = obtener_almacen()
-    print(emp)
     emp1=sumar_cantidades(emp)
     return render_template('almacen.html', almacen=emp1)
 

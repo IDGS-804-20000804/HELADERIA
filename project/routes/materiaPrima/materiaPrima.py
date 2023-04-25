@@ -30,7 +30,6 @@ def materiaP():
      else:
         create_form = MateriaPrima()
         mp = obtener_materia_prima()
-        print(mp)
         return render_template('materiaPrima.html', form=create_form, materiaPrima=mp)
 
 @materiaPrima.route("/materiaPrimaModificar",methods=['GET','POST'])

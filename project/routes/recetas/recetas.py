@@ -99,9 +99,8 @@ def indexMainModificar():
         cantidad = create_form.cantidadMateria.data
         lista.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
     else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
+        create_form = receta()
+        r = obtener_recetas()
     return render_template('recetasModificar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 @recetas.route('/removeM/<int:index>')
@@ -126,7 +125,6 @@ def indexMain():
     else:
          create_form = receta()
          r = obtener_recetas()
-         print(r)
     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 nombres = []
@@ -138,14 +136,14 @@ def index():
     r = obtener_recetas()
     mp = obtener_materia_prima()
     if request.method == 'POST':
-        materia_seleccionada = request.form['materia']
+        materia = (request.form.get('materia')).split(",")
+        id_materia_prima = materia[0]
+        materia_seleccionada = materia[1]
         cantidadMateria = request.form['cantidadMateria']
-        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidadMateria})
-        print(nombres)
+        nombres.append({'nombre': materia_seleccionada, 'id_materia_prima': id_materia_prima, 'cantidad': cantidadMateria})
     else:
-         create_form = receta()
-         r = obtener_recetas()
-         print(r)
+        create_form = receta()
+        r = obtener_recetas()
     return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
@@ -155,9 +153,8 @@ def remove(index):
     create_form = receta()
     mp = obtener_materia_prima()
     r = obtener_recetas()
-    print(nombres)
     nombres.pop(index)
-    return render_template('recetasGuardar.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+    return redirect(url_for('recetas.index'))
 
 @recetas.route('/insertar_receta', methods=["POST"])
 @login_required
@@ -169,20 +166,11 @@ def realizar_insercion():
     nombre = request.form['nombre']
     cantidad= request.form['cantidad']
     precio= request.form['precio']
-    # file = request.files['foto'] #recibiendo el archivo
-    # nuevoNombreFile = recibeFoto(file) #Llamado la funcion que procesa la imagen
     arr_receta=nombres
-    json_string = json.dumps(arr_receta)
-    valores = quitar_titulo(json_string)
-    lista_de_listas = list(valores)
+    arr_receta_parse = [[int(item['id_materia_prima']), int(item['cantidad'])] for item in arr_receta]
+    arr_receta_parse_string = str(arr_receta_parse)
     ruta_imagen='uploads/1'
-    lista_de_listas_enteros = convertir_a_enteros(lista_de_listas)
-    print(nombre+','+cantidad+','+precio+','+ruta_imagen)
-    print(lista_de_listas_enteros)
-    txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
-    # Lógica para insertar empleado en la base de datos
-    insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen,txt)
-    # De cualquier modo, y si todo fue bien, redireccionar
+    insertar_receta(nombre,int(cantidad), float(precio), ruta_imagen, arr_receta_parse_string)
     return render_template('recetas.html',form=create_form, receta=r)
 
 def quitar_titulo(json_string):
