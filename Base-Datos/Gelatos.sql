@@ -1,10 +1,10 @@
 DROP DATABASE IF EXISTS gelatos;
 CREATE DATABASE gelatos;
 USE gelatos;
-<<<<<<< HEAD
-=======
+<<<<<<<<< Temporary merge branch 1
+=========
 
->>>>>>> main
+>>>>>>>>> Temporary merge branch 2
 CREATE TABLE unidad_medida (
 	id_unidad_medida INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	descripcion VARCHAR(255) NOT NULL,

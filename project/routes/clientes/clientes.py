@@ -36,10 +36,10 @@ def cliente():
      else:
         create_form = Clientes()
         emp = obtener_clientes()
-        print(emp)
         return render_template('clientes.html',form=create_form, clientes=emp)
      
 @clientes.route('/insertar_cliente', methods=["POST"])
+@login_required
 def realizar_insercion():
     # Aquí puedes agregar la lógica para procesar los datos enviados en la solicitud POST
     nombre = request.form['nombre']
@@ -95,6 +95,7 @@ def realizar_insercion():
 #       return render_template('clientesModificar.html', form= create_fprm,clientes=emp)
 #    return render_template('clientesModificar.html', form= create_fprm, clientes=emp)
 @clientes.route("/clientesModificar",methods=['GET','POST'])
+@login_required
 def modificar():
    create_fprm=Clientes(request.form)
    if request.method=='GET':
@@ -147,6 +148,7 @@ def modificar():
 
 
 @clientes.route('/clientesEliminar', methods=['GET', 'POST'])
+@login_required
 def eliminar_cliente():
     create_fprm = Clientes(request.form)
     emp = obtener_clientes()

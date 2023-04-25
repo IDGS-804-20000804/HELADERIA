@@ -96,10 +96,10 @@ def logout():
     return redirect('/')
 
 def status_401(error):
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 def status_404(error):
-    return "<h1> Pagina no Encontrada<h1>",404
+    return render_template('404.html'),404
 
 @login_manager_app.user_loader
 def load_user(id_usuario):
