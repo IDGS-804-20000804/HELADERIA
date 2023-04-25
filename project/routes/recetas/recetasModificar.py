@@ -77,7 +77,7 @@ def modificar():
         txt = '[{}]'.format(', '.join('[{}]'.format(', '.join(map(str, sublst))) for sublst in lista_de_listas_enteros))
         modificar_receta(id_Receta,nombre,cantidad, precio, foto,txt)
         nombres.clear()
-        return redirect(url_for('recetasModificar.indexMain'))
+        return redirect(url_for('recetas.indexMain'))
     return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaA,materiaPrima=mp)
 
 
@@ -111,14 +111,26 @@ def index():
 
 @recetasModificar.route('/removeM/<int:index>')
 def removeM(index):
-    create_form = receta()
+    create_fprm=receta(request.form)
     mp = obtener_materia_prima()
     r = obtener_recetas()
     nombres.pop(index)
     listaA=[]
     for a in nombres:
         listaA.append(a)
-    return render_template('recetasModificar.html', lista=listaA, form=create_form, receta=r, materiaPrima=mp)
+    listaA=[]
+    for a in nombres:
+        listaA.append(a)
+    id= session.get('mi_dato')
+    print('------------------')
+    print(id)
+    emp=obtener_receta_por_id(id)
+    create_fprm.id_Receta.data=id
+    create_fprm.nombre.data=emp[0][1]
+    create_fprm.cantidad.data=emp[0][2]
+    create_fprm.foto.data=emp[0][4]
+    create_fprm.precio.data=emp[0][3] 
+    return render_template('recetasModificar.html', lista=listaA, form=create_fprm, receta=r, materiaPrima=mp)
 
 def transformar_datos(datos):
     resultado = []
