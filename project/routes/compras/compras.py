@@ -4,6 +4,7 @@ from controllers.controllerEmpleado import obtener_empleados
 from controllers.compra.compra_Controllers import obtener_compras, insertar_compra
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, insertar_provedor
 from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_prima
+from flask_login import login_required, current_user, UserMixin
 import json
 import ast
 

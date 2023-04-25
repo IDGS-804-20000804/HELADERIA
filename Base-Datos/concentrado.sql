@@ -1820,7 +1820,8 @@ BEGIN
 			WHERE fk_usuario = iid_usuario)
 		AS roles
 	FROM usuario
-	WHERE id_usuario = iid_usuario;
+	WHERE id_usuario = iid_usuario
+    AND estatus = TRUE;
 END //
 DELIMITER ;
 
@@ -2422,9 +2423,13 @@ CREATE PROCEDURE eliminar_empleado(	/* Datos Persona */
 									IN iid_persona INT   -- 1
 				)
 	BEGIN
-		UPDATE persona SET  estatus = false,
+		UPDATE persona SET estatus = false,
 							fecha_actualizacion = NOW()
         WHERE id_persona = iid_persona;
+        UPDATE usuario SET estatus = false
+            WHERE id_usuario = (SELECT fk_usuario FROM empleado
+                INNER JOIN persona ON id_persona = fk_persona
+                WHERE id_persona = iid_persona LIMIT 1);
     END
 //
 DELIMITER ;
