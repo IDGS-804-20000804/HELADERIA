@@ -116,7 +116,6 @@ def modificar():
       create_fprm.correo.data=emp[0][10]   
       create_fprm.contrasenia.data=emp[0][11]          
       emp = obtener_clientes()
-      print(emp)
    if request.method=='POST':
         id_Persona=create_fprm.id_persona.data
         id_Usuario=create_fprm.id_usuario.data
