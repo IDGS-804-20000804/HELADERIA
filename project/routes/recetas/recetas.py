@@ -7,9 +7,11 @@ from controllers.materiaPrima.materiaPrima_Controllers import obtener_materia_pr
 import json
 from flask_security import roles_required, login_required
 #Para subir archivo tipo foto al servidor
+import ast
 import os
 from werkzeug.utils import secure_filename 
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
 recetas = Blueprint('recetas', __name__ )
 
 # @recetas.route('/recetas', methods=["POST", "GET"])
@@ -125,7 +127,11 @@ def indexMain():
     else:
          create_form = receta()
          r = obtener_recetas()
-    return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+    user_id = current_user.id_usuario
+    db = get_connection()
+    datos = ModeloLogin.get_by_id(db, user_id)
+    list = ast.literal_eval(datos.roles)
+    return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp, roles=list)
 
 nombres = []
 

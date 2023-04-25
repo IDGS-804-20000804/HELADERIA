@@ -3,7 +3,9 @@ from controllers.almacen.almacen_Controllers import obtener_almacen
 from db.db import get_connection 
 from flask_security import roles_required, login_required
 import datetime
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 
 almacen = Blueprint('almacen', __name__)
 
@@ -14,7 +16,11 @@ def almacenP():
     
     emp = obtener_almacen()
     emp1=sumar_cantidades(emp)
-    return render_template('almacen.html', almacen=emp1)
+    user_id = current_user.id_usuario
+    db = get_connection()
+    datos = ModeloLogin.get_by_id(db, user_id)
+    list = ast.literal_eval(datos.roles)
+    return render_template('almacen.html', almacen=emp1, roles=list)
 
 def sumar_cantidades(tuplas):
     diccionario = {}

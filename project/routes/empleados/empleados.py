@@ -7,6 +7,10 @@ import json
 from flask import jsonify
 # from flask_login import login_required
 from flask_security import roles_required, login_required
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
+from db.db import get_connection 
 
 empleados = Blueprint('empleados', __name__)
 @empleados.route('/empleados', methods=["POST", "GET"])
@@ -43,8 +47,11 @@ def empleado():
     else:
         create_form = Empleados()
         emp = obtener_empleados()
-     
-        return render_template('empleados.html', form=create_form, empleados=emp)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles) 
+        return render_template('empleados.html', form=create_form, empleados=emp, roles=list)
 
 
 

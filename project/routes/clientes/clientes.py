@@ -5,7 +5,9 @@ from models.clientes.clientes import Clientes
 from db.db import get_connection 
 from markupsafe import Markup
 from flask_login import login_required
-
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 clientes = Blueprint('clientes', __name__)
 
 
@@ -36,7 +38,11 @@ def cliente():
      else:
         create_form = Clientes()
         emp = obtener_clientes()
-        return render_template('clientes.html',form=create_form, clientes=emp)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles)
+        return render_template('clientes.html',form=create_form, clientes=emp, roles=list)
      
 @clientes.route('/insertar_cliente', methods=["POST"])
 @login_required

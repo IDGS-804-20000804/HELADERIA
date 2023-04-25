@@ -5,6 +5,9 @@ from db.db import get_connection
 from models.envio.envio_Forms import Envio
 from controllers.envio.envio_Controllers import obtener_envio, enviar_envio
 from flask_security import roles_required, login_required
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 envio = Blueprint('envio', __name__ )
 
 
@@ -22,7 +25,11 @@ def envios():
      else:
          create_form = Envio()
          en = obtener_envio()
-         return render_template('envio.html', form=create_form, envio=en)
+         user_id = current_user.id_usuario
+         db = get_connection()
+         datos = ModeloLogin.get_by_id(db, user_id)
+         list = ast.literal_eval(datos.roles)
+         return render_template('envio.html', form=create_form, envio=en, roles=list)
      
 @envio.route('/envioEstatus', methods=["POST", "GET"])
 @login_required

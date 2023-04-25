@@ -4,6 +4,9 @@ from models.proveedor.proveedor_Forms import Proveedor
 from controllers.proveedor.proveedor_Controllers import obtener_proveedor, obtener_proveedor_por_id, insertar_provedor, modificar_provedor, eliminar_provedor_por_id
 from flask_wtf.csrf import CSRFProtect
 from flask_security import roles_required, login_required
+from models.login.ModeloLogin import ModeloLogin
+from flask_login import login_required, current_user, UserMixin
+import ast
 # csrf = CSRFProtect()
 provedor = Blueprint('provedor', __name__ )
 
@@ -21,7 +24,11 @@ def provedores():
      else:
         create_form = Proveedor()
         pro = obtener_proveedor()
-        return render_template('provedor.html', form=create_form, proveedor=pro)
+        user_id = current_user.id_usuario
+        db = get_connection()
+        datos = ModeloLogin.get_by_id(db, user_id)
+        list = ast.literal_eval(datos.roles)
+        return render_template('provedor.html', form=create_form, proveedor=pro, roles=list)
      
 @provedor.route("/provedorModificar",methods=['GET','POST'])
 @login_required
