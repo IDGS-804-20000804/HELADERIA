@@ -11,19 +11,19 @@ import http.cookies as Cookies
  
 
 recetasModificar = Blueprint('recetasModificar', __name__ )
-@recetasModificar.route('/recetasModif', methods=['GET', 'POST'])
-def indexMain():
-    create_form = receta()
-    r = obtener_recetas()
-    mp = obtener_materia_prima()
-    if request.method == 'POST':
-        materia_seleccionada = request.form['materia']
-        cantidad = request.form['cantidad']
-        nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
-    else:
-         create_form = receta()
-         r = obtener_recetas()
-    return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
+# @recetasModificar.route('/recetasModif', methods=['GET', 'POST'])
+# def indexMain():
+#     create_form = receta()
+#     r = obtener_recetas()
+#     mp = obtener_materia_prima()
+#     if request.method == 'POST':
+#         materia_seleccionada = request.form['materia']
+#         cantidad = request.form['cantidad']
+#         nombres.append({'nombre': materia_seleccionada, 'cantidad': cantidad})
+#     else:
+#          create_form = receta()
+#          r = obtener_recetas()
+#     return render_template('recetas.html', nombres=nombres,form=create_form, receta=r,materiaPrima=mp)
 
 
 lista=[]
@@ -39,6 +39,7 @@ def modificar():
     mp = obtener_materia_prima()
     recetaL=obtener_recetas()
     if request.method=='GET':
+        lista.clear()
         id=request.args.get('id')
         session['mi_dato'] = id
         emp=obtener_receta_por_id(id)
@@ -48,8 +49,6 @@ def modificar():
         create_fprm.foto.data=emp[0][4]
         create_fprm.precio.data=emp[0][3] 
         texto = emp[0][5]
-        print('------------------------------------HOLA -----------------')
-        print(texto)
         lista.clear()
         listaArreglo.clear()
         
@@ -61,7 +60,6 @@ def modificar():
         for a in listaA:
             nombres.append(a)
     if request.method=='POST':
-        print('-----------------------HOLA DESDE MODIFICAR------------------')
         redirect(url_for('recetasModificar.modificar'))
         id_Receta = create_fprm.id_Receta.data
         nombre = create_fprm.nombre.data
@@ -77,7 +75,8 @@ def modificar():
         nombres.clear()
         modificar_receta(id_Receta,nombre,cantidad, precio, foto, lista_de_listas_parse_string)
         return redirect(url_for('recetas.indexMain'))
-    return render_template('recetasModificar.html',nombres=nombres, form= create_fprm, receta=recetaL, lista=listaA,materiaPrima=mp)
+    print(listaA)
+    return render_template('recetasModificar.html', form= create_fprm, receta=recetaL, lista=listaA,materiaPrima=mp)
 
 
 
@@ -125,7 +124,7 @@ def removeM(index):
     listaA.clear()
     for a in nombres:
         listaA.append(a)
-    
+    print(listaA)
     return redirect(url_for('recetasModificar.index'))
 
 def transformar_datos(datos):

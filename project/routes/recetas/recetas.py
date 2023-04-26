@@ -11,6 +11,7 @@ import ast
 import os
 from werkzeug.utils import secure_filename 
 from models.login.ModeloLogin import ModeloLogin
+from flask_security import roles_required, login_required
 from flask_login import login_required, current_user, UserMixin
 recetas = Blueprint('recetas', __name__ )
 
@@ -116,6 +117,7 @@ listaArreglo=[]
 
 
 @recetas.route('/recetas', methods=['GET', 'POST'])
+@login_required
 def indexMain():
     create_form = receta()
     r = obtener_recetas()
